@@ -33,8 +33,8 @@ const kaushanScript = Kaushan_Script({
 
 export const metadata: Metadata = {
   title: {
-    template: 'Demo: %s - ThreadCraft | Shadcn Studio',
-    default: 'Demo: ThreadCraft - Premium T-Shirt Collection | Shadcn Studio'
+    template: 'Demo: %s - Armak Clothing | Shadcn Studio',
+    default: 'Demo: Armak Clothing - Premium T-Shirt Collection | Shadcn Studio'
   },
   description:
     'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',

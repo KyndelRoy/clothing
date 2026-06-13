@@ -116,7 +116,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         {/* Logo */}
         <Link href='/#home' className='flex items-center gap-3'>
           <BistroLogo />
-          <span className='text-primary text-[20px] font-semibold'>ThreadCraft</span>
+          <span className='text-primary text-[20px] font-semibold'>Armak Clothing</span>
         </Link>
 
         {/* Navigation */}
