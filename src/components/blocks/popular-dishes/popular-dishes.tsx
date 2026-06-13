@@ -30,7 +30,7 @@ const PopularDishes = ({ popularDishes }: { popularDishes: PopularDish }) => {
           {popularDishes.map((member, index) => (
             <Card
               key={index}
-              className='hover:border-primary border-primary/10 overflow-hidden rounded-none border py-0 shadow-none ring-0 transition-colors duration-300'
+              className='hover:border-primary overflow-hidden rounded-none border border-black bg-transparent !text-black py-0 shadow-none ring-0 transition-colors duration-300 dark:border-white dark:!text-white'
             >
               <CardContent className='px-0'>
                 <div className='bg-muted'>
@@ -39,7 +39,7 @@ const PopularDishes = ({ popularDishes }: { popularDishes: PopularDish }) => {
                 <div className='space-y-3 px-6 py-5'>
                   <CardTitle className='text-lg font-semibold'>{member.name}</CardTitle>
                   <Separator />
-                  <div className='text-muted-foreground'>
+                  <div className='!text-black dark:!text-white'>
                     <p className='mb-1 text-base font-medium'>{member.type}</p>
                     <p className='text-base'>{member.description}</p>
                   </div>

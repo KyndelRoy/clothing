@@ -33,7 +33,7 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
         <div className='grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3'>
           {newItems.map((item, index) => (
             <Card
-              className='hover:border-primary border-primary/10 rounded-none border pt-0 shadow-none ring-0 transition-colors duration-300 max-lg:last:col-span-full'
+              className='hover:border-primary rounded-none border border-black bg-transparent !text-black pt-0 shadow-none ring-0 transition-colors duration-300 max-lg:last:col-span-full dark:border-white dark:!text-white'
               key={index}
             >
               <CardContent className='px-0'>
@@ -43,7 +43,7 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
                 <CardTitle className='text-xl font-semibold'>
                   <Link href='#'>{item.title}</Link>
                 </CardTitle>
-                <CardDescription className='text-base'>{item.description}</CardDescription>
+                <CardDescription className='!text-black dark:!text-white text-base'>{item.description}</CardDescription>
               </CardHeader>
               <CardContent>
                 <Button
