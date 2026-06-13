@@ -30,10 +30,10 @@ const Gallery = ({ galleryImage }: { galleryImage: GalleryImage }) => {
             Offers
           </Badge>
 
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Explore our Offerings</h2>
+          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Explore our Offers</h2>
 
           <p className='text-muted-foreground text-xl'>
-            Don&apos;t miss out on the dining experience. Reserve your table and indulge in a culinary journey today.
+            Don&apos;t miss out on these deals. Shop your favourites and refresh your wardrobe today.
           </p>
         </div>
 

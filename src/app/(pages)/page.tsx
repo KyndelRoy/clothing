@@ -21,9 +21,9 @@ const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': `${process.env.NEXT_PUBLIC_APP_URL}#website`,
-      name: 'Bistro',
+      name: 'ThreadCraft',
       description:
-        'Enjoy fresh ingredients, thoughtfully prepared meals, and a welcoming space designed for memorable moments. Experience bistro dining made simple and delicious.',
+        'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',
       url: `${process.env.NEXT_PUBLIC_APP_URL}`,
       inLanguage: 'en-US'
     }

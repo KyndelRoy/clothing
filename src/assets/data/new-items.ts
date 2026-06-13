@@ -1,26 +1,26 @@
 export const newItems = [
   {
     img: '/images/new-items/new-items-01.webp',
-    alt: 'Lemon Herb Grilled Salmon',
-    title: 'Lemon Herb Grilled Salmon',
+    alt: 'Classic Cotton Crew',
+    title: 'Classic Cotton Crew',
     description:
-      'Delight in the perfect balance of zesty lemon and savoury herbs, beautifully paired with a fresh garden salad.',
+      'A timeless everyday essential crafted from 100% organic cotton. Soft, breathable, and built to last through countless washes.',
     blogLink: '#'
   },
   {
     img: '/images/new-items/new-items-02.webp',
-    alt: 'Spicy Mango Chicken',
-    title: 'Spicy Mango Chicken',
+    alt: 'Urban Graphic Tee',
+    title: 'Urban Graphic Tee',
     description:
-      'A sweet and spicy fusion of tender chicken breast combined with ripe mango and a delightful chili kick.',
+      'Bold screen-printed designs meet premium fabric for a standout look. Perfect for expressing your personal style.',
     blogLink: '#'
   },
   {
     img: '/images/new-items/new-items-03.webp',
-    alt: 'Vegetarian Tempeh Stir Fry',
-    title: 'Vegetarian Tempeh Stir Fry',
+    alt: 'Performance Blend Tee',
+    title: 'Performance Blend Tee',
     description:
-      'A healthy, hearty and nutritious dish featuring tempeh, fresh seasonal vegetables, and a light, flavourful sauce.',
+      'A high-performance fabric blend designed for all-day comfort. Moisture-wicking, lightweight, and effortlessly stylish.',
     blogLink: '#'
   }
 ]

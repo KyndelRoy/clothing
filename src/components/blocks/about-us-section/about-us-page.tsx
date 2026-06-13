@@ -26,8 +26,8 @@ const AboutUs = ({ stats }: { stats: Stat[] }) => {
           </Badge>
           <h2 className='text-2xl font-semibold tracking-tight md:text-3xl lg:text-4xl'>Our story & achievements</h2>
           <p className='text-muted-foreground text-xl'>
-            At Restaurant, every dish tells a story. With years of dedication and a passion for fine dining, we&apos;ve
-            transformed the art of cooking into an unforgettable experience.
+            At ThreadCraft, every tee tells a story. With years of dedication and a passion for quality fabrics, we&apos;ve
+            transformed the art of apparel into an unforgettable experience.
           </p>
           <Button
             size='lg'

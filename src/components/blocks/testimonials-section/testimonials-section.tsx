@@ -40,7 +40,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
           </h2>
 
           <p className='text-muted-foreground text-xl'>
-            Here&apos;s how our customers enjoyed our restaurant and the services we offer.
+            Here&apos;s what our customers say about the quality, fit, and style of our apparel.
           </p>
 
           <div className='flex items-center gap-4'>

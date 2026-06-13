@@ -17,7 +17,7 @@ const Footer = () => {
         <Link href='/#home'>
           <div className='flex items-center gap-3'>
             <BistroLogo className='gap-3' />
-            <span className='text-primary text-[20px] font-semibold'>Bistro</span>
+            <span className='text-primary text-[20px] font-semibold'>ThreadCraft</span>
           </div>
         </Link>
 
@@ -55,7 +55,7 @@ const Footer = () => {
         <p className='text-muted-foreground text-center text-balance'>
           {`©${new Date().getFullYear()}`}{' '}
           <Link href='/#home' className='hover:underline'>
-            Bistro
+            ThreadCraft
           </Link>
           , Made with ❤️ for better web.
         </p>

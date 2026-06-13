@@ -116,7 +116,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         {/* Logo */}
         <Link href='/#home' className='flex items-center gap-3'>
           <BistroLogo />
-          <span className='text-primary text-[20px] font-semibold'>Bistro</span>
+          <span className='text-primary text-[20px] font-semibold'>ThreadCraft</span>
         </Link>
 
         {/* Navigation */}
@@ -140,11 +140,11 @@ const Header = ({ navigationData, className }: HeaderProps) => {
                 scrollToSection('contact-us')
               }}
             >
-              Book table
+              Shop now
             </Link>
           </Button>
 
-          {/* Mobile book table button */}
+          {/* Mobile shop now button */}
           <Tooltip>
             <TooltipTrigger asChild>
               <Button className='ml-4 rounded-full sm:hidden' asChild>
@@ -155,11 +155,11 @@ const Header = ({ navigationData, className }: HeaderProps) => {
                     scrollToSection('contact-us')
                   }}
                 >
-                  Book table
+                  Shop now
                 </Link>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Book table</TooltipContent>
+            <TooltipContent>Shop now</TooltipContent>
           </Tooltip>
 
           {/* Mobile menu button */}

@@ -4,11 +4,11 @@ export const GalleryImage = [
     alt: 'Launch deal',
     className: 'col-span-2 row-span-2',
     offerText: {
-      text: 'Lunch Deal - $9.99',
+      text: '3-Pack Bundle - $49.99',
       className: 'xl:top-6 xl:right-6 top-3 right-3'
     },
     offerButton: {
-      text: 'Book your table',
+      text: 'Shop now',
       link: '#',
       className: 'xl:top-19.5 xl:right-6 top-12 right-3'
     }
@@ -18,7 +18,7 @@ export const GalleryImage = [
     alt: 'Bogo special',
     className: 'col-span-2 max-h-60',
     offerText: {
-      text: 'BOGO Special',
+      text: 'Buy One Get One Free',
       className: 'xl:bottom-18.5 xl:left-4 bottom-13 left-3'
     },
     offerButton: {
@@ -32,11 +32,11 @@ export const GalleryImage = [
     alt: 'Family meal',
     className: 'col-span-2 max-h-60',
     offerText: {
-      text: 'Family Meal – $29.99',
+      text: 'Free Shipping Over $75',
       className: 'xl:top-5 xl:right-12 top-3 right-3'
     },
     offerButton: {
-      text: 'Book your table',
+      text: 'Shop now',
       link: '#',
       className: 'xl:top-19 xl:right-12 top-11 right-3'
     }

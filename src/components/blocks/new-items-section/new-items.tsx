@@ -23,10 +23,10 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
           <Badge variant='outline' className='h-auto text-sm font-normal'>
             New Items
           </Badge>
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Fresh menu items</h2>
+          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>New arrivals</h2>
           <p className='text-muted-foreground text-xl'>
-            Explore our most recent additions to the menu. Each dish is designed to delight your taste buds and provide
-            a memorable dining experience.
+            Explore our latest additions to the collection. Each piece is designed to elevate your wardrobe with premium
+            fabrics and standout style.
           </p>
         </div>
 
@@ -52,7 +52,7 @@ const NewItems = ({ newItems }: { newItems: NewItem }) => {
                   asChild
                 >
                   <Link href={item.blogLink}>
-                    Full menu
+                    View details
                     <ArrowRightIcon className='transition-transform duration-200 group-hover:translate-x-0.5' />
                   </Link>
                 </Button>

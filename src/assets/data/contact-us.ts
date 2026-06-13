@@ -2,19 +2,19 @@ import { Clock8Icon, MapPinIcon, Mail, PhoneIcon } from 'lucide-react'
 
 export const contactInfo = [
   {
-    title: 'Open Hours',
+    title: 'Store Hours',
     icon: Clock8Icon,
-    description: 'Monday-Friday\n8:00 am to 5:00 pm'
+    description: 'Monday-Saturday\n10:00 am to 8:00 pm'
   },
   {
-    title: 'Our Address',
+    title: 'Our Store',
     icon: MapPinIcon,
-    description: '802 Perston Rd,Maine\n96812, USA'
+    description: '412 Fashion Ave, Suite 200\nNew York, NY 10018'
   },
   {
     title: 'Email',
     icon: Mail,
-    description: 'info@seliziakitchen.com'
+    description: 'hello@threadcraft.co'
   },
   {
     title: 'Phone',

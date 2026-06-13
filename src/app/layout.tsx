@@ -33,13 +33,13 @@ const kaushanScript = Kaushan_Script({
 
 export const metadata: Metadata = {
   title: {
-    template: 'Demo: %s - Bistro | Shadcn Studio',
-    default: 'Demo: Bistro - Restaurant Landing Page | Shadcn Studio'
+    template: 'Demo: %s - ThreadCraft | Shadcn Studio',
+    default: 'Demo: ThreadCraft - Premium T-Shirt Collection | Shadcn Studio'
   },
   description:
-    'Enjoy fresh ingredients, thoughtfully prepared meals, and a welcoming space designed for memorable moments. Experience bistro dining made simple and delicious.',
+    'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',
   robots: 'index,follow',
-  keywords: ['Restaurant', 'Dining', 'Food'],
+  keywords: ['T-Shirts', 'Clothing', 'Apparel', 'Fashion'],
   icons: {
     icon: [
       {
@@ -83,13 +83,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}`),
   openGraph: {
     title: {
-      template: 'Demo: %s - Bistro | Shadcn Studio',
-      default: 'Demo: Bistro - Restaurant Landing Page | Shadcn Studio'
+      template: 'Demo: %s - ThreadCraft | Shadcn Studio',
+      default: 'Demo: ThreadCraft - Premium T-Shirt Collection | Shadcn Studio'
     },
     description:
-      'Enjoy fresh ingredients, thoughtfully prepared meals, and a welcoming space designed for memorable moments. Experience bistro dining made simple and delicious.',
+      'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',
     type: 'website',
-    siteName: 'Bistro',
+    siteName: 'ThreadCraft',
     url: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}`,
     images: [
       {
@@ -97,18 +97,18 @@ export const metadata: Metadata = {
         type: 'image/png',
         width: 1200,
         height: 630,
-        alt: 'Template Slogan'
+        alt: 'ThreadCraft Apparel'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: {
-      template: 'Demo: %s - Bistro | Shadcn Studio',
-      default: 'Demo: Bistro - Restaurant Landing Page | Shadcn Studio'
+      template: 'Demo: %s - ThreadCraft | Shadcn Studio',
+      default: 'Demo: ThreadCraft - Premium T-Shirt Collection | Shadcn Studio'
     },
     description:
-      'Enjoy fresh ingredients, thoughtfully prepared meals, and a welcoming space designed for memorable moments. Experience bistro dining made simple and delicious.'
+      'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.'
   }
 }
 
