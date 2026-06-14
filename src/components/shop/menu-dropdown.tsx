@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 
 import { ChevronRightIcon, CircleSmallIcon } from 'lucide-react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import {
@@ -28,10 +29,12 @@ export type NavigationSection = {
   | {
       items: NavigationItem[]
       href?: never
+      kind?: never
     }
   | {
       items?: never
       href: string
+      kind?: 'section' | 'route'
     }
 )
 
@@ -43,13 +46,35 @@ type Props = {
 }
 
 const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' }: Props) => {
+  const pathname = usePathname()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
       <DropdownMenuContent className='w-56' align={align}>
         {navigationData.map(navItem => {
           if (navItem.href) {
-            // Extract section ID from href
+            if (navItem.kind === 'route') {
+              // Real route — render as a plain Link, no scroll handler.
+              const isActive = pathname === navItem.href || pathname.startsWith(`${navItem.href}/`)
+
+              return (
+                <DropdownMenuItem key={navItem.title} asChild>
+                  <Link
+                    href={navItem.href}
+                    className={cn(
+                      'cursor-pointer transition-colors duration-200',
+                      'hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary',
+                      isActive ? 'bg-primary/10 text-primary font-medium' : 'text-foreground'
+                    )}
+                  >
+                    {navItem.icon}
+                    {navItem.title}
+                  </Link>
+                </DropdownMenuItem>
+              )
+            }
+
             const sectionId = navItem.href.replace('#', '')
             const isActive = activeSection === sectionId && activeSection !== ''
 
