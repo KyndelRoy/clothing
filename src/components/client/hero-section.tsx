@@ -97,11 +97,11 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
         {/* Hero Header */}
         <div className='grid grid-cols-1 gap-6 gap-y-12 md:gap-y-16 lg:grid-cols-5'>
           <div className='flex w-full flex-col justify-center gap-5 max-lg:items-center lg:col-span-3 lg:h-95.5'>
-            <h1 className='text-3xl leading-[1.29167] font-semibold text-balance max-lg:text-center sm:text-4xl lg:text-5xl'>
+            <h1 className='client-hero-title text-balance max-lg:text-center'>
               Wear your style with confidence
             </h1>
 
-            <p className='text-muted-foreground max-w-xl text-xl max-lg:text-center'>
+            <p className='client-muted client-section-description max-w-xl max-lg:text-center'>
               Welcome to our collection where quality meets design. From premium fabrics to signature prints, every tee
               is crafted to elevate your wardrobe.
             </p>
@@ -110,7 +110,7 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
               <Button
                 asChild
                 size='lg'
-                className='group relative w-fit overflow-hidden rounded-full text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-size-[250%_250%,100%_100%] before:bg-position-[200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-position-[-100%_0,0_0] has-[>svg]:px-6 dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
+                className='group relative w-fit overflow-hidden rounded-full client-button before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-size-[250%_250%,100%_100%] before:bg-position-[200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-position-[-100%_0,0_0] has-[>svg]:px-6 dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
               >
                 <Link href='#'>
                   Shop now
@@ -120,7 +120,7 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
               <Button
                 size='lg'
                 asChild
-                className='bg-primary/10 hover:bg-primary/20 text-primary rounded-full text-base'
+                className='bg-primary/10 hover:bg-primary/20 text-primary rounded-full client-button'
               >
                 <Link href='#contact-us'>Browse collection</Link>
               </Button>
@@ -195,7 +195,7 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
                     orientation='vertical'
                     className='bg-primary hidden h-6! w-0.5! rounded-full! data-vertical:self-center sm:block'
                   />
-                  <p className='text-card-foreground'>{slide.userComment}</p>
+                  <p className='client-body'>{slide.userComment}</p>
                 </CarouselItem>
               ))}
             </CarouselContent>

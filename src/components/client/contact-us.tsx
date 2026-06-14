@@ -17,11 +17,11 @@ const ContactUs = ({ contactInfo }: ContactUsProps) => {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <Badge variant='outline' className='h-auto text-sm font-normal'>
+          <Badge variant='outline' className='h-auto client-meta'>
             Contact Us
           </Badge>
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Get in touch with us </h2>
-          <p className='text-muted-foreground text-xl'>
+          <h2 className='client-section-title'>Get in touch with us </h2>
+          <p className='client-muted client-section-description'>
             We&apos;d love to help you find your perfect fit. Reach out with any questions about our collections,
             sizing, or orders.
           </p>
@@ -35,8 +35,8 @@ const ContactUs = ({ contactInfo }: ContactUsProps) => {
           />
 
           <div>
-            <h3 className='mb-2 text-2xl'>We&apos;re here to help</h3>
-            <p className='text-muted-foreground mb-10 text-lg'>
+            <h3 className='mb-2 client-card-title'>We&apos;re here to help</h3>
+            <p className='client-muted client-body-lg mb-10'>
               We would love to hear from you. Whether you have a question about sizing, need help with an order, or want
               to learn more about our collections, we&apos;re here to assist.
             </p>
@@ -55,8 +55,8 @@ const ContactUs = ({ contactInfo }: ContactUsProps) => {
                       </AvatarFallback>
                     </Avatar>
                     <div className='space-y-3'>
-                      <h4 className='text-lg font-semibold'>{info.title}</h4>
-                      <div className='text-muted-foreground text-base font-medium'>
+                      <h4 className='client-card-title'>{info.title}</h4>
+                      <div className='client-muted client-body-sm'>
                         {info.description.split('\n').map((line, idx) => (
                           <p key={idx}>{line}</p>
                         ))}

@@ -163,6 +163,168 @@
     letter-spacing: var(--tracking-normal);
   }
 
+  .client-font {
+    font-family: var(--font-client);
+    letter-spacing: var(--client-letter-spacing);
+  }
+
+  .client-font .text-xs {
+    font-size: var(--client-xs-size);
+    line-height: var(--client-xs-line-height);
+    font-weight: var(--client-xs-font-weight);
+  }
+
+  .client-font .text-sm {
+    font-size: var(--client-sm-size);
+    line-height: var(--client-sm-line-height);
+    font-weight: var(--client-sm-font-weight);
+  }
+
+  .client-font .text-base {
+    font-size: var(--client-base-size);
+    line-height: var(--client-base-line-height);
+    font-weight: var(--client-base-font-weight);
+  }
+
+  .client-font .text-lg {
+    font-size: var(--client-lg-size);
+    line-height: var(--client-lg-line-height);
+    font-weight: var(--client-lg-font-weight);
+  }
+
+  .client-font .text-xl {
+    font-size: var(--client-xl-size);
+    line-height: var(--client-xl-line-height);
+    font-weight: var(--client-xl-font-weight);
+  }
+
+  .client-font .text-2xl {
+    font-size: var(--client-2xl-size);
+    line-height: var(--client-2xl-line-height);
+    font-weight: var(--client-2xl-font-weight);
+    letter-spacing: var(--client-2xl-letter-spacing);
+  }
+
+  .client-font .text-3xl {
+    font-size: var(--client-3xl-size);
+    line-height: var(--client-3xl-line-height);
+    font-weight: var(--client-3xl-font-weight);
+    letter-spacing: var(--client-3xl-letter-spacing);
+  }
+
+  .client-font .text-4xl {
+    font-size: var(--client-4xl-size);
+    line-height: var(--client-4xl-line-height);
+    font-weight: var(--client-4xl-font-weight);
+    letter-spacing: var(--client-4xl-letter-spacing);
+  }
+
+  .client-font .text-5xl {
+    font-size: var(--client-5xl-size);
+    line-height: var(--client-5xl-line-height);
+    font-weight: var(--client-5xl-font-weight);
+    letter-spacing: var(--client-5xl-letter-spacing);
+  }
+
+  .client-font .text-\[20px\] {
+    font-size: var(--client-logo-size);
+    line-height: var(--client-logo-line-height);
+    font-weight: var(--client-logo-font-weight);
+  }
+
+  .client-hero-title {
+    font-size: var(--client-hero-title-size);
+    line-height: var(--client-hero-title-line-height);
+    font-weight: var(--client-hero-title-font-weight);
+    letter-spacing: var(--client-hero-title-letter-spacing);
+  }
+
+  .client-section-title {
+    font-size: var(--client-section-title-size);
+    line-height: var(--client-section-title-line-height);
+    font-weight: var(--client-section-title-font-weight);
+    letter-spacing: var(--client-section-title-letter-spacing);
+  }
+
+  .client-section-description {
+    font-size: var(--client-section-description-size);
+    line-height: var(--client-section-description-line-height);
+    font-weight: var(--client-section-description-font-weight);
+  }
+
+  .client-body-lg {
+    font-size: var(--client-lg-size);
+    line-height: var(--client-lg-line-height);
+    font-weight: var(--client-lg-font-weight);
+  }
+
+  .client-body {
+    font-size: var(--client-base-size);
+    line-height: var(--client-base-line-height);
+    font-weight: var(--client-base-font-weight);
+  }
+
+  .client-body-sm {
+    font-size: var(--client-sm-size);
+    line-height: var(--client-sm-line-height);
+    font-weight: var(--client-sm-font-weight);
+  }
+
+  .client-card-title {
+    font-size: var(--client-card-title-size);
+    line-height: var(--client-card-title-line-height);
+    font-weight: var(--client-card-title-font-weight);
+  }
+
+  .client-card-description {
+    font-size: var(--client-card-description-size);
+    line-height: var(--client-card-description-line-height);
+    font-weight: var(--client-card-description-font-weight);
+  }
+
+  .client-price {
+    font-size: var(--client-price-size);
+    line-height: var(--client-price-line-height);
+    font-weight: var(--client-price-font-weight);
+    font-variant-numeric: var(--client-price-font-variant-numeric);
+  }
+
+  .client-meta {
+    font-size: var(--client-meta-size);
+    line-height: var(--client-meta-line-height);
+    font-weight: var(--client-meta-font-weight);
+  }
+
+  .client-nav {
+    font-size: var(--client-nav-size);
+    line-height: var(--client-nav-line-height);
+    font-weight: var(--client-nav-font-weight);
+  }
+
+  .client-button {
+    font-size: var(--client-button-size);
+    line-height: var(--client-button-line-height);
+    font-weight: var(--client-button-font-weight);
+  }
+
+  .client-logo {
+    font-size: var(--client-logo-size);
+    line-height: var(--client-logo-line-height);
+    font-weight: var(--client-logo-font-weight);
+  }
+
+  .client-muted {
+    color: var(--muted-foreground);
+  }
+
+  .client-tracking-tight {
+    letter-spacing: var(--client-tracking-tight);
+  }
+
+  .client-tracking-wide {
+    letter-spacing: var(--client-tracking-wide);
+  }
+
   /* For native button elements and elements with role="button", e.g., button, checkbox, radio, switch etc. */
   button:not(:disabled),
   [role='checkbox']:not(:disabled),

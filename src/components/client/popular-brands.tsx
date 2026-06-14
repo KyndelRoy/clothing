@@ -13,11 +13,11 @@ const PopularBrands = ({ brands }: PopularBrandsProps) => {
     <section id='popular-dishes' className='py-8 sm:py-16 lg:py-24'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <Badge variant='outline' className='h-auto text-sm font-normal'>
+          <Badge variant='outline' className='h-auto client-meta'>
             Popular Brands
           </Badge>
-          <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Favorite brands</h2>
-          <p className='text-muted-foreground text-xl'>
+          <h2 className='client-section-title'>Favorite brands</h2>
+          <p className='client-muted client-section-description'>
             Discover our most trusted clothing brands, known for quality craftsmanship, innovative designs, and styles
             that keep customers coming back for more.
           </p>
@@ -35,11 +35,11 @@ const PopularBrands = ({ brands }: PopularBrandsProps) => {
                   <img src={brand.image} alt={brand.alt} className='h-auto w-full' />
                 </div>
                 <div className='space-y-3 px-6 py-5'>
-                  <CardTitle className='text-lg font-semibold'>{brand.name}</CardTitle>
+                  <CardTitle className='client-card-title'>{brand.name}</CardTitle>
                   <Separator />
                   <div className='text-black! dark:text-white!'>
-                    <p className='mb-1 text-base font-medium'>{brand.type}</p>
-                    <p className='text-base'>{brand.description}</p>
+                    <p className='mb-1 client-meta'>{brand.type}</p>
+                    <p className='client-body'>{brand.description}</p>
                   </div>
                 </div>
               </CardContent>

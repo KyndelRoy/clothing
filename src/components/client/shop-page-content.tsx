@@ -42,8 +42,8 @@ const ShopPageContent = () => {
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Page header */}
         <div className='mb-8 flex flex-col gap-2 sm:mb-10'>
-          <h1 className='text-3xl font-semibold tracking-tight sm:text-4xl'>Shop all</h1>
-          <p className='text-muted-foreground text-base'>Browse the full collection.</p>
+          <h1 className='client-section-title client-tracking-tight'>Shop all</h1>
+          <p className='client-muted client-body'>Browse the full collection.</p>
         </div>
 
         {/* Search + category filter */}
@@ -82,12 +82,12 @@ const ShopPageContent = () => {
 
         {/* Result count */}
         <div className='mb-4 flex items-center justify-between text-sm'>
-          <span className='text-muted-foreground'>
+          <span className='client-muted client-meta'>
             {filtered.length} {filtered.length === 1 ? 'product' : 'products'}
             {isFiltered ? ' match your filters' : ''}
           </span>
           {isFiltered ? (
-            <Button variant='ghost' size='sm' className='rounded-full' onClick={clearFilters}>
+            <Button variant='ghost' size='sm' className='rounded-full client-button' onClick={clearFilters}>
               <XIcon className='size-3' />
               Clear
             </Button>
@@ -103,9 +103,9 @@ const ShopPageContent = () => {
           </div>
         ) : (
           <div className='flex flex-col items-center justify-center gap-2 rounded-3xl border border-dashed py-16 text-center'>
-            <p className='text-base font-medium'>No products match your search</p>
-            <p className='text-muted-foreground text-sm'>Try a different keyword or clear the category filter.</p>
-            <Button variant='outline' size='sm' className='mt-2 rounded-full' onClick={clearFilters}>
+            <p className='client-card-title'>No products match your search</p>
+            <p className='client-muted client-body-sm'>Try a different keyword or clear the category filter.</p>
+            <Button variant='outline' size='sm' className='mt-2 rounded-full client-button' onClick={clearFilters}>
               Clear filters
             </Button>
           </div>

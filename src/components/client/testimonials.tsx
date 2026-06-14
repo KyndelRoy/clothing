@@ -25,16 +25,16 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
       >
         {/* Left Content */}
         <div className='space-y-4 sm:w-1/2 lg:w-1/3'>
-          <Badge variant='outline' className='h-auto text-sm font-normal'>
+          <Badge variant='outline' className='h-auto client-meta'>
             Testimonials
           </Badge>
 
-          <h2 className='text-2xl font-semibold sm:text-3xl lg:text-4xl'>
+          <h2 className='client-section-title'>
             Customers <br />
             Feedback
           </h2>
 
-          <p className='text-muted-foreground text-xl'>
+          <p className='client-muted client-section-description'>
             Here&apos;s what our customers say about the quality, fit, and style of our apparel.
           </p>
 
@@ -68,14 +68,14 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
                     </Avatar>
 
                     <div className='flex-1'>
-                      <h4 className='text-base font-medium'>{testimonial.name}</h4>
+                      <h4 className='client-meta'>{testimonial.name}</h4>
                     </div>
                   </CardHeader>
                   <CardContent>
                     <Rating readOnly variant='yellow' size={24} value={testimonial.rating} precision={0.5} />
                   </CardContent>
                   <CardContent>
-                    <p className='text-base'>{testimonial.content}</p>
+                    <p className='client-body'>{testimonial.content}</p>
                   </CardContent>
                 </Card>
               </CarouselItem>

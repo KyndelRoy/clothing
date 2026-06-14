@@ -43,7 +43,7 @@ const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' 
                   <Link
                     href={navItem.href}
                     className={cn(
-                      'cursor-pointer transition-colors duration-200',
+                      'cursor-pointer client-body transition-colors duration-200',
                       'hover:bg-primary/10 hover:text-primary focus:bg-primary/10 focus:text-primary',
                       isActive ? 'bg-primary/10 text-primary font-medium' : 'text-foreground'
                     )}
@@ -83,9 +83,9 @@ const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' 
             <Collapsible key={navItem.title} asChild>
               <DropdownMenuGroup>
                 <CollapsibleTrigger asChild>
-                  <DropdownMenuItem onSelect={event => event.preventDefault()} className='justify-between'>
+                  <DropdownMenuItem onSelect={event => event.preventDefault()} className='justify-between client-body'>
                     {navItem.icon}
-                    <span className='flex-1'>{navItem.title}</span>
+                        <span className='client-body flex-1'>{navItem.title}</span>
                     <ChevronRightIcon className='shrink-0 transition-transform [[data-state=open]>&]:rotate-90' />
                   </DropdownMenuItem>
                 </CollapsibleTrigger>

@@ -32,13 +32,13 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
       </CardContent>
       <CardHeader className='gap-1.5 px-5 pb-2'>
         <div className='flex items-baseline justify-between gap-3'>
-          <CardTitle className='text-base font-semibold'>{product.name}</CardTitle>
-          <span className='text-base font-semibold tabular-nums'>{formatPrice(product.price)}</span>
+          <CardTitle className='client-card-title'>{product.name}</CardTitle>
+          <span className='client-price'>{formatPrice(product.price)}</span>
         </div>
-        <CardDescription className='text-sm'>{product.description}</CardDescription>
+        <CardDescription className='client-card-description'>{product.description}</CardDescription>
       </CardHeader>
       <CardContent className='px-5 pb-5'>
-        <Button size='sm' className='w-full rounded-full' variant='outline' asChild>
+        <Button size='sm' className='w-full rounded-full client-button' variant='outline' asChild>
           <Link href={`/shop/${product.id}`}>View product</Link>
         </Button>
       </CardContent>
