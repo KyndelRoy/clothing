@@ -1,46 +1,116 @@
-import Link from 'next/link'
+'use client'
 
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import { useEffect, useRef, useState } from 'react'
+
+import { Card, CardContent, CardTitle } from '@/components/ui/card'
 
 import { formatPrice } from '@/lib/format'
 
-import type { ShopProduct } from '@/types/shop'
+import type { ProductColor, ShopProduct } from '@/types/shop'
 
 type ProductCardProps = {
   product: ShopProduct
   className?: string
 }
 
+const SWATCH_SIZE = 24
+const SWATCH_GAP = 8
+
 const ProductCard = ({ product, className }: ProductCardProps) => {
+  const [selectedColor, setSelectedColor] = useState<ProductColor>(() => {
+    return product.colors.find((c) => c.available) ?? product.colors[0]
+  })
+  const [visibleCount, setVisibleCount] = useState(product.colors.length)
+  const rowRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = rowRef.current
+    if (!el) return
+
+    const calculate = () => {
+      const containerWidth = el.clientWidth
+      const totalColors = product.colors.length
+      let count = 0
+      let usedWidth = 0
+
+      for (let i = 0; i < totalColors; i++) {
+        const nextWidth = usedWidth + SWATCH_SIZE + (i > 0 ? SWATCH_GAP : 0)
+        if (nextWidth > containerWidth) break
+        usedWidth = nextWidth
+        count = i + 1
+      }
+
+      // reserve space for the +N badge if there's overflow
+      if (count < totalColors && count > 0) {
+        const overflowText = `+${totalColors - count}`
+        const badgeWidth = overflowText.length * 8 + 16
+        while (count > 0) {
+          const nextWidth = usedWidth + SWATCH_GAP + badgeWidth
+          if (nextWidth <= containerWidth) break
+          count--
+          usedWidth -= SWATCH_GAP + SWATCH_SIZE
+        }
+      }
+
+      setVisibleCount(count > 0 ? count : 1)
+    }
+
+    calculate()
+    const observer = new ResizeObserver(calculate)
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [product.colors.length])
+
+  const handleColorSelect = (color: ProductColor) => {
+    if (!color.available) return
+    setSelectedColor(color)
+  }
+
+  const hiddenCount = product.colors.length - visibleCount
+
   return (
     <Card
       className={
-        'group/product border-foreground/15 hover:border-primary overflow-hidden rounded-3xl border bg-transparent pt-0 text-black! shadow-none ring-0 transition-colors duration-300 dark:text-white! ' +
+        'group/product border-foreground/15 hover:border-primary overflow-hidden rounded-md border bg-transparent pt-0 text-black! shadow-none ring-0 transition-colors duration-300 dark:text-white! ' +
         (className ?? '')
       }
     >
       <CardContent className='px-0'>
         <div className='bg-muted/30 overflow-hidden'>
           <img
-            src={product.image}
-            alt={product.imageAlt}
+            src={selectedColor.image}
+            alt={selectedColor.imageAlt}
             className='aspect-4/5 w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
             loading='lazy'
           />
         </div>
       </CardContent>
-      <CardHeader className='gap-1.5 px-5 pb-2'>
-        <div className='flex items-baseline justify-between gap-3'>
-          <CardTitle className='client-card-title'>{product.name}</CardTitle>
-          <span className='client-price'>{formatPrice(product.price)}</span>
+      <CardContent className='flex flex-col gap-3 px-4 pb-0'>
+        <div ref={rowRef} className='flex items-center gap-2'>
+          {product.colors.slice(0, visibleCount).map((color) => (
+            <button
+              key={color.name}
+              onClick={() => handleColorSelect(color)}
+              disabled={!color.available}
+              title={`${color.name}${!color.available ? ' (Unavailable)' : ''}`}
+              className={`h-6 w-6 shrink-0 rounded-sm border transition-all ${
+                selectedColor.name === color.name
+                  ? 'border-foreground ring-2 ring-foreground/30'
+                  : 'border-foreground/20'
+              } ${!color.available ? 'cursor-not-allowed opacity-30' : 'cursor-pointer hover:scale-110'}`}
+              style={{ backgroundColor: color.hex }}
+              aria-label={`Select ${color.name}`}
+            />
+          ))}
+          {hiddenCount > 0 && (
+            <span className='text-muted-foreground shrink-0 text-xs font-medium'>
+              +{hiddenCount}
+            </span>
+          )}
         </div>
-        <CardDescription className='client-card-description'>{product.description}</CardDescription>
-      </CardHeader>
-      <CardContent className='px-5 pb-5'>
-        <Button size='sm' className='w-full rounded-full client-button' variant='outline' asChild>
-          <Link href={`/shop/${product.id}`}>View product</Link>
-        </Button>
+        <CardTitle className='client-card-title'>{product.name}</CardTitle>
+        <div className='h-4' />
+        <span className='client-price text-left'>{formatPrice(product.price)}</span>
       </CardContent>
     </Card>
   )

@@ -17,7 +17,6 @@ import { cn } from '@/lib/utils'
 
 import type { NavigationSection } from '@/types/navigation'
 
-import ArmakLogo from '@/assets/svg/armak-logo'
 import { FacebookIcon, InstagramIcon, TwitterIcon, YoutubeIcon } from '@/assets/svg/social-icons'
 
 const socialLinks = [
@@ -53,7 +52,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
         <Link href='/' className='flex items-center gap-3'>
-          <ArmakLogo />
+          <img src='/logo/logo.png' alt='Armak Clothing Co.' className='h-10 w-10 object-cover object-center' />
           <span className='text-primary client-logo'>Armak Clothing Co.</span>
         </Link>
 
