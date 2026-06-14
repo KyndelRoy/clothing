@@ -20,8 +20,8 @@ const PopularDishes = ({ popularDishes }: { popularDishes: PopularDish }) => {
           </Badge>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Favorite brands</h2>
           <p className='text-muted-foreground text-xl'>
-            Discover our most trusted clothing brands, known for quality craftsmanship, innovative designs, and styles that keep
-            customers coming back for more.
+            Discover our most trusted clothing brands, known for quality craftsmanship, innovative designs, and styles
+            that keep customers coming back for more.
           </p>
         </div>
 
@@ -30,7 +30,7 @@ const PopularDishes = ({ popularDishes }: { popularDishes: PopularDish }) => {
           {popularDishes.map((member, index) => (
             <Card
               key={index}
-              className='hover:border-primary overflow-hidden rounded-none border border-foreground/20 bg-transparent !text-black py-0 shadow-none ring-0 transition-colors duration-300'
+              className='hover:border-primary border-foreground/20 overflow-hidden rounded-none border bg-transparent py-0 !text-black shadow-none ring-0 transition-colors duration-300'
             >
               <CardContent className='px-0'>
                 <div className='bg-transparent'>

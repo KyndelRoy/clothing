@@ -24,8 +24,8 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
           </Badge>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Get in touch with us </h2>
           <p className='text-muted-foreground text-xl'>
-            We&apos;d love to help you find your perfect fit. Reach out with any questions about our collections, sizing,
-            or orders.
+            We&apos;d love to help you find your perfect fit. Reach out with any questions about our collections,
+            sizing, or orders.
           </p>
         </div>
 
