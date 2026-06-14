@@ -17,7 +17,7 @@ const Footer = () => {
         <Link href='/#home'>
           <div className='flex items-center gap-3'>
             <BistroLogo className='gap-3' />
-            <span className='text-primary text-[20px] font-semibold'>Armak Clothing</span>
+            <span className='text-primary text-[20px] font-semibold'>Armak Clothing Co.</span>
           </div>
         </Link>
 
@@ -53,7 +53,7 @@ const Footer = () => {
 
       <div className='mx-auto flex max-w-7xl justify-center px-4 py-8 sm:px-6'>
         <p className='text-muted-foreground text-center text-balance'>
-          © 2026 Armak Clothing All rights reserved
+          © 2026 Armak Clothing Co. All rights reserved
         </p>
       </div>
     </footer>

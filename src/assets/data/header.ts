@@ -1,4 +1,4 @@
-import type { NavigationSection } from '@/components/blocks/menu-navigation'
+import type { NavigationSection } from '@/components/shop/menu-navigation'
 
 export const navigationData: NavigationSection[] = [
   {

@@ -1,4 +1,4 @@
-import type { TestimonialItem } from '@/components/blocks/testimonials-section/testimonials-section'
+import type { TestimonialItem } from '@/components/shop/testimonials'
 
 export const testimonials: TestimonialItem[] = [
   {
@@ -27,6 +27,6 @@ export const testimonials: TestimonialItem[] = [
     avatar: '/images/hero-section/avatar-04.webp',
     rating: 4.5,
     content:
-      'Premium fabrics, sharp designs, and excellent fit define ThreadCraft. The team is responsive and always helpful. Perfect for building a wardrobe you can be proud of.'
+      'Premium fabrics, sharp designs, and excellent fit define Armak Clothing Co. The team is responsive and always helpful. Perfect for building a wardrobe you can be proud of.'
   }
 ]

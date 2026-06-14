@@ -9,13 +9,12 @@ import { MenuIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
-import MenuDropdown from '@/components/blocks/menu-dropdown'
-import MenuNavigation from '@/components/blocks/menu-navigation'
-import type { NavigationSection } from '@/components/blocks/menu-navigation'
-import { ModeToggle } from '@/components/layout/mode-toggle'
+import MenuDropdown from '@/components/shop/menu-dropdown'
+import MenuNavigation from '@/components/shop/menu-navigation'
+import type { NavigationSection } from '@/components/shop/menu-navigation'
+import { ModeToggle } from '@/components/shared/mode-toggle'
 
-import { cn } from '@/lib/utils'
-import { scrollToSection } from '@/lib/utils'
+import { cn, scrollToSection } from '@/lib/utils'
 
 import BistroLogo from '@/assets/svg/bistro-logo'
 
@@ -116,7 +115,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
         {/* Logo */}
         <Link href='/#home' className='flex items-center gap-3'>
           <BistroLogo />
-          <span className='text-primary text-[20px] font-semibold'>Armak Clothing</span>
+          <span className='text-primary text-[20px] font-semibold'>Armak Clothing Co.</span>
         </Link>
 
         {/* Navigation */}

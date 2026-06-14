@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { Geist_Mono, Merriweather, Outfit, Kaushan_Script } from 'next/font/google'
 import type { Metadata } from 'next'
 
-import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeProvider } from '@/components/shared/theme-provider'
 import { TooltipProvider } from '@/components/ui/tooltip'
 
 import { cn } from '@/lib/utils'
@@ -33,8 +33,8 @@ const kaushanScript = Kaushan_Script({
 
 export const metadata: Metadata = {
   title: {
-    template: 'Demo: %s - Armak Clothing | Shadcn Studio',
-    default: 'Demo: Armak Clothing - Premium T-Shirt Collection | Shadcn Studio'
+    template: '%s - Armak Clothing Co.',
+    default: 'Armak Clothing Co. - Premium T-Shirt Collection'
   },
   description:
     'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',
@@ -83,13 +83,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(`${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}`),
   openGraph: {
     title: {
-      template: 'Demo: %s - ThreadCraft | Shadcn Studio',
-      default: 'Demo: ThreadCraft - Premium T-Shirt Collection | Shadcn Studio'
+      template: '%s - Armak Clothing Co.',
+      default: 'Armak Clothing Co. - Premium T-Shirt Collection'
     },
     description:
       'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',
     type: 'website',
-    siteName: 'ThreadCraft',
+    siteName: 'Armak Clothing Co.',
     url: `${process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'}`,
     images: [
       {
@@ -97,15 +97,15 @@ export const metadata: Metadata = {
         type: 'image/png',
         width: 1200,
         height: 630,
-        alt: 'ThreadCraft Apparel'
+        alt: 'Armak Clothing Co.'
       }
     ]
   },
   twitter: {
     card: 'summary_large_image',
     title: {
-      template: 'Demo: %s - ThreadCraft | Shadcn Studio',
-      default: 'Demo: ThreadCraft - Premium T-Shirt Collection | Shadcn Studio'
+      template: '%s - Armak Clothing Co.',
+      default: 'Armak Clothing Co. - Premium T-Shirt Collection'
     },
     description:
       'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.'

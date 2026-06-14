@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import Header from '@/components/layout/header'
-import Footer from '@/components/layout/footer'
+import Header from '@/components/shop/header'
+import Footer from '@/components/shop/footer'
 import { navigationData } from '@/assets/data/header'
 
 const PagesLayout = ({ children }: Readonly<{ children: ReactNode }>) => {

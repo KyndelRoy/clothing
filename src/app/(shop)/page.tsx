@@ -1,9 +1,9 @@
-import HeroSectionPage from '@/components/blocks/hero-section/hero-section'
-import PopularDishes from '@/components/blocks/popular-dishes/popular-dishes'
-import Testimonials from '@/components/blocks/testimonials-section/testimonials-section'
-import NewItems from '@/components/blocks/new-items-section/new-items'
-import ContactUs from '@/components/blocks/contact-us-section/contact-us-page'
-import Offers from '@/components/blocks/offers-section/offers-section'
+import HeroSectionPage from '@/components/shop/hero-section'
+import PopularBrands from '@/components/shop/popular-brands'
+import Testimonials from '@/components/shop/testimonials'
+import NewItems from '@/components/shop/new-items'
+import ContactUs from '@/components/shop/contact-us'
+import Offers from '@/components/shop/offers'
 
 import { menudata } from '@/assets/data/hero'
 import { popularDishes } from '@/assets/data/popular-dishes'
@@ -19,7 +19,7 @@ const jsonLd = {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
       '@id': `${process.env.NEXT_PUBLIC_APP_URL}#website`,
-      name: 'ThreadCraft',
+      name: 'Armak Clothing Co.',
       description:
         'Premium t-shirts crafted with quality fabrics and bold designs. Explore our collection of apparel built for comfort, style, and everyday wear.',
       url: `${process.env.NEXT_PUBLIC_APP_URL}`,
@@ -32,12 +32,11 @@ const Home = () => {
   return (
     <>
       <HeroSectionPage menudata={menudata} />
-      <PopularDishes popularDishes={popularDishes} />
+      <PopularBrands popularDishes={popularDishes} />
       <Testimonials testimonials={testimonials} />
       <NewItems newItems={newItems} />
       <ContactUs contactInfo={contactInfo} />
       <Offers galleryImage={GalleryImage} />
-      {/* Add JSON-LD to your page */}
       <script
         type='application/ld+json'
         dangerouslySetInnerHTML={{

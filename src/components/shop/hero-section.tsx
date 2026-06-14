@@ -90,12 +90,14 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
 
     const onSelect = () => {
       const selectedIndex = mainApi.selectedScrollSnap()
+
       setCurrent(selectedIndex)
       thumbApi?.scrollTo(selectedIndex)
       commentsApi?.scrollTo(selectedIndex)
     }
 
     mainApi.on('select', onSelect)
+
     return () => { mainApi.off('select', onSelect) }
   }, [mainApi, thumbApi, commentsApi])
 
@@ -104,12 +106,14 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
 
     const onSelect = () => {
       const selectedIndex = thumbApi.selectedScrollSnap()
+
       setCurrent(selectedIndex)
       mainApi?.scrollTo(selectedIndex)
       commentsApi?.scrollTo(selectedIndex)
     }
 
     thumbApi.on('select', onSelect)
+
     return () => { thumbApi.off('select', onSelect) }
   }, [thumbApi, mainApi, commentsApi])
 
@@ -118,12 +122,14 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
 
     const onSelect = () => {
       const selectedIndex = commentsApi.selectedScrollSnap()
+
       setCurrent(selectedIndex)
       mainApi?.scrollTo(selectedIndex)
       thumbApi?.scrollTo(selectedIndex)
     }
 
     commentsApi.on('select', onSelect)
+
     return () => { commentsApi.off('select', onSelect) }
   }, [commentsApi, mainApi, thumbApi])
 
