@@ -9,7 +9,7 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip
 
 import MenuDropdown from '@/components/client/menu-dropdown'
 import MenuNavigation from '@/components/client/menu-navigation'
-import { ModeToggle } from '@/components/shared/mode-toggle'
+
 
 import { useActiveSection } from '@/hooks/use-active-section'
 import { useScrollState } from '@/hooks/use-scroll-state'
@@ -61,7 +61,7 @@ const Header = ({ navigationData, className }: HeaderProps) => {
 
         {/* Actions */}
         <div className='flex items-center'>
-          <ModeToggle />
+
           <Button
             className='group relative ml-4 w-fit overflow-hidden rounded-full text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-size-[250%_250%,100%_100%] before:bg-position-[200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-position-[-100%_0,0_0] has-[>svg]:px-6 max-sm:hidden dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
             asChild

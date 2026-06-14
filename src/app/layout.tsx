@@ -3,7 +3,7 @@ import type { ReactNode } from 'react'
 import { Geist_Mono, Merriweather, Outfit, Kaushan_Script } from 'next/font/google'
 import type { Metadata } from 'next'
 
-import { ThemeProvider } from '@/components/shared/theme-provider'
+
 import { TooltipProvider } from '@/components/ui/tooltip'
 
 import { cn } from '@/lib/utils'
@@ -123,12 +123,9 @@ const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
         kaushanScript.variable,
         'flex min-h-full w-full scroll-smooth antialiased'
       )}
-      suppressHydrationWarning
     >
       <body className='flex min-h-full w-full flex-auto flex-col'>
-        <ThemeProvider attribute='class' enableSystem={false} disableTransitionOnChange>
-          <TooltipProvider>{children}</TooltipProvider>
-        </ThemeProvider>
+        <TooltipProvider>{children}</TooltipProvider>
       </body>
     </html>
   )

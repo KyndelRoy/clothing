@@ -4,7 +4,7 @@ import { MenuIcon } from 'lucide-react'
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { ModeToggle } from '@/components/shared/mode-toggle'
+
 
 // AdminHeader is the top bar of the admin shell. The hamburger is
 // mobile-only; the right side carries the theme toggle and a static
@@ -30,7 +30,6 @@ const AdminHeader = ({ onMenuToggle }: AdminHeaderProps) => {
       </div>
 
       <div className='flex items-center gap-2'>
-        <ModeToggle />
         <Avatar size='sm' className='ml-1'>
           <AvatarFallback>AD</AvatarFallback>
         </Avatar>
