@@ -1,6 +1,5 @@
 import HeroSectionPage from '@/components/blocks/hero-section/hero-section'
 import PopularDishes from '@/components/blocks/popular-dishes/popular-dishes'
-import AboutUs from '@/components/blocks/about-us-section/about-us-page'
 import Testimonials from '@/components/blocks/testimonials-section/testimonials-section'
 import NewItems from '@/components/blocks/new-items-section/new-items'
 import ContactUs from '@/components/blocks/contact-us-section/contact-us-page'
@@ -8,7 +7,6 @@ import Offers from '@/components/blocks/offers-section/offers-section'
 
 import { menudata } from '@/assets/data/hero'
 import { popularDishes } from '@/assets/data/popular-dishes'
-import { stats } from '@/assets/data/about-us'
 import { testimonials } from '@/assets/data/testimonials'
 import { newItems } from '@/assets/data/new-items'
 import { contactInfo } from '@/assets/data/contact-us'
@@ -35,7 +33,6 @@ const Home = () => {
     <>
       <HeroSectionPage menudata={menudata} />
       <PopularDishes popularDishes={popularDishes} />
-      <AboutUs stats={stats} />
       <Testimonials testimonials={testimonials} />
       <NewItems newItems={newItems} />
       <ContactUs contactInfo={contactInfo} />
