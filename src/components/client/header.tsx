@@ -35,9 +35,7 @@ type HeaderProps = {
 const Header = ({ navigationData, className }: HeaderProps) => {
   const isScrolled = useScrollState()
 
-  const sectionIds = navigationData
-    .map(item => item.href?.replace('#', ''))
-    .filter(Boolean) as string[]
+  const sectionIds = navigationData.map(item => item.href?.replace('#', '')).filter(Boolean) as string[]
 
   const detectedActiveSection = useActiveSection(sectionIds)
   const activeSection = sectionIds.includes(detectedActiveSection) ? detectedActiveSection : ''
@@ -68,7 +66,6 @@ const Header = ({ navigationData, className }: HeaderProps) => {
 
         {/* Actions */}
         <div className='flex items-center'>
-
           {/* Social Icons */}
           <div className='flex items-center gap-3 max-sm:hidden'>
             {socialLinks.map(social => (
@@ -87,18 +84,14 @@ const Header = ({ navigationData, className }: HeaderProps) => {
             className='group relative ml-4 w-fit overflow-hidden rounded-full text-base before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-size-[250%_250%,100%_100%] before:bg-position-[200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-position-[-100%_0,0_0] has-[>svg]:px-6 max-sm:hidden dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
             asChild
           >
-            <Link href='/shop'>
-              Shop now
-            </Link>
+            <Link href='/shop'>Shop now</Link>
           </Button>
 
           {/* Mobile shop now button */}
           <Tooltip>
             <TooltipTrigger asChild>
               <Button className='ml-4 rounded-full sm:hidden' asChild>
-                <Link href='/shop'>
-                  Shop now
-                </Link>
+                <Link href='/shop'>Shop now</Link>
               </Button>
             </TooltipTrigger>
             <TooltipContent>Shop now</TooltipContent>
