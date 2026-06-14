@@ -39,7 +39,12 @@
   "files.insertFinalNewline": true,
   "editor.linkedEditing": true,
   "typescript.tsdk": "node_modules/typescript/lib",
-  "cSpell.words": [],
+  "cSpell.words": [
+    "menuitemcheckbox",
+    "menuitemradio",
+    "shadcn"
+  ],
+  "css.lint.unknownAtRules": "ignore",
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   }

@@ -2,7 +2,7 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Badge } from '@/components/ui/badge'
 
-import type { Brand } from '@/data/brands'
+import type { Brand } from '@/data/client/brands'
 
 type PopularBrandsProps = {
   brands: Brand[]

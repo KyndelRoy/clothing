@@ -5,7 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import ArmakLogo from '@/assets/svg/armak-logo'
 import { FacebookIcon, InstagramIcon, TwitterIcon, YoutubeIcon } from '@/assets/svg/social-icons'
 
-import { footerLinks } from '@/data/footer'
+import { footerLinks } from '@/data/client/footer'
 
 const socialLinks = [
   { href: '#', icon: FacebookIcon, label: 'Facebook' },

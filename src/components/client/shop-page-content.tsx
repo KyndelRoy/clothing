@@ -7,9 +7,9 @@ import { SearchIcon, XIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 
-import ProductCard from '@/components/shop/product-card'
+import ProductCard from '@/components/client/product-card'
 
-import { shopCategories, shopProducts } from '@/data/shop'
+import { shopCategories, shopProducts } from '@/data/client/shop'
 
 import type { ShopCategory } from '@/types/shop'
 

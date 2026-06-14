@@ -7,8 +7,8 @@ import { MenuIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
-import MenuDropdown from '@/components/shop/menu-dropdown'
-import MenuNavigation from '@/components/shop/menu-navigation'
+import MenuDropdown from '@/components/client/menu-dropdown'
+import MenuNavigation from '@/components/client/menu-navigation'
 import { ModeToggle } from '@/components/shared/mode-toggle'
 
 import { useActiveSection } from '@/hooks/use-active-section'

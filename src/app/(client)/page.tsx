@@ -1,12 +1,12 @@
-import HeroSection from '@/components/shop/hero-section'
-import PopularBrands from '@/components/shop/popular-brands'
-import Testimonials from '@/components/shop/testimonials'
-import ContactUs from '@/components/shop/contact-us'
+import HeroSection from '@/components/client/hero-section'
+import PopularBrands from '@/components/client/popular-brands'
+import Testimonials from '@/components/client/testimonials'
+import ContactUs from '@/components/client/contact-us'
 
-import { heroSlides } from '@/data/hero'
-import { brands } from '@/data/brands'
-import { testimonials } from '@/data/testimonials'
-import { contactInfo } from '@/data/contact'
+import { heroSlides } from '@/data/client/hero'
+import { brands } from '@/data/client/brands'
+import { testimonials } from '@/data/client/testimonials'
+import { contactInfo } from '@/data/client/contact'
 
 const jsonLd = {
   '@context': 'https://schema.org',
