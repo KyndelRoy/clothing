@@ -4,18 +4,13 @@ import { Badge } from '@/components/ui/badge'
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel'
 import { Rating } from '@/components/ui/rating'
 
-export type TestimonialItem = {
-  name: string
-  avatar: string
-  rating: number
-  content: string
-}
+import type { TestimonialItem } from '@/types/testimonial'
 
-type TestimonialsComponentProps = {
+type TestimonialsProps = {
   testimonials: TestimonialItem[]
 }
 
-const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => {
+const Testimonials = ({ testimonials }: TestimonialsProps) => {
   return (
     <section
       id='testimonials'
@@ -58,9 +53,9 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
         {/* Right Testimonial Carousel */}
         <div className='relative max-w-196 sm:w-1/2 lg:w-2/3'>
           <CarouselContent className='ml-0 sm:-ml-6'>
-            {testimonials.map((testimonial, index) => (
-              <CarouselItem key={index} className='px-0.5 py-0.5 sm:pl-6 lg:basis-1/2'>
-                <Card className='hover:border-primary border-foreground/20 h-full rounded-none border bg-transparent !text-black ring-0 transition-colors duration-300 dark:!text-white'>
+            {testimonials.map(testimonial => (
+              <CarouselItem key={testimonial.name} className='px-0.5 py-0.5 sm:pl-6 lg:basis-1/2'>
+                <Card className='hover:border-primary border-foreground/20 h-full rounded-none border bg-transparent text-black! ring-0 transition-colors duration-300 dark:text-white!'>
                   <CardHeader className='flex items-center gap-3'>
                     <Avatar size='lg'>
                       <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
@@ -92,4 +87,4 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
   )
 }
 
-export default TestimonialsComponent
+export default Testimonials

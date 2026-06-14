@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 
-import { settingsSections } from '@/assets/data/admin/settings'
+import { settingsSections } from '@/data/admin/settings'
 
 export const metadata: Metadata = {
   title: 'Settings'

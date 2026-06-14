@@ -9,12 +9,10 @@ import { Input } from '@/components/ui/input'
 
 import ProductCard from '@/components/shop/product-card'
 
-import { shopCategories, shopProducts, type ShopCategory } from '@/assets/data/shop/products'
+import { shopCategories, shopProducts } from '@/data/shop'
 
-// ShopPageContent owns the search/filter state for the /shop page.
-// Kept client-side for now — the catalog is small and filtering on
-// every keystroke is instant. When a real service is wired up, this
-// state moves to URL search params so filtered views are shareable.
+import type { ShopCategory } from '@/types/shop'
+
 const ShopPageContent = () => {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<'all' | ShopCategory>('all')

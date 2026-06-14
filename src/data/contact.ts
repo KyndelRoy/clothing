@@ -1,6 +1,8 @@
 import { Clock8Icon, MapPinIcon, Mail, PhoneIcon } from 'lucide-react'
 
-export const contactInfo = [
+import type { ContactInfoItem } from '@/types/contact'
+
+export const contactInfo: ContactInfoItem[] = [
   {
     title: 'Store Hours',
     icon: Clock8Icon,

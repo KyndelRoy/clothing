@@ -3,11 +3,10 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 
-import { formatPrice, type ShopProduct } from '@/assets/data/shop/products'
+import { formatPrice } from '@/lib/format'
 
-// Single product tile. Kept server-renderable — receives the product
-// as a prop and never touches client state. The parent grid owns
-// search/filter state.
+import type { ShopProduct } from '@/types/shop'
+
 type ProductCardProps = {
   product: ShopProduct
   className?: string
@@ -17,7 +16,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   return (
     <Card
       className={
-        'group/product border-foreground/15 hover:border-primary overflow-hidden rounded-3xl border bg-transparent pt-0 !text-black shadow-none ring-0 transition-colors duration-300 dark:!text-white ' +
+        'group/product border-foreground/15 hover:border-primary overflow-hidden rounded-3xl border bg-transparent pt-0 text-black! shadow-none ring-0 transition-colors duration-300 dark:text-white! ' +
         (className ?? '')
       }
     >
@@ -26,7 +25,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
           <img
             src={product.image}
             alt={product.imageAlt}
-            className='aspect-[4/5] w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
+            className='aspect-4/5 w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
             loading='lazy'
           />
         </div>

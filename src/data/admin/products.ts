@@ -1,17 +1,4 @@
-// Sample product rows for the admin products list. Static for the MVP.
-// Will be replaced with a service call to Supabase / API when those
-// integrations land.
-export type ProductStatus = 'active' | 'draft' | 'out-of-stock'
-
-export type AdminProduct = {
-  id: string
-  name: string
-  sku: string
-  category: string
-  price: number
-  stock: number
-  status: ProductStatus
-}
+import type { AdminProduct } from '@/types/admin'
 
 export const adminProducts: AdminProduct[] = [
   {

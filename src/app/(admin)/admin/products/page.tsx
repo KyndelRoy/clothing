@@ -3,7 +3,11 @@ import type { Metadata } from 'next'
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-import { adminProducts, type ProductStatus } from '@/assets/data/admin/products'
+import { formatPrice } from '@/lib/format'
+
+import { adminProducts } from '@/data/admin/products'
+
+import type { ProductStatus } from '@/types/admin'
 
 export const metadata: Metadata = {
   title: 'Products'
@@ -20,9 +24,6 @@ const statusLabel: Record<ProductStatus, string> = {
   draft: 'Draft',
   'out-of-stock': 'Out of stock'
 }
-
-const formatPrice = (cents: number) =>
-  new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', maximumFractionDigits: 0 }).format(cents)
 
 const AdminProductsPage = () => {
   return (

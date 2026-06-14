@@ -17,26 +17,7 @@ import {
 
 import { cn, scrollToSection } from '@/lib/utils'
 
-export type NavigationItem = {
-  title: string
-  href: string
-}
-
-export type NavigationSection = {
-  title: string
-  icon?: ReactNode
-} & (
-  | {
-      items: NavigationItem[]
-      href?: never
-      kind?: never
-    }
-  | {
-      items?: never
-      href: string
-      kind?: 'section' | 'route'
-    }
-)
+import type { NavigationSection } from '@/types/navigation'
 
 type Props = {
   trigger: ReactNode
@@ -55,7 +36,6 @@ const MenuDropdown = ({ trigger, navigationData, activeSection, align = 'start' 
         {navigationData.map(navItem => {
           if (navItem.href) {
             if (navItem.kind === 'route') {
-              // Real route — render as a plain Link, no scroll handler.
               const isActive = pathname === navItem.href || pathname.startsWith(`${navItem.href}/`)
 
               return (

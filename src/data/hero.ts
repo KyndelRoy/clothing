@@ -1,4 +1,6 @@
-export const menudata = [
+import type { HeroSlide } from '@/types/hero'
+
+export const heroSlides: HeroSlide[] = [
   {
     id: 1,
     img: '/images/hero-section/tshirt-01.webp',

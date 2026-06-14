@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useState, useMemo, useCallback } from 'react'
+import { useEffect, useState, useMemo, useCallback } from 'react'
 
 import Link from 'next/link'
 
@@ -8,215 +8,17 @@ import { ArrowRightIcon } from 'lucide-react'
 
 import Autoplay from 'embla-carousel-autoplay'
 
-import { Separator } from '@/components/ui/separator'
-
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { type CarouselApi, Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
+
+import brandLogos from '@/components/brand-logos'
+
 import { cn } from '@/lib/utils'
 
-export type MenuData = {
-  id: number
-  img: string
-  imgAlt: string
-  logo: string
-  userComment: string
-}
+import type { HeroSlide } from '@/types/hero'
 
-const logoSvgs: Record<string, React.ReactNode> = {
-  apex: (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' className='text-foreground size-20'>
-      <polygon points='200,60 120,200 280,200' fill='currentColor' />
-      <polygon points='200,110 150,190 250,190' className='fill-background' />
-      <text
-        x='200'
-        y='280'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='bold'
-        fontSize='72'
-        fill='currentColor'
-      >
-        APEX
-      </text>
-      <text
-        x='200'
-        y='320'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='300'
-        fontSize='24'
-        fill='currentColor'
-        opacity='0.5'
-      >
-        ATHLETICS
-      </text>
-    </svg>
-  ),
-  vorn: (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' className='text-foreground size-20'>
-      <circle cx='200' cy='120' r='70' fill='none' stroke='currentColor' strokeWidth='14' />
-      <line x1='150' y1='70' x2='250' y2='170' stroke='currentColor' strokeWidth='14' />
-      <text
-        x='200'
-        y='280'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='bold'
-        fontSize='78'
-        fill='currentColor'
-      >
-        VORN
-      </text>
-      <line x1='110' y1='300' x2='290' y2='300' stroke='currentColor' strokeWidth='4' />
-    </svg>
-  ),
-  drift: (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' className='text-foreground size-20'>
-      <path
-        d='M80,80 Q140,50 200,80 T320,80'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='10'
-        strokeLinecap='round'
-      />
-      <path
-        d='M80,120 Q140,90 200,120 T320,120'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='10'
-        strokeLinecap='round'
-      />
-      <path
-        d='M80,160 Q140,130 200,160 T320,160'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='10'
-        strokeLinecap='round'
-      />
-      <text
-        x='200'
-        y='270'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='bold'
-        fontSize='84'
-        fill='currentColor'
-      >
-        DRIFT
-      </text>
-      <text
-        x='200'
-        y='310'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='300'
-        fontSize='20'
-        fill='currentColor'
-        opacity='0.5'
-      >
-        STREETWEAR
-      </text>
-    </svg>
-  ),
-  koda: (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' className='text-foreground size-20'>
-      <polygon points='200,40 280,120 200,200 120,120' fill='currentColor' />
-      <polygon points='200,75 250,120 200,165 150,120' className='fill-background' />
-      <circle cx='200' cy='120' r='10' fill='currentColor' />
-      <text
-        x='200'
-        y='290'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='bold'
-        fontSize='78'
-        fill='currentColor'
-      >
-        KODA
-      </text>
-      <text
-        x='200'
-        y='325'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='300'
-        fontSize='18'
-        fill='currentColor'
-        opacity='0.5'
-      >
-        OUTERWEAR CO.
-      </text>
-    </svg>
-  ),
-  flux: (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' className='text-foreground size-20'>
-      <rect x='80' y='60' width='240' height='22' fill='currentColor' />
-      <rect x='120' y='100' width='160' height='22' fill='currentColor' />
-      <rect x='160' y='140' width='80' height='22' fill='currentColor' />
-      <text
-        x='200'
-        y='260'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='bold'
-        fontSize='90'
-        fill='currentColor'
-      >
-        FLUX
-      </text>
-      <line x1='120' y1='280' x2='280' y2='280' stroke='currentColor' strokeWidth='3' />
-      <text
-        x='200'
-        y='315'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='300'
-        fontSize='22'
-        fill='currentColor'
-        opacity='0.5'
-      >
-        APPAREL
-      </text>
-    </svg>
-  ),
-  zenith: (
-    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 400' className='text-foreground size-20'>
-      <path
-        d='M100,180 A140,140 0 0,1 300,180'
-        fill='none'
-        stroke='currentColor'
-        strokeWidth='12'
-        strokeLinecap='round'
-      />
-      <circle cx='200' cy='52' r='12' fill='currentColor' />
-      <text
-        x='200'
-        y='280'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='bold'
-        fontSize='66'
-        fill='currentColor'
-      >
-        ZENITH
-      </text>
-      <text
-        x='200'
-        y='320'
-        textAnchor='middle'
-        fontFamily='Arial, Helvetica, sans-serif'
-        fontWeight='300'
-        fontSize='20'
-        fill='currentColor'
-        opacity='0.5'
-      >
-        EST. 2024
-      </text>
-    </svg>
-  )
-}
-
-const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
+const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
   const [mainApi, setMainApi] = useState<CarouselApi>()
   const [thumbApi, setThumbApi] = useState<CarouselApi>()
   const [commentsApi, setCommentsApi] = useState<CarouselApi>()
@@ -224,6 +26,7 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
 
   const plugins = useMemo(() => [Autoplay({ delay: 3000, stopOnInteraction: false })], [])
 
+  // Sync all three carousels when any one changes slide.
   useEffect(() => {
     if (!mainApi) return
 
@@ -333,9 +136,9 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
             }}
           >
             <CarouselContent>
-              {menudata.map(item => (
-                <CarouselItem key={item.id} className='flex w-full items-center justify-center'>
-                  <img src={item.img} alt={item.imgAlt} className='size-95 object-contain' />
+              {slides.map(slide => (
+                <CarouselItem key={slide.id} className='flex w-full items-center justify-center'>
+                  <img src={slide.img} alt={slide.imgAlt} className='size-95 object-contain' />
                 </CarouselItem>
               ))}
             </CarouselContent>
@@ -353,12 +156,10 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
             <div className='from-background pointer-events-none absolute inset-y-0 left-0 z-1 w-25 bg-linear-to-r via-85% to-transparent' />
             <div className='from-background pointer-events-none absolute inset-y-0 right-0 z-1 w-25 bg-linear-to-l via-85% to-transparent' />
             <CarouselContent className='my-1 flex'>
-              {menudata.map((item, index) => (
+              {slides.map((slide, index) => (
                 <CarouselItem
-                  key={item.id}
-                  className={cn(
-                    'basis-1/2 cursor-pointer items-center sm:basis-1/3 md:basis-1/4 lg:basis-1/3 xl:basis-1/4'
-                  )}
+                  key={slide.id}
+                  className='basis-1/2 cursor-pointer items-center sm:basis-1/3 md:basis-1/4 lg:basis-1/3 xl:basis-1/4'
                   onClick={() => handleThumbClick(index)}
                 >
                   <div className='relative flex h-33 items-center justify-center'>
@@ -370,7 +171,7 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
                         />
                       </svg>
                     </div>
-                    <img src={item.img} alt={item.imgAlt} className='size-25' />
+                    <img src={slide.img} alt={slide.imgAlt} className='size-25' />
                   </div>
                 </CarouselItem>
               ))}
@@ -384,17 +185,17 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
             }}
           >
             <CarouselContent>
-              {menudata.map(item => (
+              {slides.map(slide => (
                 <CarouselItem
-                  key={item.id}
+                  key={slide.id}
                   className='flex h-full min-h-14 w-full items-center justify-center gap-4 px-6'
                 >
-                  {logoSvgs[item.logo]}
+                  {brandLogos[slide.logo]}
                   <Separator
                     orientation='vertical'
                     className='bg-primary hidden h-6! w-0.5! rounded-full! data-vertical:self-center sm:block'
                   />
-                  <p className='text-card-foreground'>{item.userComment}</p>
+                  <p className='text-card-foreground'>{slide.userComment}</p>
                 </CarouselItem>
               ))}
             </CarouselContent>

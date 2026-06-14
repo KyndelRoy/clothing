@@ -1,14 +1,4 @@
-// Dashboard overview data. Static for now — will be fetched from
-// the analytics service once the api/ layer is in place.
-export type StatTrend = 'up' | 'down' | 'neutral'
-
-export type DashboardStat = {
-  id: string
-  title: string
-  value: string
-  change: string
-  trend: StatTrend
-}
+import type { DashboardStat } from '@/types/admin'
 
 export const dashboardStats: DashboardStat[] = [
   {

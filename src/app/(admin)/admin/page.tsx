@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import StatCard from '@/components/admin/stat-card'
 
-import { dashboardStats } from '@/assets/data/admin/dashboard'
+import { dashboardStats } from '@/data/admin/dashboard'
 
 export const metadata: Metadata = {
   title: 'Dashboard'

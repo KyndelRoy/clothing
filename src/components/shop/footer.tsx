@@ -1,14 +1,18 @@
 import Link from 'next/link'
 
-import FacebookIcon from '@/assets/svg/facebook-icon'
-import InstagramIcon from '@/assets/svg/instagram-icon'
-import TwitterIcon from '@/assets/svg/twitter-icon'
-import YoutubeIcon from '@/assets/svg/youtube-icon'
-
 import { Separator } from '@/components/ui/separator'
 
-import BistroLogo from '@/assets/svg/bistro-logo'
-import { footerData } from '@/assets/data/footer'
+import ArmakLogo from '@/assets/svg/armak-logo'
+import { FacebookIcon, InstagramIcon, TwitterIcon, YoutubeIcon } from '@/assets/svg/social-icons'
+
+import { footerLinks } from '@/data/footer'
+
+const socialLinks = [
+  { href: '#', icon: FacebookIcon, label: 'Facebook' },
+  { href: '#', icon: InstagramIcon, label: 'Instagram' },
+  { href: '#', icon: TwitterIcon, label: 'Twitter' },
+  { href: '#', icon: YoutubeIcon, label: 'YouTube' }
+]
 
 const Footer = () => {
   return (
@@ -16,13 +20,13 @@ const Footer = () => {
       <div className='mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-4 max-md:flex-col sm:px-6 sm:py-6 md:gap-6 md:py-8'>
         <Link href='/#home'>
           <div className='flex items-center gap-3'>
-            <BistroLogo className='gap-3' />
+            <ArmakLogo className='gap-3' />
             <span className='text-primary text-[20px] font-semibold'>Armak Clothing Co.</span>
           </div>
         </Link>
 
         <div className='flex items-center gap-5 whitespace-nowrap'>
-          {footerData.map(item => (
+          {footerLinks.map(item => (
             <Link
               key={item.title}
               href={item.href}
@@ -34,18 +38,11 @@ const Footer = () => {
         </div>
 
         <div className='flex items-center gap-4'>
-          <Link href='#' className='hover:text-primary'>
-            <FacebookIcon className='size-5' />
-          </Link>
-          <Link href='#' className='hover:text-primary'>
-            <InstagramIcon className='size-5' />
-          </Link>
-          <Link href='#' className='hover:text-primary'>
-            <TwitterIcon className='size-5' />
-          </Link>
-          <Link href='#' className='hover:text-primary'>
-            <YoutubeIcon className='size-5' />
-          </Link>
+          {socialLinks.map(social => (
+            <Link key={social.label} href={social.href} className='hover:text-primary' aria-label={social.label}>
+              <social.icon className='size-5' />
+            </Link>
+          ))}
         </div>
       </div>
 

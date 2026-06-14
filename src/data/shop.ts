@@ -1,20 +1,6 @@
-// Shop catalog. Static for the MVP — will be served from a service in
-// `services/products.ts` once the api/ or supabase/ layer is wired up.
-export type ShopCategory = 't-shirts' | 'long-sleeves' | 'hoodies'
+import type { ShopCategoryFilter, ShopProduct } from '@/types/shop'
 
-export type ShopProduct = {
-  id: string
-  name: string
-  description: string
-  price: number
-  image: string
-  imageAlt: string
-  category: ShopCategory
-}
-
-// Drives the filter chips in the shop page. The first entry is the
-// default ("All") and is virtual — it doesn't map to a product field.
-export const shopCategories: { value: 'all' | ShopCategory; label: string }[] = [
+export const shopCategories: ShopCategoryFilter[] = [
   { value: 'all', label: 'All' },
   { value: 't-shirts', label: 'T-Shirts' },
   { value: 'long-sleeves', label: 'Long Sleeves' },
@@ -68,6 +54,3 @@ export const shopProducts: ShopProduct[] = [
     category: 't-shirts'
   }
 ]
-
-export const formatPrice = (cents: number) =>
-  new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP', maximumFractionDigits: 0 }).format(cents)

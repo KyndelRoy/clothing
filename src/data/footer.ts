@@ -1,4 +1,4 @@
-export const footerData = [
+export const footerLinks = [
   {
     title: 'Testimonials',
     href: '#testimonials'

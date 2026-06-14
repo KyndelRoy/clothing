@@ -1,21 +1,4 @@
-// Settings sections for the admin settings page. Static for the MVP.
-// Will become a real form backed by a service when persistence is wired up.
-export type SettingsFieldType = 'text' | 'email' | 'textarea'
-
-export type SettingsField = {
-  id: string
-  label: string
-  type: SettingsFieldType
-  value: string
-  placeholder?: string
-}
-
-export type SettingsSection = {
-  id: string
-  title: string
-  description: string
-  fields: SettingsField[]
-}
+import type { SettingsSection } from '@/types/admin'
 
 export const settingsSections: SettingsSection[] = [
   {

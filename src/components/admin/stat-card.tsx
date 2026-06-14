@@ -2,24 +2,21 @@ import { ArrowDownIcon, ArrowUpIcon, MinusIcon } from 'lucide-react'
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 
-import type { DashboardStat } from '@/assets/data/admin/dashboard'
-
 import { cn } from '@/lib/utils'
 
-// StatCard is a dashboard tile showing a single KPI. Trend icon is
-// picked from the trend prop; the colors stay muted on purpose so a
-// future swap to live data doesn't need restyling.
-const trendIcon = {
+import type { DashboardStat, StatTrend } from '@/types/admin'
+
+const trendIcon: Record<StatTrend, typeof ArrowUpIcon> = {
   up: ArrowUpIcon,
   down: ArrowDownIcon,
   neutral: MinusIcon
-} as const
+}
 
-const trendClass = {
+const trendClass: Record<StatTrend, string> = {
   up: 'text-foreground',
   down: 'text-muted-foreground',
   neutral: 'text-muted-foreground'
-} as const
+}
 
 type StatCardProps = {
   stat: DashboardStat

@@ -3,33 +3,30 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-import { adminNav, type AdminNavItem } from '@/components/admin/admin-nav'
+import { adminNav } from '@/data/admin/nav'
 
 import { cn } from '@/lib/utils'
 
-// AdminSidebar renders the left navigation. It doubles as a fixed
-// drawer on mobile (toggled via the shell) and a static column on
-// desktop. The active link is derived from the current pathname.
+import type { AdminNavItem } from '@/types/admin-nav'
+
 type AdminSidebarProps = {
   isMobileOpen: boolean
   onNavigate?: () => void
   className?: string
 }
 
+const isActiveRoute = (item: AdminNavItem, pathname: string) => {
+  if (item.href === '/admin') return pathname === '/admin'
+
+  return pathname === item.href || pathname.startsWith(`${item.href}/`)
+}
+
 const AdminSidebar = ({ isMobileOpen, onNavigate, className }: AdminSidebarProps) => {
   const pathname = usePathname()
 
-  const isActive = (item: AdminNavItem) => {
-    if (item.href === '/admin') {
-      return pathname === '/admin'
-    }
-
-    return pathname === item.href || pathname.startsWith(`${item.href}/`)
-  }
-
   return (
     <>
-      {/* Mobile backdrop. Click closes the drawer. */}
+      {/* Mobile backdrop */}
       {isMobileOpen ? (
         <button
           type='button'
@@ -55,7 +52,7 @@ const AdminSidebar = ({ isMobileOpen, onNavigate, className }: AdminSidebarProps
         <nav className='flex flex-1 flex-col gap-1 p-4' aria-label='Admin navigation'>
           {adminNav.map(item => {
             const Icon = item.icon
-            const active = isActive(item)
+            const active = isActiveRoute(item, pathname)
 
             return (
               <Link

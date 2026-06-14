@@ -1,16 +1,14 @@
-import type { ComponentType } from 'react'
-
 import { Card, CardContent } from '@/components/ui/card'
 import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
 
-type ContactInfo = {
-  title: string
-  icon: ComponentType
-  description: string
-}[]
+import type { ContactInfoItem } from '@/types/contact'
 
-const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
+type ContactUsProps = {
+  contactInfo: ContactInfoItem[]
+}
+
+const ContactUs = ({ contactInfo }: ContactUsProps) => {
   return (
     <section
       id='contact-us'
@@ -45,10 +43,10 @@ const ContactUs = ({ contactInfo }: { contactInfo: ContactInfo }) => {
 
             {/* Contact Info Grid */}
             <div className='grid gap-6 sm:grid-cols-2'>
-              {contactInfo.map((info, index) => (
+              {contactInfo.map(info => (
                 <Card
+                  key={info.title}
                   className='bg-background hover:border-primary rounded-none border shadow-none ring-0 transition-colors duration-300'
-                  key={index}
                 >
                   <CardContent className='flex flex-col items-center gap-4 text-center'>
                     <Avatar className='size-9'>

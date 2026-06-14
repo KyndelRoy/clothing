@@ -1,16 +1,4 @@
-// Sample order rows for the admin orders list. Static for the MVP.
-// Will be replaced with a service call when the api/ layer is in place.
-export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
-
-export type AdminOrder = {
-  id: string
-  customer: string
-  email: string
-  items: number
-  total: number
-  status: OrderStatus
-  date: string
-}
+import type { AdminOrder } from '@/types/admin'
 
 export const adminOrders: AdminOrder[] = [
   {
@@ -43,7 +31,7 @@ export const adminOrders: AdminOrder[] = [
   {
     id: 'ORD-1021',
     customer: 'Paulo Garcia',
-    email: 'paulo.garcia@example.com',
+    email: 'paulo.garc@example.com',
     items: 1,
     total: 899,
     status: 'delivered',
