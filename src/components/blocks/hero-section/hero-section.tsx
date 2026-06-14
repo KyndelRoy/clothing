@@ -86,51 +86,45 @@ const HeroSection = ({ menudata }: { menudata: MenuData[] }) => {
   const plugins = useMemo(() => [Autoplay({ delay: 3000, stopOnInteraction: false })], [])
 
   useEffect(() => {
-    if (!mainApi) {
-      return
-    }
+    if (!mainApi) return
 
-    mainApi.on('select', () => {
+    const onSelect = () => {
       const selectedIndex = mainApi.selectedScrollSnap()
-
       setCurrent(selectedIndex)
-
-      // Sync all carousels with main carousel
       thumbApi?.scrollTo(selectedIndex)
       commentsApi?.scrollTo(selectedIndex)
-    })
+    }
+
+    mainApi.on('select', onSelect)
+    return () => { mainApi.off('select', onSelect) }
   }, [mainApi, thumbApi, commentsApi])
 
   useEffect(() => {
-    if (!thumbApi) {
-      return
-    }
+    if (!thumbApi) return
 
-    thumbApi.on('select', () => {
+    const onSelect = () => {
       const selectedIndex = thumbApi.selectedScrollSnap()
-
       setCurrent(selectedIndex)
-
-      // Sync main and comments carousel with thumbnail carousel
       mainApi?.scrollTo(selectedIndex)
       commentsApi?.scrollTo(selectedIndex)
-    })
+    }
+
+    thumbApi.on('select', onSelect)
+    return () => { thumbApi.off('select', onSelect) }
   }, [thumbApi, mainApi, commentsApi])
 
   useEffect(() => {
-    if (!commentsApi) {
-      return
-    }
+    if (!commentsApi) return
 
-    commentsApi.on('select', () => {
+    const onSelect = () => {
       const selectedIndex = commentsApi.selectedScrollSnap()
-
       setCurrent(selectedIndex)
-
-      // Sync main and thumbnail carousel with comments carousel
       mainApi?.scrollTo(selectedIndex)
       thumbApi?.scrollTo(selectedIndex)
-    })
+    }
+
+    commentsApi.on('select', onSelect)
+    return () => { commentsApi.off('select', onSelect) }
   }, [commentsApi, mainApi, thumbApi])
 
   const handleThumbClick = useCallback(

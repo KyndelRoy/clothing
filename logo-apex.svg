@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
-  <!-- Triangle mark -->
-  <polygon points="200,60 120,200 280,200" fill="currentColor"/>
-  <polygon points="200,110 150,190 250,190" fill="var(--bg, white)"/>
-  <!-- Brand name -->
-  <text x="200" y="280" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="bold" font-size="72" fill="currentColor">APEX</text>
-  <!-- Subtitle -->
-  <text x="200" y="320" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="300" font-size="24" fill="currentColor" opacity="0.5">ATHLETICS</text>
-</svg>
