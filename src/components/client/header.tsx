@@ -42,9 +42,9 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   return (
     <header
       className={cn(
-        'fixed top-0 z-50 h-16 w-full border-b transition-all duration-300',
+        'fixed top-0 z-50 h-16 w-full border-b bg-background transition-all duration-300',
         {
-          'bg-background shadow-md': isScrolled
+          'shadow-md': isScrolled
         },
         className
       )}
