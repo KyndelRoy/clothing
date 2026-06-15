@@ -192,6 +192,7 @@ const ShopPageContent = () => {
       setShowAllNecklines(false)
       setShowAllFeatures(false)
     }
+
     setFiltersExpanded(prev => !prev)
   }
 
@@ -363,6 +364,7 @@ const ShopPageContent = () => {
   const renderSizePill = (size: ShopSize) => {
 
     const isDisabled = (counts.size[size] || 0) === 0
+
     return (
       <button
         key={size}
@@ -390,6 +392,7 @@ const ShopPageContent = () => {
               {visibleGenders.map(g => {
 
                 const isDisabled = (counts.gender[g.value] || 0) === 0
+
                 return (
                   <label key={g.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
@@ -422,6 +425,7 @@ const ShopPageContent = () => {
               {visibleCategories.map(cat => {
 
                 const isDisabled = (counts.category[cat.value] || 0) === 0
+
                 return (
                   <label key={cat.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
@@ -539,6 +543,7 @@ const ShopPageContent = () => {
               {visibleFabrics.map(f => {
 
                 const isDisabled = (counts.fabric[f.value] || 0) === 0
+
                 return (
                   <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
@@ -573,6 +578,7 @@ const ShopPageContent = () => {
               {visibleFits.map(f => {
 
                 const isDisabled = (counts.fit[f.value] || 0) === 0
+
                 return (
                   <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
@@ -605,6 +611,7 @@ const ShopPageContent = () => {
               {visibleNecklines.map(n => {
 
                 const isDisabled = (counts.neckline[n.value] || 0) === 0
+
                 return (
                   <label key={n.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
@@ -637,6 +644,7 @@ const ShopPageContent = () => {
               {visibleFeatures.map(f => {
 
                 const isDisabled = (counts.feature[f.value] || 0) === 0
+
                 return (
                   <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
