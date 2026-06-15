@@ -168,8 +168,6 @@ const ShopPageContent = () => {
   const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState<SortOption>('newest')
 
-  const [filtersExpanded, setFiltersExpanded] = useState(true)
-
   const [showAllGenders, setShowAllGenders] = useState(false)
   const [showAllCategories, setShowAllCategories] = useState(false)
   const [showAllSizes, setShowAllSizes] = useState(false)
@@ -180,21 +178,6 @@ const ShopPageContent = () => {
   const [showAllFeatures, setShowAllFeatures] = useState(false)
 
   const [filterOrder] = useState<FilterKey[]>(DEFAULT_FILTER_ORDER)
-
-  const toggleFiltersExpanded = () => {
-    if (filtersExpanded) {
-      setShowAllGenders(false)
-      setShowAllCategories(false)
-      setShowAllSizes(false)
-      setShowAllColors(false)
-      setShowAllFabrics(false)
-      setShowAllFits(false)
-      setShowAllNecklines(false)
-      setShowAllFeatures(false)
-    }
-
-    setFiltersExpanded(prev => !prev)
-  }
 
   const toggle = <T extends string>(prev: T[], val: T) =>
     prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
@@ -387,7 +370,7 @@ const ShopPageContent = () => {
     switch (key) {
       case 'gender':
         return (
-          <FilterSection title='Gender' defaultOpen={filtersExpanded}>
+          <FilterSection title='Gender' defaultOpen>
             <div className='flex flex-col gap-2'>
               {visibleGenders.map(g => {
 
@@ -420,7 +403,7 @@ const ShopPageContent = () => {
 
       case 'category':
         return (
-          <FilterSection title='Category' defaultOpen={filtersExpanded}>
+          <FilterSection title='Category' defaultOpen>
             <div className='flex flex-col gap-2'>
               {visibleCategories.map(cat => {
 
@@ -453,7 +436,7 @@ const ShopPageContent = () => {
 
       case 'size':
         return (
-          <FilterSection title='Size' defaultOpen={filtersExpanded}>
+          <FilterSection title='Size' defaultOpen>
             {showAllSizes ? (
               <>
                 {sizeGroups.map((group, groupIdx) => (
@@ -490,7 +473,7 @@ const ShopPageContent = () => {
 
       case 'color':
         return (
-          <FilterSection title='Color' defaultOpen={filtersExpanded}>
+          <FilterSection title='Color' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleColors.map(([name, count]) => {
                 const colorData = shopProducts.flatMap(p => p.colors).find(c => c.name === name)
@@ -538,7 +521,7 @@ const ShopPageContent = () => {
 
       case 'fabric':
         return (
-          <FilterSection title='Fabric' defaultOpen={filtersExpanded}>
+          <FilterSection title='Fabric'>
             <div className='flex flex-col gap-2'>
               {visibleFabrics.map(f => {
 
@@ -573,7 +556,7 @@ const ShopPageContent = () => {
 
       case 'fit':
         return (
-          <FilterSection title='Fit' defaultOpen={filtersExpanded}>
+          <FilterSection title='Fit' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleFits.map(f => {
 
@@ -606,7 +589,7 @@ const ShopPageContent = () => {
 
       case 'neckline':
         return (
-          <FilterSection title='Neckline' defaultOpen={filtersExpanded}>
+          <FilterSection title='Neckline' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleNecklines.map(n => {
 
@@ -639,7 +622,7 @@ const ShopPageContent = () => {
 
       case 'features':
         return (
-          <FilterSection title='Features' defaultOpen={filtersExpanded}>
+          <FilterSection title='Features' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleFeatures.map(f => {
 
@@ -672,7 +655,7 @@ const ShopPageContent = () => {
 
       case 'price':
         return (
-          <FilterSection title='Price' defaultOpen={filtersExpanded}>
+          <FilterSection title='Price' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               <label className='flex cursor-pointer items-center gap-2 text-sm'>
                 <input
@@ -795,25 +778,6 @@ const ShopPageContent = () => {
                 ) : (
                   <p className='text-muted-foreground mb-2 text-xs'>No filters applied</p>
                 )}
-
-                {/* Expand/Collapse toggle */}
-                <div className='mb-3 flex items-center justify-between'>
-                  <span className='text-xs font-medium'>Expand all filters</span>
-                  <button
-                    onClick={toggleFiltersExpanded}
-                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors ${
-                      filtersExpanded ? 'bg-foreground' : 'bg-foreground/25'
-                    }`}
-                    role='switch'
-                    aria-checked={filtersExpanded}
-                  >
-                    <span
-                      className={`inline-block size-3.5 rounded-full bg-white shadow-sm transition-transform ${
-                        filtersExpanded ? 'translate-x-4.5' : 'translate-x-0.5'
-                      }`}
-                    />
-                  </button>
-                </div>
               </div>
 
               <div className='px-4'>
