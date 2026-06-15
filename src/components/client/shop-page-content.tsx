@@ -90,6 +90,9 @@ const ShopPageContent = () => {
   const [genders, setGenders] = useState<ShopGender[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<PriceRange>('all')
+  const [customPriceActive, setCustomPriceActive] = useState(false)
+  const [minPrice, setMinPrice] = useState('')
+  const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState<SortOption>('newest')
 
   const toggleCategory = (cat: ShopCategory) => {
@@ -115,7 +118,8 @@ const ShopPageContent = () => {
     categories.length > 0 ||
     genders.length > 0 ||
     selectedColors.length > 0 ||
-    priceRange !== 'all'
+    priceRange !== 'all' ||
+    customPriceActive
 
   const clearFilters = () => {
     setQuery('')
@@ -123,6 +127,9 @@ const ShopPageContent = () => {
     setGenders([])
     setSelectedColors([])
     setPriceRange('all')
+    setCustomPriceActive(false)
+    setMinPrice('')
+    setMaxPrice('')
   }
 
   const filtered = useMemo(() => {
@@ -137,7 +144,7 @@ const ShopPageContent = () => {
         if (!selectedColors.some(c => productColorNames.includes(c))) return false
       }
 
-      if (priceRange !== 'all') {
+      if (priceRange !== 'all' && !customPriceActive) {
         switch (priceRange) {
           case 'up-to-200':
             if (product.price > 200) return false
@@ -152,6 +159,12 @@ const ShopPageContent = () => {
             if (product.price <= 1000) return false
             break
         }
+      }
+
+      if (customPriceActive) {
+        const min = minPrice ? Number(minPrice) : 0
+        const max = maxPrice ? Number(maxPrice) : Infinity
+        if (product.price < min || product.price > max) return false
       }
 
       if (q) {
@@ -177,7 +190,7 @@ const ShopPageContent = () => {
     })
 
     return results
-  }, [query, categories, genders, selectedColors, priceRange, sort])
+  }, [query, categories, genders, selectedColors, priceRange, customPriceActive, minPrice, maxPrice, sort])
 
   return (
     <section className='pt-2 pb-8 sm:pt-4 sm:pb-12 lg:pt-6 lg:pb-16'>
@@ -281,8 +294,13 @@ const ShopPageContent = () => {
                       <input
                         type='radio'
                         name='price'
-                        checked={priceRange === 'all'}
-                        onChange={() => setPriceRange('all')}
+                        checked={priceRange === 'all' && !customPriceActive}
+                        onChange={() => {
+                          setPriceRange('all')
+                          setCustomPriceActive(false)
+                          setMinPrice('')
+                          setMaxPrice('')
+                        }}
                         className='accent-primary'
                       />
                       <span>All prices</span>
@@ -292,13 +310,75 @@ const ShopPageContent = () => {
                         <input
                           type='radio'
                           name='price'
-                          checked={priceRange === p.value}
-                          onChange={() => setPriceRange(p.value)}
+                          checked={priceRange === p.value && !customPriceActive}
+                          onChange={() => {
+                            setPriceRange(p.value)
+                            setCustomPriceActive(false)
+                            setMinPrice('')
+                            setMaxPrice('')
+                          }}
                           className='accent-primary'
                         />
                         <span>{p.label}</span>
                       </label>
                     ))}
+
+                    {/* Dashed separator */}
+                    <div className='border-foreground/20 my-1 border-t border-dashed' />
+
+                    {/* Min / Max inputs */}
+                    <div className='flex gap-3'>
+                      <div className='flex-1'>
+                        <label className='text-muted-foreground mb-1 block text-xs'>Minimum ₱</label>
+                        <Input
+                          type='text'
+                          inputMode='numeric'
+                          pattern='[0-9]*'
+                          placeholder='100'
+                          value={minPrice}
+                          onChange={e => setMinPrice(e.target.value.replace(/[^0-9]/g, ''))}
+                          className='rounded-sm text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                        />
+                      </div>
+                      <div className='flex-1'>
+                        <label className='text-muted-foreground mb-1 block text-xs'>Maximum ₱</label>
+                        <Input
+                          type='text'
+                          inputMode='numeric'
+                          pattern='[0-9]*'
+                          placeholder='500'
+                          value={maxPrice}
+                          onChange={e => setMaxPrice(e.target.value.replace(/[^0-9]/g, ''))}
+                          className='rounded-sm text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                        />
+                      </div>
+                    </div>
+
+                    <Button
+                      size='sm'
+                      className='mt-1 w-full rounded-md'
+                      onClick={() => {
+                        if (minPrice || maxPrice) {
+                          setPriceRange('all')
+                          setCustomPriceActive(true)
+                        }
+                      }}
+                    >
+                      APPLY
+                    </Button>
+
+                    {(minPrice || maxPrice) && (
+                      <button
+                        className='text-muted-foreground mt-2 self-start text-xs underline underline-offset-3'
+                        onClick={() => {
+                          setMinPrice('')
+                          setMaxPrice('')
+                          setCustomPriceActive(false)
+                        }}
+                      >
+                        Clear price filter
+                      </button>
+                    )}
                   </div>
                 </FilterSection>
               </div>
