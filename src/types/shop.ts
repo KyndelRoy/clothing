@@ -2,6 +2,8 @@ export type ShopCategory = 't-shirts' | 'long-sleeves' | 'hoodies' | 'sandos'
 
 export type ShopGender = 'men' | 'women' | 'unisex'
 
+export type ShopSize = 'XXXS' | 'XXS' | 'XXS/XS' | 'XS' | 'XS/S' | 'S' | 'S/M' | 'M' | 'M/L' | 'L' | 'L/XL' | 'XL' | 'XL/XXL' | 'XXL' | 'ONE SIZE'
+
 export type ProductColor = {
   name: string
   hex: string
@@ -16,6 +18,7 @@ export type ShopProduct = {
   description: string
   price: number
   colors: ProductColor[]
+  sizes: ShopSize[]
   category: ShopCategory
   gender: ShopGender
   createdAt: string

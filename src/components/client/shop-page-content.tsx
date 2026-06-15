@@ -11,7 +11,7 @@ import ProductCard from '@/components/client/product-card'
 
 import { shopProducts } from '@/data/client/shop'
 
-import type { PriceRange, ShopCategory, ShopGender } from '@/types/shop'
+import type { PriceRange, ShopCategory, ShopGender, ShopSize } from '@/types/shop'
 
 type SortOption = 'newest' | 'oldest' | 'price-low' | 'price-high'
 
@@ -35,21 +35,8 @@ const categoryOptions: { value: ShopCategory; label: string }[] = [
   { value: 'sandos', label: 'Sandos' }
 ]
 
-const colorOptions: { name: string; hex: string }[] = [
-  { name: 'Black', hex: '#1a1a1a' },
-  { name: 'White', hex: '#f5f5f5' },
-  { name: 'Navy', hex: '#1e3a5f' },
-  { name: 'Red', hex: '#c0392b' },
-  { name: 'Green', hex: '#27ae60' },
-  { name: 'Blue', hex: '#2980b9' },
-  { name: 'Grey', hex: '#7f8c8d' },
-  { name: 'Beige', hex: '#d4c5a9' },
-  { name: 'Coral', hex: '#e07c5a' },
-  { name: 'Lavender', hex: '#b39ddb' },
-  { name: 'Mustard', hex: '#d4a017' },
-  { name: 'Olive', hex: '#6b8e23' },
-  { name: 'Pink', hex: '#e91e8a' },
-  { name: 'Teal', hex: '#008080' }
+const allSizes: ShopSize[] = [
+  'XXXS', 'XXS', 'XXS/XS', 'XS', 'XS/S', 'S', 'S/M', 'M', 'M/L', 'L', 'L/XL', 'XL', 'XL/XXL', 'XXL'
 ]
 
 const priceRanges: { value: PriceRange; label: string }[] = [
@@ -58,6 +45,12 @@ const priceRanges: { value: PriceRange; label: string }[] = [
   { value: '501-1000', label: '₱501 – ₱1,000' },
   { value: 'over-1000', label: 'Over ₱1,000' }
 ]
+
+const GENDER_INITIAL_COUNT = 6
+const CATEGORY_INITIAL_COUNT = 4
+const SIZE_INITIAL_ROWS = 2
+const SIZE_ITEMS_PER_ROW = 5
+const COLOR_INITIAL_COUNT = 5
 
 const FilterSection = ({
   title,
@@ -88,12 +81,18 @@ const ShopPageContent = () => {
   const [query, setQuery] = useState('')
   const [categories, setCategories] = useState<ShopCategory[]>([])
   const [genders, setGenders] = useState<ShopGender[]>([])
+  const [selectedSizes, setSelectedSizes] = useState<ShopSize[]>([])
   const [selectedColors, setSelectedColors] = useState<string[]>([])
   const [priceRange, setPriceRange] = useState<PriceRange>('all')
   const [customPriceActive, setCustomPriceActive] = useState(false)
   const [minPrice, setMinPrice] = useState('')
   const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState<SortOption>('newest')
+
+  const [showAllGenders, setShowAllGenders] = useState(false)
+  const [showAllCategories, setShowAllCategories] = useState(false)
+  const [showAllSizes, setShowAllSizes] = useState(false)
+  const [showAllColors, setShowAllColors] = useState(false)
 
   const toggleCategory = (cat: ShopCategory) => {
     setCategories(prev =>
@@ -107,16 +106,25 @@ const ShopPageContent = () => {
     )
   }
 
+  const toggleSize = (s: ShopSize) => {
+    setSelectedSizes(prev =>
+      prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s]
+    )
+  }
+
   const toggleColor = (name: string) => {
     setSelectedColors(prev =>
       prev.includes(name) ? prev.filter(c => c !== name) : [...prev, name]
     )
   }
 
+  const hasPriceInput = minPrice.trim() !== '' || maxPrice.trim() !== ''
+
   const isFiltered =
     query.trim().length > 0 ||
     categories.length > 0 ||
     genders.length > 0 ||
+    selectedSizes.length > 0 ||
     selectedColors.length > 0 ||
     priceRange !== 'all' ||
     customPriceActive
@@ -125,6 +133,7 @@ const ShopPageContent = () => {
     setQuery('')
     setCategories([])
     setGenders([])
+    setSelectedSizes([])
     setSelectedColors([])
     setPriceRange('all')
     setCustomPriceActive(false)
@@ -138,6 +147,10 @@ const ShopPageContent = () => {
     const results = shopProducts.filter(product => {
       if (categories.length > 0 && !categories.includes(product.category)) return false
       if (genders.length > 0 && !genders.includes(product.gender)) return false
+
+      if (selectedSizes.length > 0) {
+        if (!selectedSizes.some(s => product.sizes.includes(s))) return false
+      }
 
       if (selectedColors.length > 0) {
         const productColorNames = product.colors.map(c => c.name)
@@ -190,7 +203,41 @@ const ShopPageContent = () => {
     })
 
     return results
-  }, [query, categories, genders, selectedColors, priceRange, customPriceActive, minPrice, maxPrice, sort])
+  }, [query, categories, genders, selectedSizes, selectedColors, priceRange, customPriceActive, minPrice, maxPrice, sort])
+
+  const colorCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    shopProducts.forEach(p => {
+      p.colors.forEach(c => {
+        if (c.available) {
+          counts[c.name] = (counts[c.name] || 0) + 1
+        }
+      })
+    })
+    return counts
+  }, [])
+
+  const sizeCounts = useMemo(() => {
+    const counts: Record<string, number> = {}
+    shopProducts.forEach(p => {
+      p.sizes.forEach(s => {
+        counts[s] = (counts[s] || 0) + 1
+      })
+    })
+    return counts
+  }, [])
+
+  const availableColors = useMemo(() => {
+    return Object.entries(colorCounts)
+      .filter(([, count]) => count > 0)
+      .sort((a, b) => b[1] - a[1])
+  }, [colorCounts])
+
+  const visibleGenders = showAllGenders ? genderOptions : genderOptions.slice(0, GENDER_INITIAL_COUNT)
+  const visibleCategories = showAllCategories ? categoryOptions : categoryOptions.slice(0, CATEGORY_INITIAL_COUNT)
+  const sizeInitialCount = SIZE_INITIAL_ROWS * SIZE_ITEMS_PER_ROW
+  const visibleSizes = showAllSizes ? allSizes : allSizes.slice(0, sizeInitialCount)
+  const visibleColors = showAllColors ? availableColors : availableColors.slice(0, COLOR_INITIAL_COUNT)
 
   return (
     <section className='pt-2 pb-8 sm:pt-4 sm:pb-12 lg:pt-6 lg:pb-16'>
@@ -220,7 +267,7 @@ const ShopPageContent = () => {
                 {/* Gender */}
                 <FilterSection title='Gender'>
                   <div className='flex flex-col gap-2'>
-                    {genderOptions.map(g => {
+                    {visibleGenders.map(g => {
                       const count = shopProducts.filter(p => p.gender === g.value).length
                       const isActive = genders.includes(g.value)
 
@@ -237,13 +284,21 @@ const ShopPageContent = () => {
                         </label>
                       )
                     })}
+                    {genderOptions.length > GENDER_INITIAL_COUNT && (
+                      <button
+                        className='text-muted-foreground mt-1 self-start text-xs underline underline-offset-3'
+                        onClick={() => setShowAllGenders(!showAllGenders)}
+                      >
+                        {showAllGenders ? 'Show less' : `Show all (${genderOptions.length})`}
+                      </button>
+                    )}
                   </div>
                 </FilterSection>
 
                 {/* Category */}
                 <FilterSection title='Category'>
                   <div className='flex flex-col gap-2'>
-                    {categoryOptions.map(cat => {
+                    {visibleCategories.map(cat => {
                       const count = shopProducts.filter(p => p.category === cat.value).length
                       const isActive = categories.includes(cat.value)
 
@@ -260,30 +315,93 @@ const ShopPageContent = () => {
                         </label>
                       )
                     })}
+                    {categoryOptions.length > CATEGORY_INITIAL_COUNT && (
+                      <button
+                        className='text-muted-foreground mt-1 self-start text-xs underline underline-offset-3'
+                        onClick={() => setShowAllCategories(!showAllCategories)}
+                      >
+                        {showAllCategories ? 'Show less' : `Show all (${categoryOptions.length})`}
+                      </button>
+                    )}
                   </div>
+                </FilterSection>
+
+                {/* Size */}
+                <FilterSection title='Size'>
+                  <div className='flex flex-wrap gap-2'>
+                    {visibleSizes.map(size => {
+                      const isActive = selectedSizes.includes(size)
+                      const count = sizeCounts[size] || 0
+
+                      return (
+                        <button
+                          key={size}
+                          onClick={() => toggleSize(size)}
+                          className={`rounded-md border px-3 py-1.5 text-xs transition-all ${
+                            isActive
+                              ? 'border-foreground bg-foreground text-primary-foreground'
+                              : 'border-foreground/20 hover:border-foreground/40'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      )
+                    })}
+                  </div>
+                  {allSizes.length > sizeInitialCount && (
+                    <button
+                      className='text-muted-foreground mt-2 self-start text-xs underline underline-offset-3'
+                      onClick={() => setShowAllSizes(!showAllSizes)}
+                    >
+                      {showAllSizes ? 'Show less' : `Show all (${allSizes.length})`}
+                    </button>
+                  )}
+                  {/* Dashed separator before ONE SIZE */}
+                  <div className='border-foreground/20 my-3 border-t border-dashed' />
+                  <button
+                    onClick={() => toggleSize('ONE SIZE')}
+                    className={`rounded-md border px-3 py-1.5 text-xs transition-all ${
+                      selectedSizes.includes('ONE SIZE')
+                        ? 'border-foreground bg-foreground text-primary-foreground'
+                        : 'border-foreground/20 hover:border-foreground/40'
+                    }`}
+                  >
+                    ONE SIZE
+                  </button>
                 </FilterSection>
 
                 {/* Color */}
                 <FilterSection title='Color'>
-                  <div className='flex flex-wrap gap-2'>
-                    {colorOptions.map(color => {
-                      const isActive = selectedColors.includes(color.name)
+                  <div className='flex flex-col gap-2'>
+                    {visibleColors.map(([name, count]) => {
+                      const colorData = shopProducts.flatMap(p => p.colors).find(c => c.name === name)
+                      const isActive = selectedColors.includes(name)
 
                       return (
-                        <button
-                          key={color.name}
-                          onClick={() => toggleColor(color.name)}
-                          title={color.name}
-                          className={`h-7 w-7 rounded-full border-2 transition-all ${
-                            isActive
-                              ? 'border-foreground ring-2 ring-foreground/30'
-                              : 'border-foreground/20 hover:scale-110'
-                          }`}
-                          style={{ backgroundColor: color.hex }}
-                          aria-label={`Select ${color.name}`}
-                        />
+                        <label key={name} className='flex cursor-pointer items-center gap-2 text-sm'>
+                          <input
+                            type='checkbox'
+                            checked={isActive}
+                            onChange={() => toggleColor(name)}
+                            className='border-foreground/30 size-4 rounded-sm accent-primary'
+                          />
+                          <span
+                            className='size-5 shrink-0 rounded-sm border border-foreground/20'
+                            style={{ backgroundColor: colorData?.hex }}
+                          />
+                          <span className={isActive ? 'font-medium' : ''}>{name}</span>
+                          <span className='text-muted-foreground ml-auto text-xs'>({count})</span>
+                        </label>
                       )
                     })}
+                    {availableColors.length > COLOR_INITIAL_COUNT && (
+                      <button
+                        className='text-muted-foreground mt-1 self-start text-xs underline underline-offset-3'
+                        onClick={() => setShowAllColors(!showAllColors)}
+                      >
+                        {showAllColors ? 'Show less' : `Show all (${availableColors.length})`}
+                      </button>
+                    )}
                   </div>
                 </FilterSection>
 
@@ -337,7 +455,7 @@ const ShopPageContent = () => {
                           placeholder='100'
                           value={minPrice}
                           onChange={e => setMinPrice(e.target.value.replace(/[^0-9]/g, ''))}
-                          className='rounded-sm text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                          className='rounded-sm text-sm placeholder:text-foreground/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
                         />
                       </div>
                       <div className='flex-1'>
@@ -349,7 +467,7 @@ const ShopPageContent = () => {
                           placeholder='500'
                           value={maxPrice}
                           onChange={e => setMaxPrice(e.target.value.replace(/[^0-9]/g, ''))}
-                          className='rounded-sm text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                          className='rounded-sm text-sm placeholder:text-foreground/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
                         />
                       </div>
                     </div>
@@ -357,8 +475,9 @@ const ShopPageContent = () => {
                     <Button
                       size='sm'
                       className='mt-1 w-full rounded-md'
+                      disabled={!hasPriceInput}
                       onClick={() => {
-                        if (minPrice || maxPrice) {
+                        if (hasPriceInput) {
                           setPriceRange('all')
                           setCustomPriceActive(true)
                         }
@@ -367,7 +486,7 @@ const ShopPageContent = () => {
                       APPLY
                     </Button>
 
-                    {(minPrice || maxPrice) && (
+                    {hasPriceInput && (
                       <button
                         className='text-muted-foreground mt-2 self-start text-xs underline underline-offset-3'
                         onClick={() => {
