@@ -1,8 +1,8 @@
 'use client'
 
-import { useCallback, useMemo, useRef, useState } from 'react'
+import { useMemo, useState } from 'react'
 
-import { GripVertical, MinusIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react'
+import { MinusIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -175,10 +175,7 @@ const ShopPageContent = () => {
   const [showAllNecklines, setShowAllNecklines] = useState(false)
   const [showAllFeatures, setShowAllFeatures] = useState(false)
 
-  const [filterOrder, setFilterOrder] = useState<FilterKey[]>(DEFAULT_FILTER_ORDER)
-  const dragItem = useRef<FilterKey | null>(null)
-  const dragOverItem = useRef<FilterKey | null>(null)
-  const [dragOverKey, setDragOverKey] = useState<FilterKey | null>(null)
+  const [filterOrder] = useState<FilterKey[]>(DEFAULT_FILTER_ORDER)
 
   const toggle = <T extends string>(prev: T[], val: T) =>
     prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
@@ -213,45 +210,6 @@ const ShopPageContent = () => {
     setMinPrice('')
     setMaxPrice('')
   }
-
-  const handleDragStart = useCallback((key: FilterKey) => {
-    dragItem.current = key
-  }, [])
-
-  const handleDragOver = useCallback((e: React.DragEvent, key: FilterKey) => {
-    e.preventDefault()
-    dragOverItem.current = key
-    setDragOverKey(key)
-  }, [])
-
-  const handleDrop = useCallback((key: FilterKey) => {
-    if (dragItem.current === null || dragItem.current === key) {
-      setDragOverKey(null)
-
-      return
-    }
-
-    setFilterOrder(prev => {
-      const newOrder = [...prev]
-      const dragIdx = newOrder.indexOf(dragItem.current!)
-      const dropIdx = newOrder.indexOf(key)
-
-      newOrder.splice(dragIdx, 1)
-      newOrder.splice(dropIdx, 0, dragItem.current!)
-
-      return newOrder
-    })
-
-    dragItem.current = null
-    dragOverItem.current = null
-    setDragOverKey(null)
-  }, [])
-
-  const handleDragEnd = useCallback(() => {
-    dragItem.current = null
-    dragOverItem.current = null
-    setDragOverKey(null)
-  }, [])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -776,21 +734,8 @@ const ShopPageContent = () => {
 
               <div className='px-4'>
                 {filterOrder.map(key => (
-                  <div
-                    key={key}
-                    draggable
-                    onDragStart={() => handleDragStart(key)}
-                    onDragOver={e => handleDragOver(e, key)}
-                    onDrop={() => handleDrop(key)}
-                    onDragEnd={handleDragEnd}
-                    className={`group/item ${dragOverKey === key && dragItem.current !== key ? 'border-primary border-t-2' : ''}`}
-                  >
-                    <div className='flex items-center'>
-                      <span className='text-foreground/20 hover:text-foreground/50 mr-1 hidden cursor-grab group-hover/item:inline-block active:cursor-grabbing'>
-                        <GripVertical className='size-3' />
-                      </span>
-                      <div className='flex-1'>{renderFilterContent(key)}</div>
-                    </div>
+                  <div key={key}>
+                    {renderFilterContent(key)}
                   </div>
                 ))}
               </div>
