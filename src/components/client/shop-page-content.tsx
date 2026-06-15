@@ -11,7 +11,16 @@ import ProductCard from '@/components/client/product-card'
 
 import { shopProducts } from '@/data/client/shop'
 
-import type { PriceRange, ShopCategory, ShopFabric, ShopFeature, ShopFit, ShopGender, ShopNeckline, ShopSize } from '@/types/shop'
+import type {
+  PriceRange,
+  ShopCategory,
+  ShopFabric,
+  ShopFeature,
+  ShopFit,
+  ShopGender,
+  ShopNeckline,
+  ShopSize
+} from '@/types/shop'
 
 type SortOption = 'newest' | 'oldest' | 'price-low' | 'price-high'
 
@@ -36,12 +45,25 @@ const categoryOptions: { value: ShopCategory; label: string }[] = [
 ]
 
 const allSizes: ShopSize[] = [
-  'XXXS', 'XXS', 'XXS/XS', 'XS', 'XS/S', 'S', 'S/M', 'M', 'M/L', 'L', 'L/XL', 'XL', 'XL/XXL', 'XXL'
+  'XXXS',
+  'XXS',
+  'XXS/XS',
+  'XS',
+  'XS/S',
+  'S',
+  'S/M',
+  'M',
+  'M/L',
+  'L',
+  'L/XL',
+  'XL',
+  'XL/XXL',
+  'XXL'
 ]
 
 const fabricOptions: { value: ShopFabric; label: string; description?: string }[] = [
-  { value: 'cotton', label: 'Cotton', description: 'Naturally breathable and soft to the touch' },
-  { value: 'polyester', label: 'Polyester', description: 'Durable, wrinkle-resistant, and quick-drying' },
+  { value: 'cotton', label: 'Cotton', description: '' },
+  { value: 'polyester', label: 'Polyester', description: '' },
   { value: 'linen', label: 'Linen', description: 'Lightweight and perfect for warm weather' },
   { value: 'dry-fit', label: 'Dry Fit', description: 'Moisture-wicking technology for active wear' }
 ]
@@ -97,10 +119,7 @@ const FilterSection = ({
 
   return (
     <div className='border-foreground/10 border-b py-3'>
-      <button
-        onClick={() => setOpen(!open)}
-        className='flex w-full items-center justify-between text-sm font-semibold'
-      >
+      <button onClick={() => setOpen(!open)} className='flex w-full items-center justify-between text-sm font-semibold'>
         {title}
         {open ? <MinusIcon className='size-4' /> : <PlusIcon className='size-4' />}
       </button>
@@ -110,10 +129,7 @@ const FilterSection = ({
 }
 
 const ShowAllButton = ({ show, total, onToggle }: { show: boolean; total: number; onToggle: () => void }) => (
-  <button
-    className='text-muted-foreground mt-1 self-start text-xs underline underline-offset-3'
-    onClick={onToggle}
-  >
+  <button className='text-muted-foreground mt-1 self-start text-xs underline underline-offset-3' onClick={onToggle}>
     {show ? 'Show less' : `Show all (${total})`}
   </button>
 )
@@ -184,7 +200,8 @@ const ShopPageContent = () => {
       if (categories.length > 0 && !categories.includes(product.category)) return false
       if (genders.length > 0 && !genders.includes(product.gender)) return false
       if (selectedSizes.length > 0 && !selectedSizes.some(s => product.sizes.includes(s))) return false
-      if (selectedColors.length > 0 && !selectedColors.some(c => product.colors.map(x => x.name).includes(c))) return false
+      if (selectedColors.length > 0 && !selectedColors.some(c => product.colors.map(x => x.name).includes(c)))
+        return false
       if (selectedFabrics.length > 0 && !selectedFabrics.includes(product.fabric)) return false
       if (selectedFits.length > 0 && !selectedFits.includes(product.fit)) return false
       if (selectedNecklines.length > 0 && !selectedNecklines.includes(product.neckline)) return false
@@ -192,16 +209,25 @@ const ShopPageContent = () => {
 
       if (priceRange !== 'all' && !customPriceActive) {
         switch (priceRange) {
-          case 'up-to-200': if (product.price > 200) return false; break
-          case '201-500': if (product.price < 201 || product.price > 500) return false; break
-          case '501-1000': if (product.price < 501 || product.price > 1000) return false; break
-          case 'over-1000': if (product.price <= 1000) return false; break
+          case 'up-to-200':
+            if (product.price > 200) return false
+            break
+          case '201-500':
+            if (product.price < 201 || product.price > 500) return false
+            break
+          case '501-1000':
+            if (product.price < 501 || product.price > 1000) return false
+            break
+          case 'over-1000':
+            if (product.price <= 1000) return false
+            break
         }
       }
 
       if (customPriceActive) {
         const min = minPrice ? Number(minPrice) : 0
         const max = maxPrice ? Number(maxPrice) : Infinity
+
         if (product.price < min || product.price > max) return false
       }
 
@@ -212,38 +238,74 @@ const ShopPageContent = () => {
 
     results.sort((a, b) => {
       switch (sort) {
-        case 'newest': return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-        case 'oldest': return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
-        case 'price-low': return a.price - b.price
-        case 'price-high': return b.price - a.price
-        default: return 0
+        case 'newest':
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        case 'oldest':
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        case 'price-low':
+          return a.price - b.price
+        case 'price-high':
+          return b.price - a.price
+        default:
+          return 0
       }
     })
 
     return results
-  }, [query, categories, genders, selectedSizes, selectedColors, selectedFabrics, selectedFits, selectedNecklines, selectedFeatures, priceRange, customPriceActive, minPrice, maxPrice, sort])
+  }, [
+    query,
+    categories,
+    genders,
+    selectedSizes,
+    selectedColors,
+    selectedFabrics,
+    selectedFits,
+    selectedNecklines,
+    selectedFeatures,
+    priceRange,
+    customPriceActive,
+    minPrice,
+    maxPrice,
+    sort
+  ])
 
   const counts = useMemo(() => {
     const c: Record<string, Record<string, number>> = {
-      gender: {}, category: {}, size: {}, color: {}, fabric: {}, fit: {}, neckline: {}, feature: {}
+      gender: {},
+      category: {},
+      size: {},
+      color: {},
+      fabric: {},
+      fit: {},
+      neckline: {},
+      feature: {}
     }
+
     shopProducts.forEach(p => {
       c.gender[p.gender] = (c.gender[p.gender] || 0) + 1
       c.category[p.category] = (c.category[p.category] || 0) + 1
-      p.sizes.forEach(s => { c.size[s] = (c.size[s] || 0) + 1 })
-      p.colors.forEach(co => { if (co.available) c.color[co.name] = (c.color[co.name] || 0) + 1 })
+      p.sizes.forEach(s => {
+        c.size[s] = (c.size[s] || 0) + 1
+      })
+      p.colors.forEach(co => {
+        if (co.available) c.color[co.name] = (c.color[co.name] || 0) + 1
+      })
       c.fabric[p.fabric] = (c.fabric[p.fabric] || 0) + 1
       c.fit[p.fit] = (c.fit[p.fit] || 0) + 1
       c.neckline[p.neckline] = (c.neckline[p.neckline] || 0) + 1
-      p.features.forEach(f => { c.feature[f] = (c.feature[f] || 0) + 1 })
+      p.features.forEach(f => {
+        c.feature[f] = (c.feature[f] || 0) + 1
+      })
     })
+
     return c
   }, [])
 
-  const availableColors = useMemo(() =>
-    Object.entries(counts.color)
-      .filter(([, n]) => n > 0)
-      .sort((a, b) => b[1] - a[1]),
+  const availableColors = useMemo(
+    () =>
+      Object.entries(counts.color)
+        .filter(([, n]) => n > 0)
+        .sort((a, b) => b[1] - a[1]),
     [counts]
   )
 
@@ -262,13 +324,18 @@ const ShopPageContent = () => {
         <div className='flex gap-8'>
           {/* Left sidebar - Filters */}
           <aside className='w-60 shrink-0'>
-            <div className='sticky top-16 h-[calc(100vh-4rem)] overflow-y-auto rounded-lg bg-white py-4 pr-1 scrollbar-thin'>
+            <div className='sticky top-16 h-[calc(100vh-4rem)] scrollbar-thin overflow-y-auto rounded-lg bg-white py-4 pr-1'>
               <div className='px-4'>
                 {/* Filters heading */}
                 <div className='mb-2 flex items-center justify-between'>
                   <h2 className='client-card-title'>Filters</h2>
                   {isFiltered && (
-                    <Button variant='ghost' size='sm' className='h-auto p-0 text-xs client-button' onClick={clearFilters}>
+                    <Button
+                      variant='ghost'
+                      size='sm'
+                      className='client-button h-auto p-0 text-xs'
+                      onClick={clearFilters}
+                    >
                       <XIcon className='size-3' />
                       Clear
                     </Button>
@@ -287,12 +354,23 @@ const ShopPageContent = () => {
                   <div className='flex flex-col gap-2'>
                     {visibleGenders.map(g => (
                       <label key={g.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                        <input type='checkbox' checked={genders.includes(g.value)} onChange={() => setGenders(prev => toggle(prev, g.value))} className='border-foreground/30 size-4 rounded-sm accent-primary' />
+                        <input
+                          type='checkbox'
+                          checked={genders.includes(g.value)}
+                          onChange={() => setGenders(prev => toggle(prev, g.value))}
+                          className='border-foreground/30 accent-primary size-4 rounded-sm'
+                        />
                         <span className={genders.includes(g.value) ? 'font-medium' : ''}>{g.label}</span>
                         <span className='text-muted-foreground ml-auto text-xs'>({counts.gender[g.value] || 0})</span>
                       </label>
                     ))}
-                    {genderOptions.length > GENDER_INITIAL_COUNT && <ShowAllButton show={showAllGenders} total={genderOptions.length} onToggle={() => setShowAllGenders(!showAllGenders)} />}
+                    {genderOptions.length > GENDER_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllGenders}
+                        total={genderOptions.length}
+                        onToggle={() => setShowAllGenders(!showAllGenders)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -301,12 +379,25 @@ const ShopPageContent = () => {
                   <div className='flex flex-col gap-2'>
                     {visibleCategories.map(cat => (
                       <label key={cat.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                        <input type='checkbox' checked={categories.includes(cat.value)} onChange={() => setCategories(prev => toggle(prev, cat.value))} className='border-foreground/30 size-4 rounded-sm accent-primary' />
+                        <input
+                          type='checkbox'
+                          checked={categories.includes(cat.value)}
+                          onChange={() => setCategories(prev => toggle(prev, cat.value))}
+                          className='border-foreground/30 accent-primary size-4 rounded-sm'
+                        />
                         <span className={categories.includes(cat.value) ? 'font-medium' : ''}>{cat.label}</span>
-                        <span className='text-muted-foreground ml-auto text-xs'>({counts.category[cat.value] || 0})</span>
+                        <span className='text-muted-foreground ml-auto text-xs'>
+                          ({counts.category[cat.value] || 0})
+                        </span>
                       </label>
                     ))}
-                    {categoryOptions.length > CATEGORY_INITIAL_COUNT && <ShowAllButton show={showAllCategories} total={categoryOptions.length} onToggle={() => setShowAllCategories(!showAllCategories)} />}
+                    {categoryOptions.length > CATEGORY_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllCategories}
+                        total={categoryOptions.length}
+                        onToggle={() => setShowAllCategories(!showAllCategories)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -314,15 +405,28 @@ const ShopPageContent = () => {
                 <FilterSection title='Size'>
                   <div className='flex flex-wrap gap-2'>
                     {visibleSizes.map(size => (
-                      <button key={size} onClick={() => setSelectedSizes(prev => toggle(prev, size))} className={`rounded-md border px-3 py-1.5 text-xs transition-all ${selectedSizes.includes(size) ? 'border-foreground bg-foreground text-primary-foreground' : 'border-foreground/20 hover:border-foreground/40'}`}>
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSizes(prev => toggle(prev, size))}
+                        className={`rounded-md border px-3 py-1.5 text-xs transition-all ${selectedSizes.includes(size) ? 'border-foreground bg-foreground text-primary-foreground' : 'border-foreground/20 hover:border-foreground/40'}`}
+                      >
                         {size}
                       </button>
                     ))}
                   </div>
-                  {allSizes.length > SIZE_INITIAL_COUNT && <ShowAllButton show={showAllSizes} total={allSizes.length} onToggle={() => setShowAllSizes(!showAllSizes)} />}
+                  {allSizes.length > SIZE_INITIAL_COUNT && (
+                    <ShowAllButton
+                      show={showAllSizes}
+                      total={allSizes.length}
+                      onToggle={() => setShowAllSizes(!showAllSizes)}
+                    />
+                  )}
                   <div className='border-foreground/20 my-3 border-t border-dashed' />
                   <div className='flex flex-wrap gap-2'>
-                    <button onClick={() => setSelectedSizes(prev => toggle(prev, 'ONE SIZE'))} className={`rounded-md border px-3 py-1.5 text-xs transition-all ${selectedSizes.includes('ONE SIZE') ? 'border-foreground bg-foreground text-primary-foreground' : 'border-foreground/20 hover:border-foreground/40'}`}>
+                    <button
+                      onClick={() => setSelectedSizes(prev => toggle(prev, 'ONE SIZE'))}
+                      className={`rounded-md border px-3 py-1.5 text-xs transition-all ${selectedSizes.includes('ONE SIZE') ? 'border-foreground bg-foreground text-primary-foreground' : 'border-foreground/20 hover:border-foreground/40'}`}
+                    >
                       ONE SIZE
                     </button>
                   </div>
@@ -334,16 +438,31 @@ const ShopPageContent = () => {
                     {visibleColors.map(([name, count]) => {
                       const colorData = shopProducts.flatMap(p => p.colors).find(c => c.name === name)
                       const isActive = selectedColors.includes(name)
+
                       return (
                         <label key={name} className='flex cursor-pointer items-center gap-2 text-sm'>
-                          <input type='checkbox' checked={isActive} onChange={() => setSelectedColors(prev => toggle(prev, name))} className='border-foreground/30 size-4 rounded-sm accent-primary' />
-                          <span className='size-5 shrink-0 rounded-sm border border-foreground/20' style={{ backgroundColor: colorData?.hex }} />
+                          <input
+                            type='checkbox'
+                            checked={isActive}
+                            onChange={() => setSelectedColors(prev => toggle(prev, name))}
+                            className='border-foreground/30 accent-primary size-4 rounded-sm'
+                          />
+                          <span
+                            className='border-foreground/20 size-5 shrink-0 rounded-sm border'
+                            style={{ backgroundColor: colorData?.hex }}
+                          />
                           <span className={isActive ? 'font-medium' : ''}>{name}</span>
                           <span className='text-muted-foreground ml-auto text-xs'>({count})</span>
                         </label>
                       )
                     })}
-                    {availableColors.length > COLOR_INITIAL_COUNT && <ShowAllButton show={showAllColors} total={availableColors.length} onToggle={() => setShowAllColors(!showAllColors)} />}
+                    {availableColors.length > COLOR_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllColors}
+                        total={availableColors.length}
+                        onToggle={() => setShowAllColors(!showAllColors)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -352,15 +471,28 @@ const ShopPageContent = () => {
                   <div className='flex flex-col gap-2'>
                     {visibleFabrics.map(f => (
                       <label key={f.value} className='flex cursor-pointer items-start gap-2 text-sm'>
-                        <input type='checkbox' checked={selectedFabrics.includes(f.value)} onChange={() => setSelectedFabrics(prev => toggle(prev, f.value))} className='border-foreground/30 mt-0.5 size-4 rounded-sm accent-primary' />
+                        <input
+                          type='checkbox'
+                          checked={selectedFabrics.includes(f.value)}
+                          onChange={() => setSelectedFabrics(prev => toggle(prev, f.value))}
+                          className='border-foreground/30 accent-primary mt-0.5 size-4 rounded-sm'
+                        />
                         <div className='flex flex-col'>
                           <span className={selectedFabrics.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
                           {f.description && <span className='text-muted-foreground text-xs'>{f.description}</span>}
                         </div>
-                        <span className='text-muted-foreground ml-auto shrink-0 text-xs'>({counts.fabric[f.value] || 0})</span>
+                        <span className='text-muted-foreground ml-auto shrink-0 text-xs'>
+                          ({counts.fabric[f.value] || 0})
+                        </span>
                       </label>
                     ))}
-                    {fabricOptions.length > FABRIC_INITIAL_COUNT && <ShowAllButton show={showAllFabrics} total={fabricOptions.length} onToggle={() => setShowAllFabrics(!showAllFabrics)} />}
+                    {fabricOptions.length > FABRIC_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllFabrics}
+                        total={fabricOptions.length}
+                        onToggle={() => setShowAllFabrics(!showAllFabrics)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -369,12 +501,23 @@ const ShopPageContent = () => {
                   <div className='flex flex-col gap-2'>
                     {visibleFits.map(f => (
                       <label key={f.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                        <input type='checkbox' checked={selectedFits.includes(f.value)} onChange={() => setSelectedFits(prev => toggle(prev, f.value))} className='border-foreground/30 size-4 rounded-sm accent-primary' />
+                        <input
+                          type='checkbox'
+                          checked={selectedFits.includes(f.value)}
+                          onChange={() => setSelectedFits(prev => toggle(prev, f.value))}
+                          className='border-foreground/30 accent-primary size-4 rounded-sm'
+                        />
                         <span className={selectedFits.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
                         <span className='text-muted-foreground ml-auto text-xs'>({counts.fit[f.value] || 0})</span>
                       </label>
                     ))}
-                    {fitOptions.length > FIT_INITIAL_COUNT && <ShowAllButton show={showAllFits} total={fitOptions.length} onToggle={() => setShowAllFits(!showAllFits)} />}
+                    {fitOptions.length > FIT_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllFits}
+                        total={fitOptions.length}
+                        onToggle={() => setShowAllFits(!showAllFits)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -383,12 +526,23 @@ const ShopPageContent = () => {
                   <div className='flex flex-col gap-2'>
                     {visibleNecklines.map(n => (
                       <label key={n.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                        <input type='checkbox' checked={selectedNecklines.includes(n.value)} onChange={() => setSelectedNecklines(prev => toggle(prev, n.value))} className='border-foreground/30 size-4 rounded-sm accent-primary' />
+                        <input
+                          type='checkbox'
+                          checked={selectedNecklines.includes(n.value)}
+                          onChange={() => setSelectedNecklines(prev => toggle(prev, n.value))}
+                          className='border-foreground/30 accent-primary size-4 rounded-sm'
+                        />
                         <span className={selectedNecklines.includes(n.value) ? 'font-medium' : ''}>{n.label}</span>
                         <span className='text-muted-foreground ml-auto text-xs'>({counts.neckline[n.value] || 0})</span>
                       </label>
                     ))}
-                    {necklineOptions.length > NECKLINE_INITIAL_COUNT && <ShowAllButton show={showAllNecklines} total={necklineOptions.length} onToggle={() => setShowAllNecklines(!showAllNecklines)} />}
+                    {necklineOptions.length > NECKLINE_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllNecklines}
+                        total={necklineOptions.length}
+                        onToggle={() => setShowAllNecklines(!showAllNecklines)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -397,12 +551,23 @@ const ShopPageContent = () => {
                   <div className='flex flex-col gap-2'>
                     {visibleFeatures.map(f => (
                       <label key={f.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                        <input type='checkbox' checked={selectedFeatures.includes(f.value)} onChange={() => setSelectedFeatures(prev => toggle(prev, f.value))} className='border-foreground/30 size-4 rounded-sm accent-primary' />
+                        <input
+                          type='checkbox'
+                          checked={selectedFeatures.includes(f.value)}
+                          onChange={() => setSelectedFeatures(prev => toggle(prev, f.value))}
+                          className='border-foreground/30 accent-primary size-4 rounded-sm'
+                        />
                         <span className={selectedFeatures.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
                         <span className='text-muted-foreground ml-auto text-xs'>({counts.feature[f.value] || 0})</span>
                       </label>
                     ))}
-                    {featureOptions.length > FEATURE_INITIAL_COUNT && <ShowAllButton show={showAllFeatures} total={featureOptions.length} onToggle={() => setShowAllFeatures(!showAllFeatures)} />}
+                    {featureOptions.length > FEATURE_INITIAL_COUNT && (
+                      <ShowAllButton
+                        show={showAllFeatures}
+                        total={featureOptions.length}
+                        onToggle={() => setShowAllFeatures(!showAllFeatures)}
+                      />
+                    )}
                   </div>
                 </FilterSection>
 
@@ -410,12 +575,34 @@ const ShopPageContent = () => {
                 <FilterSection title='Price'>
                   <div className='flex flex-col gap-2'>
                     <label className='flex cursor-pointer items-center gap-2 text-sm'>
-                      <input type='radio' name='price' checked={priceRange === 'all' && !customPriceActive} onChange={() => { setPriceRange('all'); setCustomPriceActive(false); setMinPrice(''); setMaxPrice('') }} className='accent-primary' />
+                      <input
+                        type='radio'
+                        name='price'
+                        checked={priceRange === 'all' && !customPriceActive}
+                        onChange={() => {
+                          setPriceRange('all')
+                          setCustomPriceActive(false)
+                          setMinPrice('')
+                          setMaxPrice('')
+                        }}
+                        className='accent-primary'
+                      />
                       <span>All prices</span>
                     </label>
                     {priceRanges.map(p => (
                       <label key={p.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                        <input type='radio' name='price' checked={priceRange === p.value && !customPriceActive} onChange={() => { setPriceRange(p.value); setCustomPriceActive(false); setMinPrice(''); setMaxPrice('') }} className='accent-primary' />
+                        <input
+                          type='radio'
+                          name='price'
+                          checked={priceRange === p.value && !customPriceActive}
+                          onChange={() => {
+                            setPriceRange(p.value)
+                            setCustomPriceActive(false)
+                            setMinPrice('')
+                            setMaxPrice('')
+                          }}
+                          className='accent-primary'
+                        />
                         <span>{p.label}</span>
                       </label>
                     ))}
@@ -423,18 +610,51 @@ const ShopPageContent = () => {
                     <div className='flex gap-3'>
                       <div className='flex-1'>
                         <label className='text-muted-foreground mb-1 block text-xs'>Minimum ₱</label>
-                        <Input type='text' inputMode='numeric' pattern='[0-9]*' placeholder='100' value={minPrice} onChange={e => setMinPrice(e.target.value.replace(/[^0-9]/g, ''))} className='rounded-sm text-sm placeholder:text-foreground/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                        <Input
+                          type='text'
+                          inputMode='numeric'
+                          pattern='[0-9]*'
+                          placeholder='100'
+                          value={minPrice}
+                          onChange={e => setMinPrice(e.target.value.replace(/[^0-9]/g, ''))}
+                          className='placeholder:text-foreground/30 rounded-sm text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                        />
                       </div>
                       <div className='flex-1'>
                         <label className='text-muted-foreground mb-1 block text-xs'>Maximum ₱</label>
-                        <Input type='text' inputMode='numeric' pattern='[0-9]*' placeholder='500' value={maxPrice} onChange={e => setMaxPrice(e.target.value.replace(/[^0-9]/g, ''))} className='rounded-sm text-sm placeholder:text-foreground/30 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none' />
+                        <Input
+                          type='text'
+                          inputMode='numeric'
+                          pattern='[0-9]*'
+                          placeholder='500'
+                          value={maxPrice}
+                          onChange={e => setMaxPrice(e.target.value.replace(/[^0-9]/g, ''))}
+                          className='placeholder:text-foreground/30 rounded-sm text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                        />
                       </div>
                     </div>
-                    <Button size='sm' className='mt-1 w-full rounded-md' disabled={!hasPriceInput} onClick={() => { if (hasPriceInput) { setPriceRange('all'); setCustomPriceActive(true) } }}>
+                    <Button
+                      size='sm'
+                      className='mt-1 w-full rounded-md'
+                      disabled={!hasPriceInput}
+                      onClick={() => {
+                        if (hasPriceInput) {
+                          setPriceRange('all')
+                          setCustomPriceActive(true)
+                        }
+                      }}
+                    >
                       APPLY
                     </Button>
                     {hasPriceInput && (
-                      <button className='text-muted-foreground mt-2 self-start text-xs underline underline-offset-3' onClick={() => { setMinPrice(''); setMaxPrice(''); setCustomPriceActive(false) }}>
+                      <button
+                        className='text-muted-foreground mt-2 self-start text-xs underline underline-offset-3'
+                        onClick={() => {
+                          setMinPrice('')
+                          setMaxPrice('')
+                          setCustomPriceActive(false)
+                        }}
+                      >
                         Clear price filter
                       </button>
                     )}
@@ -445,19 +665,34 @@ const ShopPageContent = () => {
           </aside>
 
           {/* Right side - Search + Sort + Cards */}
-          <div className='flex-1 min-w-0'>
+          <div className='min-w-0 flex-1'>
             {/* Sort bar */}
             <div className='bg-background/95 sticky top-16 z-40 mb-4 flex items-center justify-end gap-3 border-b py-3 text-sm backdrop-blur-sm'>
-              <div className='relative flex-1 max-w-xs'>
+              <div className='relative max-w-xs flex-1'>
                 <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
-                <Input value={query} onChange={event => setQuery(event.target.value)} placeholder='Search products…' className='pl-9' aria-label='Search products' type='search' />
+                <Input
+                  value={query}
+                  onChange={event => setQuery(event.target.value)}
+                  placeholder='Search products…'
+                  className='pl-9'
+                  aria-label='Search products'
+                  type='search'
+                />
               </div>
-              <span className='client-muted client-meta'>{filtered.length} {filtered.length === 1 ? 'product' : 'products'}</span>
+              <span className='client-muted client-meta'>
+                {filtered.length} {filtered.length === 1 ? 'product' : 'products'}
+              </span>
               <span className='text-muted-foreground'>|</span>
               <span className='client-muted client-meta'>Sort by</span>
-              <select value={sort} onChange={e => setSort(e.target.value as SortOption)} className='border-foreground/20 bg-background rounded-md border px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary'>
+              <select
+                value={sort}
+                onChange={e => setSort(e.target.value as SortOption)}
+                className='border-foreground/20 bg-background focus:ring-primary rounded-md border px-3 py-1.5 text-sm focus:ring-1 focus:outline-none'
+              >
                 {Object.entries(sortLabels).map(([value, label]) => (
-                  <option key={value} value={value}>{label}</option>
+                  <option key={value} value={value}>
+                    {label}
+                  </option>
                 ))}
               </select>
             </div>
@@ -473,7 +708,9 @@ const ShopPageContent = () => {
               <div className='flex flex-col items-center justify-center gap-2 rounded-3xl border border-dashed py-16 text-center'>
                 <p className='client-card-title'>No products match your search</p>
                 <p className='client-muted client-body-sm'>Try a different keyword or clear the filters.</p>
-                <Button variant='outline' size='sm' className='mt-2 rounded-full client-button' onClick={clearFilters}>Clear filters</Button>
+                <Button variant='outline' size='sm' className='client-button mt-2 rounded-full' onClick={clearFilters}>
+                  Clear filters
+                </Button>
               </div>
             )}
           </div>
