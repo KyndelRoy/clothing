@@ -18,6 +18,7 @@ export type ProductColor = {
   available: boolean
   image: string
   imageAlt: string
+  boxImage?: string
 }
 
 export type ShopProduct = {
@@ -42,3 +43,20 @@ export type ShopCategoryFilter = {
 }
 
 export type PriceRange = 'all' | 'up-to-200' | '201-500' | '501-1000' | 'over-1000'
+
+export type SizeGroup = {
+  id: string
+  label: string
+  values: ShopSize[]
+}
+
+export type FilterKey =
+  | 'gender'
+  | 'category'
+  | 'size'
+  | 'color'
+  | 'fabric'
+  | 'fit'
+  | 'neckline'
+  | 'features'
+  | 'price'
