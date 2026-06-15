@@ -13,14 +13,24 @@ import { shopCategories, shopProducts } from '@/data/client/shop'
 
 import type { ShopCategory } from '@/types/shop'
 
+type SortOption = 'newest' | 'oldest' | 'price-low' | 'price-high'
+
+const sortLabels: Record<SortOption, string> = {
+  newest: 'Newest to Oldest',
+  oldest: 'Oldest to Newest',
+  'price-low': 'Price: Low to High',
+  'price-high': 'Price: High to Low'
+}
+
 const ShopPageContent = () => {
   const [query, setQuery] = useState('')
   const [category, setCategory] = useState<'all' | ShopCategory>('all')
+  const [sort, setSort] = useState<SortOption>('newest')
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
 
-    return shopProducts.filter(product => {
+    const results = shopProducts.filter(product => {
       const matchesCategory = category === 'all' || product.category === category
 
       if (!matchesCategory) return false
@@ -28,7 +38,24 @@ const ShopPageContent = () => {
 
       return product.name.toLowerCase().includes(q) || product.description.toLowerCase().includes(q)
     })
-  }, [query, category])
+
+    results.sort((a, b) => {
+      switch (sort) {
+        case 'newest':
+          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        case 'oldest':
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+        case 'price-low':
+          return a.price - b.price
+        case 'price-high':
+          return b.price - a.price
+        default:
+          return 0
+      }
+    })
+
+    return results
+  }, [query, category, sort])
 
   const isFiltered = query.trim().length > 0 || category !== 'all'
 
@@ -37,79 +64,110 @@ const ShopPageContent = () => {
     setCategory('all')
   }
 
+  const categoriesToShow = shopCategories.filter(c => c.value !== 'all')
+
   return (
-    <section className='py-8 sm:py-12 lg:py-16'>
+    <section className='pt-2 pb-8 sm:pt-4 sm:pb-12 lg:pt-6 lg:pb-16'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        {/* Page header */}
-        <div className='mb-8 flex flex-col gap-2 sm:mb-10'>
-          <h1 className='client-section-title client-tracking-tight'>Shop all</h1>
-          <p className='client-muted client-body'>Browse the full collection.</p>
-        </div>
+        <div className='flex gap-8'>
+          {/* Left sidebar - Filters */}
+          <aside className='w-56 shrink-0'>
+            <div className='sticky top-24'>
+              {/* Filters heading */}
+              <div className='mb-2 flex items-center justify-between'>
+                <h2 className='client-card-title'>Filters</h2>
+                {isFiltered && (
+                  <Button variant='ghost' size='sm' className='h-auto p-0 text-xs client-button' onClick={clearFilters}>
+                    <XIcon className='size-3' />
+                    Clear
+                  </Button>
+                )}
+              </div>
 
-        {/* Search + category filter */}
-        <div className='bg-card ring-foreground/5 mb-6 flex flex-col gap-4 rounded-3xl p-4 ring-1 sm:flex-row sm:items-center sm:gap-3'>
-          <div className='relative flex-1'>
-            <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
-            <Input
-              value={query}
-              onChange={event => setQuery(event.target.value)}
-              placeholder='Search products…'
-              className='pl-9'
-              aria-label='Search products'
-              type='search'
-            />
-          </div>
+              {isFiltered ? (
+                <p className='text-muted-foreground mb-3 text-xs'>Filters applied</p>
+              ) : (
+                <p className='text-muted-foreground mb-3 text-xs'>No filters applied</p>
+              )}
 
-          <div className='flex flex-wrap gap-2 sm:justify-end' role='group' aria-label='Filter by category'>
-            {shopCategories.map(cat => {
-              const isActive = category === cat.value
+              {/* Category section */}
+              <div className='border-foreground/10 border-b pb-4'>
+                <h3 className='client-card-title mb-3 text-sm'>Category</h3>
+                <div className='flex flex-col gap-2'>
+                  {categoriesToShow.map(cat => {
+                    const count = shopProducts.filter(p => p.category === cat.value).length
+                    const isActive = category === cat.value
 
-              return (
-                <Button
-                  key={cat.value}
-                  size='sm'
-                  variant={isActive ? 'default' : 'outline'}
-                  className='rounded-full'
-                  onClick={() => setCategory(cat.value)}
-                  aria-pressed={isActive}
-                >
-                  {cat.label}
+                    return (
+                      <label
+                        key={cat.value}
+                        className='flex cursor-pointer items-center gap-2 text-sm'
+                      >
+                        <input
+                          type='checkbox'
+                          checked={isActive}
+                          onChange={() => setCategory(isActive ? 'all' : cat.value)}
+                          className='border-foreground/30 size-4 rounded-sm accent-primary'
+                        />
+                        <span className={isActive ? 'font-medium' : ''}>{cat.label}</span>
+                        <span className='text-muted-foreground ml-auto text-xs'>({count})</span>
+                      </label>
+                    )
+                  })}
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* Right side - Search + Sort + Cards */}
+          <div className='flex-1'>
+            {/* Sort bar */}
+            <div className='bg-background/95 sticky top-16 z-40 mb-4 flex items-center justify-end gap-3 border-b py-3 text-sm backdrop-blur-sm'>
+              <div className='relative flex-1 max-w-xs'>
+                <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
+                <Input
+                  value={query}
+                  onChange={event => setQuery(event.target.value)}
+                  placeholder='Search products…'
+                  className='pl-9'
+                  aria-label='Search products'
+                  type='search'
+                />
+              </div>
+              <span className='client-muted client-meta'>
+                {filtered.length} {filtered.length === 1 ? 'product' : 'products'}
+              </span>
+              <span className='text-muted-foreground'>|</span>
+              <span className='client-muted client-meta'>Sort by</span>
+              <select
+                value={sort}
+                onChange={e => setSort(e.target.value as SortOption)}
+                className='border-foreground/20 bg-background rounded-md border px-3 py-1.5 text-sm focus:outline-none focus:ring-1 focus:ring-primary'
+              >
+                {Object.entries(sortLabels).map(([value, label]) => (
+                  <option key={value} value={value}>{label}</option>
+                ))}
+              </select>
+            </div>
+
+            {/* Product grid */}
+            {filtered.length > 0 ? (
+              <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6'>
+                {filtered.map(product => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+            ) : (
+              <div className='flex flex-col items-center justify-center gap-2 rounded-3xl border border-dashed py-16 text-center'>
+                <p className='client-card-title'>No products match your search</p>
+                <p className='client-muted client-body-sm'>Try a different keyword or clear the category filter.</p>
+                <Button variant='outline' size='sm' className='mt-2 rounded-full client-button' onClick={clearFilters}>
+                  Clear filters
                 </Button>
-              )
-            })}
+              </div>
+            )}
           </div>
         </div>
-
-        {/* Result count */}
-        <div className='mb-4 flex items-center justify-between text-sm'>
-          <span className='client-muted client-meta'>
-            {filtered.length} {filtered.length === 1 ? 'product' : 'products'}
-            {isFiltered ? ' match your filters' : ''}
-          </span>
-          {isFiltered ? (
-            <Button variant='ghost' size='sm' className='rounded-full client-button' onClick={clearFilters}>
-              <XIcon className='size-3' />
-              Clear
-            </Button>
-          ) : null}
-        </div>
-
-        {/* Grid or empty state */}
-        {filtered.length > 0 ? (
-          <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4'>
-            {filtered.map(product => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <div className='flex flex-col items-center justify-center gap-2 rounded-3xl border border-dashed py-16 text-center'>
-            <p className='client-card-title'>No products match your search</p>
-            <p className='client-muted client-body-sm'>Try a different keyword or clear the category filter.</p>
-            <Button variant='outline' size='sm' className='mt-2 rounded-full client-button' onClick={clearFilters}>
-              Clear filters
-            </Button>
-          </div>
-        )}
       </div>
     </section>
   )

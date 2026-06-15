@@ -15,6 +15,7 @@ export type ShopProduct = {
   price: number
   colors: ProductColor[]
   category: ShopCategory
+  createdAt: string
 }
 
 export type ShopCategoryFilter = {

@@ -21,7 +21,8 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Red', hex: '#c0392b', available: false, image: '', imageAlt: '' },
       { name: 'Green', hex: '#27ae60', available: false, image: '', imageAlt: '' }
     ],
-    category: 't-shirts'
+    category: 't-shirts',
+    createdAt: '2025-01-15'
   },
   {
     id: 'p-002',
@@ -34,7 +35,8 @@ export const shopProducts: ShopProduct[] = [
       { name: 'White', hex: '#f5f5f5', available: false, image: '', imageAlt: '' },
       { name: 'Grey', hex: '#7f8c8d', available: true, image: '/images/hero-section/tshirt-04.webp', imageAlt: 'Grey Armak Heavyweight Tee' }
     ],
-    category: 't-shirts'
+    category: 't-shirts',
+    createdAt: '2025-02-10'
   },
   {
     id: 'p-003',
@@ -47,7 +49,8 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Blue', hex: '#2980b9', available: false, image: '', imageAlt: '' },
       { name: 'Green', hex: '#27ae60', available: true, image: '/images/hero-section/tshirt-05.webp', imageAlt: 'Green Armak Pocket Tee' }
     ],
-    category: 't-shirts'
+    category: 't-shirts',
+    createdAt: '2025-03-05'
   },
   {
     id: 'p-004',
@@ -59,7 +62,8 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Black', hex: '#1a1a1a', available: true, image: '/images/hero-section/tshirt-01.webp', imageAlt: 'Black Armak Long Sleeve' },
       { name: 'White', hex: '#f5f5f5', available: true, image: '/images/hero-section/tshirt-02.webp', imageAlt: 'White Armak Long Sleeve' }
     ],
-    category: 'long-sleeves'
+    category: 'long-sleeves',
+    createdAt: '2025-04-01'
   },
   {
     id: 'p-005',
@@ -72,7 +76,8 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Red', hex: '#c0392b', available: false, image: '', imageAlt: '' },
       { name: 'Navy', hex: '#1e3a5f', available: false, image: '', imageAlt: '' }
     ],
-    category: 't-shirts'
+    category: 't-shirts',
+    createdAt: '2025-05-20'
   },
   {
     id: 'p-006',
@@ -95,7 +100,8 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Mauve', hex: '#e0b0ff', available: false, image: '', imageAlt: '' },
       { name: 'Plum', hex: '#8e4585', available: false, image: '', imageAlt: '' }
     ],
-    category: 'sandos'
+    category: 'sandos',
+    createdAt: '2025-06-10'
   },
   {
     id: 'p-007',
@@ -112,6 +118,7 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Pink', hex: '#e91e8a', available: true, image: '/sando-color-data/sando-pink.png', imageAlt: 'Pink Armak Ribbed Sando' },
       { name: 'Teal', hex: '#008080', available: true, image: '/sando-color-data/sando-teal.png', imageAlt: 'Teal Armak Ribbed Sando' }
     ],
-    category: 'sandos'
+    category: 'sandos',
+    createdAt: '2025-07-01'
   }
 ]
