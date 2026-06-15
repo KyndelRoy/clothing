@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 
 import { MinusIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react'
 
@@ -181,8 +181,8 @@ const ShopPageContent = () => {
 
   const [filterOrder] = useState<FilterKey[]>(DEFAULT_FILTER_ORDER)
 
-  useEffect(() => {
-    if (!filtersExpanded) {
+  const toggleFiltersExpanded = () => {
+    if (filtersExpanded) {
       setShowAllGenders(false)
       setShowAllCategories(false)
       setShowAllSizes(false)
@@ -192,7 +192,8 @@ const ShopPageContent = () => {
       setShowAllNecklines(false)
       setShowAllFeatures(false)
     }
-  }, [filtersExpanded])
+    setFiltersExpanded(prev => !prev)
+  }
 
   const toggle = <T extends string>(prev: T[], val: T) =>
     prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
@@ -360,6 +361,7 @@ const ShopPageContent = () => {
   const needsSizeShowAll = allSizeValues.length > sizeInitialVisibleCount
 
   const renderSizePill = (size: ShopSize) => {
+
     const isDisabled = (counts.size[size] || 0) === 0
     return (
       <button
@@ -386,6 +388,7 @@ const ShopPageContent = () => {
           <FilterSection title='Gender' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleGenders.map(g => {
+
                 const isDisabled = (counts.gender[g.value] || 0) === 0
                 return (
                   <label key={g.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
@@ -417,6 +420,7 @@ const ShopPageContent = () => {
           <FilterSection title='Category' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleCategories.map(cat => {
+
                 const isDisabled = (counts.category[cat.value] || 0) === 0
                 return (
                   <label key={cat.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
@@ -533,6 +537,7 @@ const ShopPageContent = () => {
           <FilterSection title='Fabric' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleFabrics.map(f => {
+
                 const isDisabled = (counts.fabric[f.value] || 0) === 0
                 return (
                   <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
@@ -566,6 +571,7 @@ const ShopPageContent = () => {
           <FilterSection title='Fit' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleFits.map(f => {
+
                 const isDisabled = (counts.fit[f.value] || 0) === 0
                 return (
                   <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
@@ -597,6 +603,7 @@ const ShopPageContent = () => {
           <FilterSection title='Neckline' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleNecklines.map(n => {
+
                 const isDisabled = (counts.neckline[n.value] || 0) === 0
                 return (
                   <label key={n.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
@@ -628,6 +635,7 @@ const ShopPageContent = () => {
           <FilterSection title='Features' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleFeatures.map(f => {
+
                 const isDisabled = (counts.feature[f.value] || 0) === 0
                 return (
                   <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
@@ -784,7 +792,7 @@ const ShopPageContent = () => {
                 <div className='mb-3 flex items-center justify-between'>
                   <span className='text-xs font-medium'>Expand all filters</span>
                   <button
-                    onClick={() => setFiltersExpanded(!filtersExpanded)}
+                    onClick={toggleFiltersExpanded}
                     className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors ${
                       filtersExpanded ? 'bg-foreground' : 'bg-foreground/25'
                     }`}
