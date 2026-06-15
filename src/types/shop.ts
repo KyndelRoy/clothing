@@ -1,5 +1,7 @@
 export type ShopCategory = 't-shirts' | 'long-sleeves' | 'hoodies' | 'sandos'
 
+export type ShopGender = 'men' | 'women' | 'unisex'
+
 export type ProductColor = {
   name: string
   hex: string
@@ -15,6 +17,7 @@ export type ShopProduct = {
   price: number
   colors: ProductColor[]
   category: ShopCategory
+  gender: ShopGender
   createdAt: string
 }
 
@@ -22,3 +25,5 @@ export type ShopCategoryFilter = {
   value: 'all' | ShopCategory
   label: string
 }
+
+export type PriceRange = 'all' | 'up-to-200' | '201-500' | '501-1000' | 'over-1000'
