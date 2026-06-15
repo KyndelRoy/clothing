@@ -21,9 +21,13 @@ export const shopProducts: ShopProduct[] = [
       { name: 'Red', hex: '#c0392b', available: false, image: '', imageAlt: '' },
       { name: 'Green', hex: '#27ae60', available: false, image: '', imageAlt: '' }
     ],
+    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
     category: 't-shirts',
     gender: 'unisex',
-    sizes: ['XS', 'S', 'M', 'L', 'XL', 'XXL'],
+    fabric: 'cotton',
+    fit: 'classic',
+    neckline: 'crew-neck',
+    features: ['logo-print'],
     createdAt: '2025-01-15'
   },
   {
@@ -40,6 +44,10 @@ export const shopProducts: ShopProduct[] = [
     sizes: ['S', 'M', 'L', 'XL'],
     category: 't-shirts',
     gender: 'men',
+    fabric: 'cotton',
+    fit: 'relaxed',
+    neckline: 'crew-neck',
+    features: [],
     createdAt: '2025-02-10'
   },
   {
@@ -56,6 +64,10 @@ export const shopProducts: ShopProduct[] = [
     sizes: ['S', 'M', 'L', 'XL', 'XXL'],
     category: 't-shirts',
     gender: 'men',
+    fabric: 'cotton',
+    fit: 'classic',
+    neckline: 'crew-neck',
+    features: ['pocket'],
     createdAt: '2025-03-05'
   },
   {
@@ -71,6 +83,10 @@ export const shopProducts: ShopProduct[] = [
     sizes: ['XS', 'S', 'M', 'L', 'XL'],
     category: 'long-sleeves',
     gender: 'unisex',
+    fabric: 'cotton',
+    fit: 'relaxed',
+    neckline: 'crew-neck',
+    features: [],
     createdAt: '2025-04-01'
   },
   {
@@ -87,6 +103,10 @@ export const shopProducts: ShopProduct[] = [
     sizes: ['XS', 'S', 'M', 'L'],
     category: 't-shirts',
     gender: 'women',
+    fabric: 'cotton',
+    fit: 'relaxed',
+    neckline: 'v-neck',
+    features: [],
     createdAt: '2025-05-20'
   },
   {
@@ -113,6 +133,10 @@ export const shopProducts: ShopProduct[] = [
     sizes: ['S', 'M', 'L', 'XL', 'ONE SIZE'],
     category: 'sandos',
     gender: 'women',
+    fabric: 'polyester',
+    fit: 'relaxed',
+    neckline: 'crew-neck',
+    features: ['ribbed'],
     createdAt: '2025-06-10'
   },
   {
@@ -133,6 +157,64 @@ export const shopProducts: ShopProduct[] = [
     sizes: ['ONE SIZE'],
     category: 'sandos',
     gender: 'unisex',
+    fabric: 'linen',
+    fit: 'classic',
+    neckline: 'crew-neck',
+    features: ['ribbed'],
     createdAt: '2025-07-01'
+  },
+  {
+    id: 'p-008',
+    name: 'Armak Dry-Fit Sport Tee',
+    description: 'Moisture-wicking performance tee for intense workouts and outdoor runs.',
+    price: 849,
+    colors: [
+      { name: 'Black', hex: '#1a1a1a', available: true, image: '/images/hero-section/tshirt-01.webp', imageAlt: 'Black Armak Dry-Fit Sport Tee' },
+      { name: 'Navy', hex: '#1e3a5f', available: true, image: '/images/hero-section/tshirt-02.webp', imageAlt: 'Navy Armak Dry-Fit Sport Tee' }
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
+    category: 't-shirts',
+    gender: 'men',
+    fabric: 'dry-fit',
+    fit: 'slim',
+    neckline: 'crew-neck',
+    features: ['logo-print'],
+    createdAt: '2025-08-01'
+  },
+  {
+    id: 'p-009',
+    name: 'Armak Oversized Graphic Hoodie',
+    description: 'A bold graphic hoodie with an oversized silhouette for streetwear vibes.',
+    price: 1299,
+    colors: [
+      { name: 'Black', hex: '#1a1a1a', available: true, image: '/images/hero-section/tshirt-01.webp', imageAlt: 'Black Armak Oversized Graphic Hoodie' },
+      { name: 'Grey', hex: '#7f8c8d', available: true, image: '/images/hero-section/tshirt-04.webp', imageAlt: 'Grey Armak Oversized Graphic Hoodie' }
+    ],
+    sizes: ['S', 'M', 'L', 'XL', 'XXL'],
+    category: 'hoodies',
+    gender: 'unisex',
+    fabric: 'cotton',
+    fit: 'oversized',
+    neckline: 'crew-neck',
+    features: ['graphic'],
+    createdAt: '2025-08-15'
+  },
+  {
+    id: 'p-010',
+    name: 'Armak Slim Collared Polo',
+    description: 'A fitted polo with a clean collar for a smart-casual look.',
+    price: 999,
+    colors: [
+      { name: 'White', hex: '#f5f5f5', available: true, image: '/images/hero-section/tshirt-02.webp', imageAlt: 'White Armak Slim Collared Polo' },
+      { name: 'Navy', hex: '#1e3a5f', available: true, image: '/images/hero-section/tshirt-03.webp', imageAlt: 'Navy Armak Slim Collared Polo' }
+    ],
+    sizes: ['S', 'M', 'L', 'XL'],
+    category: 't-shirts',
+    gender: 'men',
+    fabric: 'polyester',
+    fit: 'slim',
+    neckline: 'collared',
+    features: ['logo-print'],
+    createdAt: '2025-09-01'
   }
 ]

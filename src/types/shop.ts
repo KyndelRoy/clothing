@@ -4,6 +4,14 @@ export type ShopGender = 'men' | 'women' | 'unisex'
 
 export type ShopSize = 'XXXS' | 'XXS' | 'XXS/XS' | 'XS' | 'XS/S' | 'S' | 'S/M' | 'M' | 'M/L' | 'L' | 'L/XL' | 'XL' | 'XL/XXL' | 'XXL' | 'ONE SIZE'
 
+export type ShopFabric = 'cotton' | 'polyester' | 'linen' | 'dry-fit'
+
+export type ShopFit = 'relaxed' | 'classic' | 'oversized' | 'slim' | 'tight'
+
+export type ShopNeckline = 'crew-neck' | 'collared' | 'v-neck'
+
+export type ShopFeature = 'pocket' | 'logo-print' | 'ribbed' | 'striped' | 'graphic'
+
 export type ProductColor = {
   name: string
   hex: string
@@ -21,6 +29,10 @@ export type ShopProduct = {
   sizes: ShopSize[]
   category: ShopCategory
   gender: ShopGender
+  fabric: ShopFabric
+  fit: ShopFit
+  neckline: ShopNeckline
+  features: ShopFeature[]
   createdAt: string
 }
 
