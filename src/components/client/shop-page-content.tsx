@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { MinusIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react'
 
@@ -134,8 +134,10 @@ const FilterSection = ({
   return (
     <div className='border-foreground/10 border-b py-3'>
       <div className='flex w-full items-center justify-between'>
-        <button onClick={() => setOpen(!open)} className='flex items-center gap-1.5 text-sm font-semibold'>
+        <button onClick={() => setOpen(!open)} className='text-sm font-semibold'>
           {title}
+        </button>
+        <button onClick={() => setOpen(!open)} className='text-foreground/60 hover:text-foreground transition-colors'>
           {open ? <MinusIcon className='size-4' /> : <PlusIcon className='size-4' />}
         </button>
       </div>
@@ -166,6 +168,8 @@ const ShopPageContent = () => {
   const [maxPrice, setMaxPrice] = useState('')
   const [sort, setSort] = useState<SortOption>('newest')
 
+  const [filtersExpanded, setFiltersExpanded] = useState(true)
+
   const [showAllGenders, setShowAllGenders] = useState(false)
   const [showAllCategories, setShowAllCategories] = useState(false)
   const [showAllSizes, setShowAllSizes] = useState(false)
@@ -176,6 +180,19 @@ const ShopPageContent = () => {
   const [showAllFeatures, setShowAllFeatures] = useState(false)
 
   const [filterOrder] = useState<FilterKey[]>(DEFAULT_FILTER_ORDER)
+
+  useEffect(() => {
+    if (!filtersExpanded) {
+      setShowAllGenders(false)
+      setShowAllCategories(false)
+      setShowAllSizes(false)
+      setShowAllColors(false)
+      setShowAllFabrics(false)
+      setShowAllFits(false)
+      setShowAllNecklines(false)
+      setShowAllFeatures(false)
+    }
+  }, [filtersExpanded])
 
   const toggle = <T extends string>(prev: T[], val: T) =>
     prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
@@ -342,38 +359,48 @@ const ShopPageContent = () => {
   const visibleSizeValues = showAllSizes ? allSizeValues : allSizeValues.slice(0, sizeInitialVisibleCount)
   const needsSizeShowAll = allSizeValues.length > sizeInitialVisibleCount
 
-  const renderSizePill = (size: ShopSize) => (
-    <button
-      key={size}
-      onClick={() => setSelectedSizes(prev => toggle(prev, size))}
-      className={`rounded-md border px-3 py-1.5 text-xs transition-all ${
-        selectedSizes.includes(size)
-          ? 'border-foreground bg-foreground text-primary-foreground'
-          : 'border-foreground/20 hover:border-foreground/40'
-      }`}
-    >
-      {size}
-    </button>
-  )
+  const renderSizePill = (size: ShopSize) => {
+    const isDisabled = (counts.size[size] || 0) === 0
+    return (
+      <button
+        key={size}
+        onClick={() => !isDisabled && setSelectedSizes(prev => toggle(prev, size))}
+        disabled={isDisabled}
+        className={`rounded-md border px-3 py-1.5 text-xs transition-all ${
+          isDisabled
+            ? 'cursor-not-allowed border-foreground/10 opacity-30'
+            : selectedSizes.includes(size)
+              ? 'border-foreground bg-foreground text-primary-foreground'
+              : 'border-foreground/20 hover:border-foreground/40'
+        }`}
+      >
+        {size}
+      </button>
+    )
+  }
 
   const renderFilterContent = (key: FilterKey) => {
     switch (key) {
       case 'gender':
         return (
-          <FilterSection title='Gender'>
+          <FilterSection title='Gender' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
-              {visibleGenders.map(g => (
-                <label key={g.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                  <input
-                    type='checkbox'
-                    checked={genders.includes(g.value)}
-                    onChange={() => setGenders(prev => toggle(prev, g.value))}
-                    className='border-foreground/30 accent-primary size-4 rounded-sm'
-                  />
-                  <span className={genders.includes(g.value) ? 'font-medium' : ''}>{g.label}</span>
-                  <span className='text-muted-foreground ml-auto text-xs'>({counts.gender[g.value] || 0})</span>
-                </label>
-              ))}
+              {visibleGenders.map(g => {
+                const isDisabled = (counts.gender[g.value] || 0) === 0
+                return (
+                  <label key={g.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                    <input
+                      type='checkbox'
+                      checked={genders.includes(g.value)}
+                      disabled={isDisabled}
+                      onChange={() => setGenders(prev => toggle(prev, g.value))}
+                      className='border-foreground/30 accent-primary size-4 rounded-sm'
+                    />
+                    <span className={genders.includes(g.value) ? 'font-medium' : ''}>{g.label}</span>
+                    <span className='text-muted-foreground ml-auto text-xs'>({counts.gender[g.value] || 0})</span>
+                  </label>
+                )
+              })}
               {genderOptions.length > GENDER_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllGenders}
@@ -387,20 +414,24 @@ const ShopPageContent = () => {
 
       case 'category':
         return (
-          <FilterSection title='Category'>
+          <FilterSection title='Category' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
-              {visibleCategories.map(cat => (
-                <label key={cat.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                  <input
-                    type='checkbox'
-                    checked={categories.includes(cat.value)}
-                    onChange={() => setCategories(prev => toggle(prev, cat.value))}
-                    className='border-foreground/30 accent-primary size-4 rounded-sm'
-                  />
-                  <span className={categories.includes(cat.value) ? 'font-medium' : ''}>{cat.label}</span>
-                  <span className='text-muted-foreground ml-auto text-xs'>({counts.category[cat.value] || 0})</span>
-                </label>
-              ))}
+              {visibleCategories.map(cat => {
+                const isDisabled = (counts.category[cat.value] || 0) === 0
+                return (
+                  <label key={cat.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                    <input
+                      type='checkbox'
+                      checked={categories.includes(cat.value)}
+                      disabled={isDisabled}
+                      onChange={() => setCategories(prev => toggle(prev, cat.value))}
+                      className='border-foreground/30 accent-primary size-4 rounded-sm'
+                    />
+                    <span className={categories.includes(cat.value) ? 'font-medium' : ''}>{cat.label}</span>
+                    <span className='text-muted-foreground ml-auto text-xs'>({counts.category[cat.value] || 0})</span>
+                  </label>
+                )
+              })}
               {categoryOptions.length > CATEGORY_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllCategories}
@@ -414,7 +445,7 @@ const ShopPageContent = () => {
 
       case 'size':
         return (
-          <FilterSection title='Size'>
+          <FilterSection title='Size' defaultOpen={filtersExpanded}>
             {showAllSizes ? (
               <>
                 {sizeGroups.map((group, groupIdx) => (
@@ -451,17 +482,19 @@ const ShopPageContent = () => {
 
       case 'color':
         return (
-          <FilterSection title='Color'>
+          <FilterSection title='Color' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               {visibleColors.map(([name, count]) => {
                 const colorData = shopProducts.flatMap(p => p.colors).find(c => c.name === name)
                 const isActive = selectedColors.includes(name)
+                const isDisabled = count === 0
 
                 return (
-                  <label key={name} className='flex cursor-pointer items-center gap-2 text-sm'>
+                  <label key={name} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
                     <input
                       type='checkbox'
                       checked={isActive}
+                      disabled={isDisabled}
                       onChange={() => setSelectedColors(prev => toggle(prev, name))}
                       className='border-foreground/30 accent-primary size-4 rounded-sm'
                     />
@@ -497,22 +530,26 @@ const ShopPageContent = () => {
 
       case 'fabric':
         return (
-          <FilterSection title='Fabric'>
+          <FilterSection title='Fabric' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
-              {visibleFabrics.map(f => (
-                <label key={f.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                  <input
-                    type='checkbox'
-                    checked={selectedFabrics.includes(f.value)}
-                    onChange={() => setSelectedFabrics(prev => toggle(prev, f.value))}
-                    className='border-foreground/30 accent-primary size-4 rounded-sm'
-                  />
-                  <span className={selectedFabrics.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
-                  <span className='text-muted-foreground ml-auto shrink-0 text-xs'>
-                    ({counts.fabric[f.value] || 0})
-                  </span>
-                </label>
-              ))}
+              {visibleFabrics.map(f => {
+                const isDisabled = (counts.fabric[f.value] || 0) === 0
+                return (
+                  <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                    <input
+                      type='checkbox'
+                      checked={selectedFabrics.includes(f.value)}
+                      disabled={isDisabled}
+                      onChange={() => setSelectedFabrics(prev => toggle(prev, f.value))}
+                      className='border-foreground/30 accent-primary size-4 rounded-sm'
+                    />
+                    <span className={selectedFabrics.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
+                    <span className='text-muted-foreground ml-auto shrink-0 text-xs'>
+                      ({counts.fabric[f.value] || 0})
+                    </span>
+                  </label>
+                )
+              })}
               {fabricOptions.length > FABRIC_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllFabrics}
@@ -526,20 +563,24 @@ const ShopPageContent = () => {
 
       case 'fit':
         return (
-          <FilterSection title='Fit'>
+          <FilterSection title='Fit' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
-              {visibleFits.map(f => (
-                <label key={f.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                  <input
-                    type='checkbox'
-                    checked={selectedFits.includes(f.value)}
-                    onChange={() => setSelectedFits(prev => toggle(prev, f.value))}
-                    className='border-foreground/30 accent-primary size-4 rounded-sm'
-                  />
-                  <span className={selectedFits.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
-                  <span className='text-muted-foreground ml-auto text-xs'>({counts.fit[f.value] || 0})</span>
-                </label>
-              ))}
+              {visibleFits.map(f => {
+                const isDisabled = (counts.fit[f.value] || 0) === 0
+                return (
+                  <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                    <input
+                      type='checkbox'
+                      checked={selectedFits.includes(f.value)}
+                      disabled={isDisabled}
+                      onChange={() => setSelectedFits(prev => toggle(prev, f.value))}
+                      className='border-foreground/30 accent-primary size-4 rounded-sm'
+                    />
+                    <span className={selectedFits.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
+                    <span className='text-muted-foreground ml-auto text-xs'>({counts.fit[f.value] || 0})</span>
+                  </label>
+                )
+              })}
               {fitOptions.length > FIT_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllFits}
@@ -553,20 +594,24 @@ const ShopPageContent = () => {
 
       case 'neckline':
         return (
-          <FilterSection title='Neckline'>
+          <FilterSection title='Neckline' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
-              {visibleNecklines.map(n => (
-                <label key={n.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                  <input
-                    type='checkbox'
-                    checked={selectedNecklines.includes(n.value)}
-                    onChange={() => setSelectedNecklines(prev => toggle(prev, n.value))}
-                    className='border-foreground/30 accent-primary size-4 rounded-sm'
-                  />
-                  <span className={selectedNecklines.includes(n.value) ? 'font-medium' : ''}>{n.label}</span>
-                  <span className='text-muted-foreground ml-auto text-xs'>({counts.neckline[n.value] || 0})</span>
-                </label>
-              ))}
+              {visibleNecklines.map(n => {
+                const isDisabled = (counts.neckline[n.value] || 0) === 0
+                return (
+                  <label key={n.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                    <input
+                      type='checkbox'
+                      checked={selectedNecklines.includes(n.value)}
+                      disabled={isDisabled}
+                      onChange={() => setSelectedNecklines(prev => toggle(prev, n.value))}
+                      className='border-foreground/30 accent-primary size-4 rounded-sm'
+                    />
+                    <span className={selectedNecklines.includes(n.value) ? 'font-medium' : ''}>{n.label}</span>
+                    <span className='text-muted-foreground ml-auto text-xs'>({counts.neckline[n.value] || 0})</span>
+                  </label>
+                )
+              })}
               {necklineOptions.length > NECKLINE_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllNecklines}
@@ -580,20 +625,24 @@ const ShopPageContent = () => {
 
       case 'features':
         return (
-          <FilterSection title='Features'>
+          <FilterSection title='Features' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
-              {visibleFeatures.map(f => (
-                <label key={f.value} className='flex cursor-pointer items-center gap-2 text-sm'>
-                  <input
-                    type='checkbox'
-                    checked={selectedFeatures.includes(f.value)}
-                    onChange={() => setSelectedFeatures(prev => toggle(prev, f.value))}
-                    className='border-foreground/30 accent-primary size-4 rounded-sm'
-                  />
-                  <span className={selectedFeatures.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
-                  <span className='text-muted-foreground ml-auto text-xs'>({counts.feature[f.value] || 0})</span>
-                </label>
-              ))}
+              {visibleFeatures.map(f => {
+                const isDisabled = (counts.feature[f.value] || 0) === 0
+                return (
+                  <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                    <input
+                      type='checkbox'
+                      checked={selectedFeatures.includes(f.value)}
+                      disabled={isDisabled}
+                      onChange={() => setSelectedFeatures(prev => toggle(prev, f.value))}
+                      className='border-foreground/30 accent-primary size-4 rounded-sm'
+                    />
+                    <span className={selectedFeatures.includes(f.value) ? 'font-medium' : ''}>{f.label}</span>
+                    <span className='text-muted-foreground ml-auto text-xs'>({counts.feature[f.value] || 0})</span>
+                  </label>
+                )
+              })}
               {featureOptions.length > FEATURE_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllFeatures}
@@ -607,7 +656,7 @@ const ShopPageContent = () => {
 
       case 'price':
         return (
-          <FilterSection title='Price'>
+          <FilterSection title='Price' defaultOpen={filtersExpanded}>
             <div className='flex flex-col gap-2'>
               <label className='flex cursor-pointer items-center gap-2 text-sm'>
                 <input
@@ -730,6 +779,25 @@ const ShopPageContent = () => {
                 ) : (
                   <p className='text-muted-foreground mb-2 text-xs'>No filters applied</p>
                 )}
+
+                {/* Expand/Collapse toggle */}
+                <div className='mb-3 flex items-center justify-between'>
+                  <span className='text-xs font-medium'>Expand all filters</span>
+                  <button
+                    onClick={() => setFiltersExpanded(!filtersExpanded)}
+                    className={`relative inline-flex h-5 w-9 shrink-0 cursor-pointer items-center rounded-full transition-colors ${
+                      filtersExpanded ? 'bg-foreground' : 'bg-foreground/25'
+                    }`}
+                    role='switch'
+                    aria-checked={filtersExpanded}
+                  >
+                    <span
+                      className={`inline-block size-3.5 rounded-full bg-white shadow-sm transition-transform ${
+                        filtersExpanded ? 'translate-x-4.5' : 'translate-x-0.5'
+                      }`}
+                    />
+                  </button>
+                </div>
               </div>
 
               <div className='px-4'>
