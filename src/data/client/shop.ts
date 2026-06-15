@@ -1,4 +1,10 @@
-import type { ShopCategoryFilter, ShopProduct } from '@/types/shop'
+import type {
+  FilterKey,
+  PriceRange,
+  ShopCategoryFilter,
+  ShopProduct,
+  SizeGroup
+} from '@/types/shop'
 
 export const shopCategories: ShopCategoryFilter[] = [
   { value: 'all', label: 'All' },
@@ -6,6 +12,80 @@ export const shopCategories: ShopCategoryFilter[] = [
   { value: 'long-sleeves', label: 'Long Sleeves' },
   { value: 'hoodies', label: 'Hoodies' },
   { value: 'sandos', label: 'Sandos' }
+]
+
+export const shopFilterOrder: FilterKey[] = [
+  'gender',
+  'category',
+  'size',
+  'color',
+  'price',
+  'fabric',
+  'fit',
+  'neckline',
+  'features'
+]
+
+export const shopGenderOptions: { value: string; label: string }[] = [
+  { value: 'men', label: 'Men' },
+  { value: 'women', label: 'Women' },
+  { value: 'unisex', label: 'Unisex' }
+]
+
+export const shopCategoryOptions: { value: string; label: string }[] = [
+  { value: 't-shirts', label: 'T-Shirts' },
+  { value: 'long-sleeves', label: 'Long Sleeves' },
+  { value: 'hoodies', label: 'Hoodies' },
+  { value: 'sandos', label: 'Sandos' }
+]
+
+export const shopSizeGroups: SizeGroup[] = [
+  {
+    id: 'regular',
+    label: 'Regular',
+    values: ['XXXS', 'XXS', 'XXS/XS', 'XS', 'XS/S', 'S', 'S/M', 'M', 'M/L', 'L', 'L/XL', 'XL', 'XL/XXL', 'XXL']
+  },
+  {
+    id: 'one-size',
+    label: 'One Size',
+    values: ['ONE SIZE']
+  }
+]
+
+export const shopFabricOptions: { value: string; label: string; description?: string }[] = [
+  { value: 'cotton', label: 'Cotton', description: '' },
+  { value: 'polyester', label: 'Polyester', description: '' },
+  { value: 'linen', label: 'Linen', description: 'Lightweight and perfect for warm weather' },
+  { value: 'dry-fit', label: 'Dry Fit', description: 'Moisture-wicking technology for active wear' }
+]
+
+export const shopFitOptions: { value: string; label: string }[] = [
+  { value: 'relaxed', label: 'Relaxed Fit' },
+  { value: 'classic', label: 'Classic Fit' },
+  { value: 'oversized', label: 'Oversized Fit' },
+  { value: 'slim', label: 'Slim Fit' },
+  { value: 'tight', label: 'Tight Fit' }
+]
+
+export const shopNecklineOptions: { value: string; label: string }[] = [
+  { value: 'crew-neck', label: 'Crew Neck' },
+  { value: 'collared', label: 'Collared' },
+  { value: 'v-neck', label: 'V-Neck' }
+]
+
+export const shopFeatureOptions: { value: string; label: string }[] = [
+  { value: 'pocket', label: 'Pocket' },
+  { value: 'logo-print', label: 'Logo Print' },
+  { value: 'ribbed', label: 'Ribbed' },
+  { value: 'striped', label: 'Striped' },
+  { value: 'graphic', label: 'Graphic' }
+]
+
+export const shopPriceRanges: { value: PriceRange; label: string }[] = [
+  { value: 'up-to-200', label: 'Up to ₱200' },
+  { value: '201-500', label: '₱201 – ₱500' },
+  { value: '501-1000', label: '₱501 – ₱1,000' },
+  { value: 'over-1000', label: 'Over ₱1,000' }
 ]
 
 export const shopProducts: ShopProduct[] = [

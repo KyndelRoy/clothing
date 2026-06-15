@@ -9,7 +9,18 @@ import { Input } from '@/components/ui/input'
 
 import ProductCard from '@/components/client/product-card'
 
-import { shopProducts } from '@/data/client/shop'
+import {
+  shopProducts,
+  shopFilterOrder,
+  shopGenderOptions,
+  shopCategoryOptions,
+  shopSizeGroups,
+  shopFabricOptions,
+  shopFitOptions,
+  shopNecklineOptions,
+  shopFeatureOptions,
+  shopPriceRanges
+} from '@/data/client/shop'
 
 import type {
   FilterKey,
@@ -20,8 +31,7 @@ import type {
   ShopFit,
   ShopGender,
   ShopNeckline,
-  ShopSize,
-  SizeGroup
+  ShopSize
 } from '@/types/shop'
 
 type SortOption = 'newest' | 'oldest' | 'price-low' | 'price-high'
@@ -33,72 +43,10 @@ const sortLabels: Record<SortOption, string> = {
   'price-high': 'Price: High to Low'
 }
 
-const genderOptions: { value: ShopGender; label: string }[] = [
-  { value: 'men', label: 'Men' },
-  { value: 'women', label: 'Women' },
-  { value: 'unisex', label: 'Unisex' }
-]
-
-const categoryOptions: { value: ShopCategory; label: string }[] = [
-  { value: 't-shirts', label: 'T-Shirts' },
-  { value: 'long-sleeves', label: 'Long Sleeves' },
-  { value: 'hoodies', label: 'Hoodies' },
-  { value: 'sandos', label: 'Sandos' }
-]
-
-const sizeGroups: SizeGroup[] = [
-  {
-    id: 'regular',
-    label: 'Regular',
-    values: ['XXXS', 'XXS', 'XXS/XS', 'XS', 'XS/S', 'S', 'S/M', 'M', 'M/L', 'L', 'L/XL', 'XL', 'XL/XXL', 'XXL']
-  },
-  {
-    id: 'one-size',
-    label: 'One Size',
-    values: ['ONE SIZE']
-  }
-]
-
 const SIZE_GROUP_INITIAL_ROWS = 3
 const SIZE_PILL_WIDTH_APPROX = 70
 const SIZE_GAP = 8
 const SIZE_CONTAINER_WIDTH = 208
-
-const fabricOptions: { value: ShopFabric; label: string; description?: string }[] = [
-  { value: 'cotton', label: 'Cotton', description: '' },
-  { value: 'polyester', label: 'Polyester', description: '' },
-  { value: 'linen', label: 'Linen', description: 'Lightweight and perfect for warm weather' },
-  { value: 'dry-fit', label: 'Dry Fit', description: 'Moisture-wicking technology for active wear' }
-]
-
-const fitOptions: { value: ShopFit; label: string }[] = [
-  { value: 'relaxed', label: 'Relaxed Fit' },
-  { value: 'classic', label: 'Classic Fit' },
-  { value: 'oversized', label: 'Oversized Fit' },
-  { value: 'slim', label: 'Slim Fit' },
-  { value: 'tight', label: 'Tight Fit' }
-]
-
-const necklineOptions: { value: ShopNeckline; label: string }[] = [
-  { value: 'crew-neck', label: 'Crew Neck' },
-  { value: 'collared', label: 'Collared' },
-  { value: 'v-neck', label: 'V-Neck' }
-]
-
-const featureOptions: { value: ShopFeature; label: string }[] = [
-  { value: 'pocket', label: 'Pocket' },
-  { value: 'logo-print', label: 'Logo Print' },
-  { value: 'ribbed', label: 'Ribbed' },
-  { value: 'striped', label: 'Striped' },
-  { value: 'graphic', label: 'Graphic' }
-]
-
-const priceRanges: { value: PriceRange; label: string }[] = [
-  { value: 'up-to-200', label: 'Up to ₱200' },
-  { value: '201-500', label: '₱201 – ₱500' },
-  { value: '501-1000', label: '₱501 – ₱1,000' },
-  { value: 'over-1000', label: 'Over ₱1,000' }
-]
 
 const GENDER_INITIAL_COUNT = 6
 const CATEGORY_INITIAL_COUNT = 4
@@ -107,18 +55,6 @@ const FABRIC_INITIAL_COUNT = 3
 const FIT_INITIAL_COUNT = 3
 const NECKLINE_INITIAL_COUNT = 3
 const FEATURE_INITIAL_COUNT = 3
-
-const DEFAULT_FILTER_ORDER: FilterKey[] = [
-  'gender',
-  'category',
-  'size',
-  'color',
-  'price',
-  'fabric',
-  'fit',
-  'neckline',
-  'features'
-]
 
 const FilterSection = ({
   title,
@@ -177,7 +113,7 @@ const ShopPageContent = () => {
   const [showAllNecklines, setShowAllNecklines] = useState(false)
   const [showAllFeatures, setShowAllFeatures] = useState(false)
 
-  const [filterOrder] = useState<FilterKey[]>(DEFAULT_FILTER_ORDER)
+  const [filterOrder] = useState<FilterKey[]>(shopFilterOrder)
 
   const toggle = <T extends string>(prev: T[], val: T) =>
     prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
@@ -329,18 +265,18 @@ const ShopPageContent = () => {
     [counts]
   )
 
-  const visibleGenders = showAllGenders ? genderOptions : genderOptions.slice(0, GENDER_INITIAL_COUNT)
-  const visibleCategories = showAllCategories ? categoryOptions : categoryOptions.slice(0, CATEGORY_INITIAL_COUNT)
+  const visibleGenders = showAllGenders ? shopGenderOptions : shopGenderOptions.slice(0, GENDER_INITIAL_COUNT)
+  const visibleCategories = showAllCategories ? shopCategoryOptions : shopCategoryOptions.slice(0, CATEGORY_INITIAL_COUNT)
   const visibleColors = showAllColors ? availableColors : availableColors.slice(0, COLOR_INITIAL_COUNT)
-  const visibleFabrics = showAllFabrics ? fabricOptions : fabricOptions.slice(0, FABRIC_INITIAL_COUNT)
-  const visibleFits = showAllFits ? fitOptions : fitOptions.slice(0, FIT_INITIAL_COUNT)
-  const visibleNecklines = showAllNecklines ? necklineOptions : necklineOptions.slice(0, NECKLINE_INITIAL_COUNT)
-  const visibleFeatures = showAllFeatures ? featureOptions : featureOptions.slice(0, FEATURE_INITIAL_COUNT)
+  const visibleFabrics = showAllFabrics ? shopFabricOptions : shopFabricOptions.slice(0, FABRIC_INITIAL_COUNT)
+  const visibleFits = showAllFits ? shopFitOptions : shopFitOptions.slice(0, FIT_INITIAL_COUNT)
+  const visibleNecklines = showAllNecklines ? shopNecklineOptions : shopNecklineOptions.slice(0, NECKLINE_INITIAL_COUNT)
+  const visibleFeatures = showAllFeatures ? shopFeatureOptions : shopFeatureOptions.slice(0, FEATURE_INITIAL_COUNT)
 
   const pillsPerRow = Math.floor((SIZE_CONTAINER_WIDTH + SIZE_GAP) / (SIZE_PILL_WIDTH_APPROX + SIZE_GAP))
   const sizeInitialVisibleCount = pillsPerRow * SIZE_GROUP_INITIAL_ROWS
 
-  const allSizeValues = sizeGroups.flatMap(g => g.values)
+  const allSizeValues = shopSizeGroups.flatMap((g: { values: ShopSize[] }) => g.values)
   const visibleSizeValues = showAllSizes ? allSizeValues : allSizeValues.slice(0, sizeInitialVisibleCount)
   const needsSizeShowAll = allSizeValues.length > sizeInitialVisibleCount
 
@@ -390,10 +326,10 @@ const ShopPageContent = () => {
                   </label>
                 )
               })}
-              {genderOptions.length > GENDER_INITIAL_COUNT && (
+              {shopGenderOptions.length > GENDER_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllGenders}
-                  total={genderOptions.length}
+                  total={shopGenderOptions.length}
                   onToggle={() => setShowAllGenders(!showAllGenders)}
                 />
               )}
@@ -405,7 +341,7 @@ const ShopPageContent = () => {
         return (
           <FilterSection title='Category' defaultOpen>
             <div className='flex flex-col gap-2'>
-              {visibleCategories.map(cat => {
+              {visibleCategories.map((cat: { value: ShopCategory; label: string }) => {
 
                 const isDisabled = (counts.category[cat.value] || 0) === 0
 
@@ -423,10 +359,10 @@ const ShopPageContent = () => {
                   </label>
                 )
               })}
-              {categoryOptions.length > CATEGORY_INITIAL_COUNT && (
+              {shopCategoryOptions.length > CATEGORY_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllCategories}
-                  total={categoryOptions.length}
+                  total={shopCategoryOptions.length}
                   onToggle={() => setShowAllCategories(!showAllCategories)}
                 />
               )}
@@ -439,10 +375,10 @@ const ShopPageContent = () => {
           <FilterSection title='Size' defaultOpen>
             {showAllSizes ? (
               <>
-                {sizeGroups.map((group, groupIdx) => (
+                {shopSizeGroups.map((group: { id: string; label: string; values: ShopSize[] }, groupIdx: number) => (
                   <div key={group.id}>
                     {groupIdx > 0 && <div className='border-foreground/20 my-3 border-t border-dashed' />}
-                    {sizeGroups.length > 1 && (
+                    {shopSizeGroups.length > 1 && (
                       <p className='text-muted-foreground mb-2 text-xs font-medium tracking-wider uppercase'>
                         {group.label}
                       </p>
@@ -523,7 +459,7 @@ const ShopPageContent = () => {
         return (
           <FilterSection title='Fabric'>
             <div className='flex flex-col gap-2'>
-              {visibleFabrics.map(f => {
+              {visibleFabrics.map((f: { value: ShopFabric; label: string }) => {
 
                 const isDisabled = (counts.fabric[f.value] || 0) === 0
 
@@ -543,10 +479,10 @@ const ShopPageContent = () => {
                   </label>
                 )
               })}
-              {fabricOptions.length > FABRIC_INITIAL_COUNT && (
+              {shopFabricOptions.length > FABRIC_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllFabrics}
-                  total={fabricOptions.length}
+                  total={shopFabricOptions.length}
                   onToggle={() => setShowAllFabrics(!showAllFabrics)}
                 />
               )}
@@ -558,7 +494,7 @@ const ShopPageContent = () => {
         return (
           <FilterSection title='Fit' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
-              {visibleFits.map(f => {
+              {visibleFits.map((f: { value: ShopFit; label: string }) => {
 
                 const isDisabled = (counts.fit[f.value] || 0) === 0
 
@@ -576,10 +512,10 @@ const ShopPageContent = () => {
                   </label>
                 )
               })}
-              {fitOptions.length > FIT_INITIAL_COUNT && (
+              {shopFitOptions.length > FIT_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllFits}
-                  total={fitOptions.length}
+                  total={shopFitOptions.length}
                   onToggle={() => setShowAllFits(!showAllFits)}
                 />
               )}
@@ -591,7 +527,7 @@ const ShopPageContent = () => {
         return (
           <FilterSection title='Neckline' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
-              {visibleNecklines.map(n => {
+              {visibleNecklines.map((n: { value: ShopNeckline; label: string }) => {
 
                 const isDisabled = (counts.neckline[n.value] || 0) === 0
 
@@ -609,10 +545,10 @@ const ShopPageContent = () => {
                   </label>
                 )
               })}
-              {necklineOptions.length > NECKLINE_INITIAL_COUNT && (
+              {shopNecklineOptions.length > NECKLINE_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllNecklines}
-                  total={necklineOptions.length}
+                  total={shopNecklineOptions.length}
                   onToggle={() => setShowAllNecklines(!showAllNecklines)}
                 />
               )}
@@ -624,7 +560,7 @@ const ShopPageContent = () => {
         return (
           <FilterSection title='Features' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
-              {visibleFeatures.map(f => {
+              {visibleFeatures.map((f: { value: ShopFeature; label: string }) => {
 
                 const isDisabled = (counts.feature[f.value] || 0) === 0
 
@@ -642,10 +578,10 @@ const ShopPageContent = () => {
                   </label>
                 )
               })}
-              {featureOptions.length > FEATURE_INITIAL_COUNT && (
+              {shopFeatureOptions.length > FEATURE_INITIAL_COUNT && (
                 <ShowAllButton
                   show={showAllFeatures}
-                  total={featureOptions.length}
+                  total={shopFeatureOptions.length}
                   onToggle={() => setShowAllFeatures(!showAllFeatures)}
                 />
               )}
@@ -672,7 +608,7 @@ const ShopPageContent = () => {
                 />
                 <span>All prices</span>
               </label>
-              {priceRanges.map(p => (
+              {shopPriceRanges.map((p: { value: PriceRange; label: string }) => (
                 <label key={p.value} className='flex cursor-pointer items-center gap-2 text-sm'>
                   <input
                     type='radio'

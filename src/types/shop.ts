@@ -1,16 +1,16 @@
-export type ShopCategory = 't-shirts' | 'long-sleeves' | 'hoodies' | 'sandos'
+export type ShopCategory = string
 
-export type ShopGender = 'men' | 'women' | 'unisex'
+export type ShopGender = string
 
-export type ShopSize = 'XXXS' | 'XXS' | 'XXS/XS' | 'XS' | 'XS/S' | 'S' | 'S/M' | 'M' | 'M/L' | 'L' | 'L/XL' | 'XL' | 'XL/XXL' | 'XXL' | 'ONE SIZE'
+export type ShopSize = string
 
-export type ShopFabric = 'cotton' | 'polyester' | 'linen' | 'dry-fit'
+export type ShopFabric = string
 
-export type ShopFit = 'relaxed' | 'classic' | 'oversized' | 'slim' | 'tight'
+export type ShopFit = string
 
-export type ShopNeckline = 'crew-neck' | 'collared' | 'v-neck'
+export type ShopNeckline = string
 
-export type ShopFeature = 'pocket' | 'logo-print' | 'ribbed' | 'striped' | 'graphic'
+export type ShopFeature = string
 
 export type ProductColor = {
   name: string
