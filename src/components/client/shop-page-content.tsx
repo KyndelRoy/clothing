@@ -729,7 +729,7 @@ const ShopPageContent = () => {
           {/* Right side - Search + Sort + Cards */}
           <div className='min-w-0 flex-1'>
             {/* Sort bar */}
-            <div className='bg-background/95 sticky top-16 z-40 mb-4 flex items-center justify-end gap-3 border-b py-3 text-sm backdrop-blur-sm'>
+            <div className='bg-white/95 sticky top-16 z-40 mb-4 flex items-center justify-end gap-3 border-b py-3 text-sm backdrop-blur-sm'>
               <div className='relative max-w-xs flex-1'>
                 <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
                 <Input
@@ -749,7 +749,7 @@ const ShopPageContent = () => {
               <select
                 value={sort}
                 onChange={e => setSort(e.target.value as SortOption)}
-                className='border-foreground/20 bg-background focus:ring-primary rounded-md border px-3 py-1.5 text-sm focus:ring-1 focus:outline-none'
+                className='border-foreground/20 bg-white focus:ring-primary rounded-md border px-3 py-1.5 text-sm focus:ring-1 focus:outline-none'
               >
                 {Object.entries(sortLabels).map(([value, label]) => (
                   <option key={value} value={value}>
