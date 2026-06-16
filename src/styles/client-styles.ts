@@ -10,7 +10,7 @@ type ClientTypographyToken = {
 }
 
 export const clientTypography = {
-  fontFamily: 'Calibre, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+  fontFamily: '"Helvetica Neue", Calibre, Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
   letterSpacing: 'normal',
   trackingTight: '-0.04em',
   trackingNormal: 'normal',
@@ -109,7 +109,7 @@ export const clientTypography = {
   price: {
     size: '1rem',
     lineHeight: '1',
-    fontWeight: 600,
+    fontWeight: 400,
     fontVariantNumeric: 'tabular-nums'
   },
   meta: {

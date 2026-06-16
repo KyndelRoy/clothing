@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import { HeartIcon, ShoppingBagIcon } from 'lucide-react'
+
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
 
 import { formatPrice } from '@/lib/format'
@@ -83,7 +85,13 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
         (className ?? '')
       }
     >
-      <CardContent className='px-0'>
+      <CardContent className='relative px-0'>
+        <button
+          className='absolute top-2 right-2 z-10 flex size-8 items-center justify-center rounded-full bg-white/80 text-black shadow-sm backdrop-blur-sm transition-colors hover:bg-white'
+          aria-label='Add to wishlist'
+        >
+          <HeartIcon className='size-4' />
+        </button>
         <div className='bg-muted/30 overflow-hidden'>
           <img
             src={selectedColor.image}
@@ -125,10 +133,15 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
             </div>
           </div>
         )}
-        <CardTitle className='text-[17px] font-normal leading-snug'>
-          {product.name}
-        </CardTitle>
+        <CardTitle className='text-base font-semibold leading-snug'>{product.name}</CardTitle>
         <span className='client-price mt-auto text-left'>{formatPrice(product.price)}</span>
+        <a
+          href='#'
+          className='mt-1 inline-flex items-center gap-1.5 text-sm font-normal text-black underline underline-offset-2 transition-colors hover:text-black/70'
+        >
+          <ShoppingBagIcon className='size-3.5' />
+          Quick Shop
+        </a>
       </CardContent>
     </Card>
   )

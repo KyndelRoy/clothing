@@ -288,9 +288,11 @@ const ShopPageContent = () => {
   )
 
   const visibleGenders = showAllGenders ? shopGenderOptions : shopGenderOptions.slice(0, GENDER_INITIAL_COUNT)
+
   const visibleCategories = showAllCategories
     ? shopCategoryOptions
     : shopCategoryOptions.slice(0, CATEGORY_INITIAL_COUNT)
+
   const visibleColors = showAllColors ? availableColors : availableColors.slice(0, COLOR_INITIAL_COUNT)
   const visibleFabrics = showAllFabrics ? shopFabricOptions : shopFabricOptions.slice(0, FABRIC_INITIAL_COUNT)
   const visibleFits = showAllFits ? shopFitOptions : shopFitOptions.slice(0, FIT_INITIAL_COUNT)
