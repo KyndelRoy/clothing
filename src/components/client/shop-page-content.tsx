@@ -68,7 +68,7 @@ const FilterSection = ({
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className='border-b border-gray-200 py-3'>
+    <div className='border-b border-gray-200 px-4 py-3'>
       <div className='flex w-full items-center justify-between'>
         <button onClick={() => setOpen(!open)} className='text-sm font-semibold'>
           {title}
@@ -729,7 +729,7 @@ const ShopPageContent = () => {
   return (
     <section className='mt-4 pb-4 sm:pb-6 lg:pb-8'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
-        <div className='flex gap-8'>
+        <div className='flex gap-4'>
           {/* Left sidebar - Filters */}
           <aside className='w-[276px] shrink-0'>
             <div className='bg-white pt-4 pr-1'>
@@ -756,7 +756,7 @@ const ShopPageContent = () => {
                 )}
               </div>
 
-              <div className='px-4'>
+              <div>
                 {filterOrder.map(key => (
                   <div key={key}>{renderFilterContent(key)}</div>
                 ))}
@@ -787,7 +787,7 @@ const ShopPageContent = () => {
               <select
                 value={sort}
                 onChange={e => setSort(e.target.value as SortOption)}
-                className='rounded-md border border-gray-200 bg-white px-3 py-1.5 text-sm focus:ring-1 focus:ring-black focus:outline-none'
+                className='rounded-none border border-gray-200 bg-white px-3 py-1.5 text-sm focus:ring-1 focus:ring-black focus:outline-none'
               >
                 {Object.entries(sortLabels).map(([value, label]) => (
                   <option key={value} value={value}>

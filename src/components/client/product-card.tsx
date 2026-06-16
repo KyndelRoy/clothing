@@ -81,7 +81,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   return (
     <Card
       className={
-        'group/product flex aspect-[317.6/590.44] flex-col overflow-hidden rounded-md border border-gray-200 bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 hover:border-black dark:text-white! ' +
+        'group/product flex aspect-[317.6/590.44] flex-col gap-3 overflow-hidden rounded-none border border-gray-200 bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 hover:border-black dark:text-white! ' +
         (className ?? '')
       }
     >
@@ -101,7 +101,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
           />
         </div>
       </CardContent>
-      <CardContent className={`flex flex-1 flex-col gap-2 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
+      <CardContent className={`flex flex-1 flex-col gap-2 pt-0 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
         {hasAvailableColors ? (
           <div ref={rowRef} className='flex items-center gap-2'>
             {product.colors.slice(0, visibleCount).map(color => (
@@ -110,9 +110,9 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
                 onClick={() => handleColorSelect(color)}
                 disabled={!color.available}
                 title={`${color.name}${!color.available ? ' (Unavailable)' : ''}`}
-                className={`h-6 w-6 shrink-0 rounded-sm border transition-all ${
+                className={`h-5 w-5 shrink-0 rounded-full border transition-all ${
                   selectedColor.name === color.name
-                    ? 'border-foreground ring-foreground/30 ring-2'
+                    ? 'border-foreground/30 ring-foreground ring-1 ring-offset-1'
                     : 'border-foreground/20'
                 } ${!color.available ? 'cursor-not-allowed opacity-30' : 'cursor-pointer hover:scale-110'}`}
                 style={{ backgroundColor: color.hex }}
@@ -133,13 +133,13 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
             </div>
           </div>
         )}
-        <CardTitle className='text-base font-semibold leading-snug'>{product.name}</CardTitle>
-        <span className='client-price mt-auto text-left'>{formatPrice(product.price)}</span>
+        <CardTitle className='text-base leading-snug font-semibold'>{product.name}</CardTitle>
+        <span className='mt-auto text-left text-base font-normal tabular-nums'>{formatPrice(product.price)}</span>
         <a
           href='#'
-          className='mt-1 inline-flex items-center gap-1.5 text-sm font-normal text-black underline underline-offset-2 transition-colors hover:text-black/70'
+          className='mt-1 ml-1 inline-flex items-center gap-1.5 text-base font-normal text-black underline underline-offset-4 transition-colors hover:text-black/70'
         >
-          <ShoppingBagIcon className='size-3.5' />
+          <ShoppingBagIcon className='size-4' />
           Quick Shop
         </a>
       </CardContent>
