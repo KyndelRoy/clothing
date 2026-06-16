@@ -79,7 +79,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   return (
     <Card
       className={
-        'group/product overflow-hidden rounded-md border border-gray-200 bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 hover:border-black dark:text-white! ' +
+        'group/product flex aspect-[317.6/590.44] flex-col overflow-hidden rounded-md border border-gray-200 bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 hover:border-black dark:text-white! ' +
         (className ?? '')
       }
     >
@@ -88,12 +88,12 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
           <img
             src={selectedColor.image}
             alt={selectedColor.imageAlt}
-            className='aspect-[1/1.9] w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
+            className='aspect-[297.6/356.94] w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
             loading='lazy'
           />
         </div>
       </CardContent>
-      <CardContent className={`flex flex-col gap-2 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
+      <CardContent className={`flex flex-1 flex-col gap-2 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
         {hasAvailableColors ? (
           <div ref={rowRef} className='flex items-center gap-2'>
             {product.colors.slice(0, visibleCount).map(color => (
@@ -125,11 +125,10 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
             </div>
           </div>
         )}
-        <CardTitle className={`${hasAvailableColors ? 'client-card-title' : 'text-sm font-semibold'}`}>
+        <CardTitle className='text-[17px] font-normal leading-snug'>
           {product.name}
         </CardTitle>
-        <div className='h-2' />
-        <span className='client-price text-left'>{formatPrice(product.price)}</span>
+        <span className='client-price mt-auto text-left'>{formatPrice(product.price)}</span>
       </CardContent>
     </Card>
   )
