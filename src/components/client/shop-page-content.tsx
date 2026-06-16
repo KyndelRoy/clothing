@@ -676,7 +676,7 @@ const ShopPageContent = () => {
                     placeholder='100'
                     value={minPrice}
                     onChange={e => setMinPrice(e.target.value.replace(/[^0-9]/g, ''))}
-                    className='placeholder:text-foreground/30 rounded-sm border border-gray-200 bg-white text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                    className='placeholder:text-foreground/30 rounded-none border border-gray-200 bg-white text-sm focus:border-black focus:ring-0 focus-visible:border-black focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
                   />
                 </div>
                 <div className='flex-1'>
@@ -688,7 +688,7 @@ const ShopPageContent = () => {
                     placeholder='500'
                     value={maxPrice}
                     onChange={e => setMaxPrice(e.target.value.replace(/[^0-9]/g, ''))}
-                    className='placeholder:text-foreground/30 rounded-sm border border-gray-200 bg-white text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
+                    className='placeholder:text-foreground/30 rounded-none border border-gray-200 bg-white text-sm focus:border-black focus:ring-0 focus-visible:border-black focus-visible:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none'
                   />
                 </div>
               </div>
@@ -774,7 +774,7 @@ const ShopPageContent = () => {
                   value={query}
                   onChange={event => setQuery(event.target.value)}
                   placeholder='Search products…'
-                  className='pl-9'
+                  className='rounded-none border border-gray-300 pl-9 focus:border-black focus:ring-0 focus-visible:border-black focus-visible:ring-0'
                   aria-label='Search products'
                   type='search'
                 />
