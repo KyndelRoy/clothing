@@ -1,35 +1,12 @@
 import type { ReactNode } from 'react'
 
-import { Geist_Mono, Merriweather, Outfit, Kaushan_Script } from 'next/font/google'
 import type { Metadata } from 'next'
-
 
 import { TooltipProvider } from '@/components/ui/tooltip'
 
 import { cn } from '@/lib/utils'
 
 import './globals.css'
-
-const outfitSans = Outfit({
-  variable: '--font-outfit-sans',
-  subsets: ['latin']
-})
-
-const merriweatherSerif = Merriweather({
-  variable: '--font-merriweather-serif',
-  subsets: ['latin']
-})
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin']
-})
-
-const kaushanScript = Kaushan_Script({
-  weight: '400',
-  variable: '--font-kaushan-script',
-  subsets: ['latin']
-})
 
 export const metadata: Metadata = {
   title: {
@@ -114,16 +91,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
-    <html
-      lang='en'
-      className={cn(
-        outfitSans.variable,
-        merriweatherSerif.variable,
-        geistMono.variable,
-        kaushanScript.variable,
-        'flex min-h-full w-full scroll-smooth antialiased'
-      )}
-    >
+    <html lang='en' className={cn('flex min-h-full w-full scroll-smooth antialiased')}>
       <body className='flex min-h-full w-full flex-auto flex-col'>
         <TooltipProvider>{children}</TooltipProvider>
       </body>
