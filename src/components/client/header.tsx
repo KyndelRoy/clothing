@@ -42,16 +42,16 @@ const Header = ({ navigationData, className }: HeaderProps) => {
   return (
     <header
       className={cn(
-        'fixed top-0 z-50 h-16 w-full border-b bg-white transition-all duration-300',
+        'fixed top-0 z-50 h-16 w-full bg-white transition-all duration-300',
         {
-          'shadow-md': isScrolled
+          'border-b border-gray-200': isScrolled
         },
         className
       )}
     >
       <div className='mx-auto flex h-full max-w-7xl items-center justify-between gap-6 px-4 sm:px-6 lg:px-8'>
         {/* Logo */}
-        <Link href='/' className='flex items-center gap-3'>
+        <Link href='/' className='flex items-center gap-3 outline-none border-none'>
           <img src='/logo/logo.png' alt='Armak Clothing Co.' className='h-10 w-10 object-cover object-center' />
           <span className='text-primary client-logo'>Armak Clothing Co.</span>
         </Link>

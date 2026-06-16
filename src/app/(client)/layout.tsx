@@ -60,7 +60,7 @@ const PagesLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
     >
       <Header navigationData={navigationData} />
 
-      <main className='flex flex-col pt-17.5 *:scroll-mt-16'>{children}</main>
+      <main className='flex flex-col pt-16 *:scroll-mt-16'>{children}</main>
 
       <Footer />
     </div>

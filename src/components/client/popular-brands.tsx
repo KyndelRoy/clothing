@@ -28,7 +28,7 @@ const PopularBrands = ({ brands }: PopularBrandsProps) => {
           {brands.map(brand => (
             <Card
               key={brand.id}
-              className='hover:border-primary border-foreground/20 overflow-hidden rounded-none border bg-transparent py-0 text-black! shadow-none ring-0 transition-colors duration-300'
+              className='border-gray-200 hover:border-black overflow-hidden rounded-md border bg-white py-0 text-black! shadow-none ring-0 transition-colors duration-300'
             >
               <CardContent className='px-0'>
                 <div className='bg-transparent'>

@@ -79,7 +79,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   return (
     <Card
       className={
-        'group/product border-foreground/15 hover:border-primary overflow-hidden rounded-md border bg-transparent pt-0 text-black! shadow-none ring-0 transition-colors duration-300 dark:text-white! ' +
+        'group/product border-gray-200 hover:border-black overflow-hidden rounded-md border bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 dark:text-white! ' +
         (className ?? '')
       }
     >

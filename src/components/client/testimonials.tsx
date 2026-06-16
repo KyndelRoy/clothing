@@ -55,7 +55,7 @@ const Testimonials = ({ testimonials }: TestimonialsProps) => {
           <CarouselContent className='ml-0 sm:-ml-6'>
             {testimonials.map(testimonial => (
               <CarouselItem key={testimonial.name} className='px-0.5 py-0.5 sm:pl-6 lg:basis-1/2'>
-                <Card className='hover:border-primary border-foreground/20 h-full rounded-none border bg-transparent text-black! ring-0 transition-colors duration-300 dark:text-white!'>
+                <Card className='border-gray-200 hover:border-black h-full rounded-md border bg-white text-black! ring-0 transition-colors duration-300 dark:text-white!'>
                   <CardHeader className='flex items-center gap-3'>
                     <Avatar size='lg'>
                       <AvatarImage src={testimonial.avatar} alt={testimonial.name} />
