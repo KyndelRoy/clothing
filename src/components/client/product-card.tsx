@@ -79,7 +79,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
   return (
     <Card
       className={
-        'group/product border-gray-200 hover:border-black overflow-hidden rounded-md border bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 dark:text-white! ' +
+        'group/product overflow-hidden rounded-md border border-gray-200 bg-white pt-0 text-black! shadow-none ring-0 transition-colors duration-300 hover:border-black dark:text-white! ' +
         (className ?? '')
       }
     >
@@ -88,12 +88,12 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
           <img
             src={selectedColor.image}
             alt={selectedColor.imageAlt}
-            className='aspect-4/5 w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
+            className='aspect-[1/1.9] w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
             loading='lazy'
           />
         </div>
       </CardContent>
-      <CardContent className={`flex flex-col gap-3 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
+      <CardContent className={`flex flex-col gap-2 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
         {hasAvailableColors ? (
           <div ref={rowRef} className='flex items-center gap-2'>
             {product.colors.slice(0, visibleCount).map(color => (
@@ -128,7 +128,7 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
         <CardTitle className={`${hasAvailableColors ? 'client-card-title' : 'text-sm font-semibold'}`}>
           {product.name}
         </CardTitle>
-        <div className='h-4' />
+        <div className='h-2' />
         <span className='client-price text-left'>{formatPrice(product.price)}</span>
       </CardContent>
     </Card>

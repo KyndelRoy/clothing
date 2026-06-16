@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { MinusIcon, PlusIcon, SearchIcon, XIcon } from 'lucide-react'
 
@@ -68,7 +68,7 @@ const FilterSection = ({
   const [open, setOpen] = useState(defaultOpen)
 
   return (
-    <div className='border-foreground/10 border-b py-3'>
+    <div className='border-b border-gray-200 py-3'>
       <div className='flex w-full items-center justify-between'>
         <button onClick={() => setOpen(!open)} className='text-sm font-semibold'>
           {title}
@@ -114,6 +114,9 @@ const ShopPageContent = () => {
   const [showAllFeatures, setShowAllFeatures] = useState(false)
 
   const [filterOrder] = useState<FilterKey[]>(shopFilterOrder)
+  const cardsRef = useRef<HTMLDivElement>(null)
+  const rightColRef = useRef<HTMLDivElement>(null)
+  const isFirstRender = useRef(true)
 
   const toggle = <T extends string>(prev: T[], val: T) =>
     prev.includes(val) ? prev.filter(v => v !== val) : [...prev, val]
@@ -148,6 +151,14 @@ const ShopPageContent = () => {
     setMinPrice('')
     setMaxPrice('')
   }
+
+  const scrollToCards = useCallback(() => {
+    requestAnimationFrame(() => {
+      if (rightColRef.current) {
+        rightColRef.current.scrollIntoView({ behavior: 'instant', block: 'start' })
+      }
+    })
+  }, [])
 
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase()
@@ -225,6 +236,17 @@ const ShopPageContent = () => {
     sort
   ])
 
+  // Reset scroll to top of cards whenever filtered results change (skip initial render)
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false
+
+      return
+    }
+
+    scrollToCards()
+  }, [filtered, scrollToCards])
+
   const counts = useMemo(() => {
     const c: Record<string, Record<string, number>> = {
       gender: {},
@@ -266,7 +288,9 @@ const ShopPageContent = () => {
   )
 
   const visibleGenders = showAllGenders ? shopGenderOptions : shopGenderOptions.slice(0, GENDER_INITIAL_COUNT)
-  const visibleCategories = showAllCategories ? shopCategoryOptions : shopCategoryOptions.slice(0, CATEGORY_INITIAL_COUNT)
+  const visibleCategories = showAllCategories
+    ? shopCategoryOptions
+    : shopCategoryOptions.slice(0, CATEGORY_INITIAL_COUNT)
   const visibleColors = showAllColors ? availableColors : availableColors.slice(0, COLOR_INITIAL_COUNT)
   const visibleFabrics = showAllFabrics ? shopFabricOptions : shopFabricOptions.slice(0, FABRIC_INITIAL_COUNT)
   const visibleFits = showAllFits ? shopFitOptions : shopFitOptions.slice(0, FIT_INITIAL_COUNT)
@@ -281,7 +305,6 @@ const ShopPageContent = () => {
   const needsSizeShowAll = allSizeValues.length > sizeInitialVisibleCount
 
   const renderSizePill = (size: ShopSize) => {
-
     const isDisabled = (counts.size[size] || 0) === 0
 
     return (
@@ -291,7 +314,7 @@ const ShopPageContent = () => {
         disabled={isDisabled}
         className={`rounded-md border px-3 py-1.5 text-xs transition-all ${
           isDisabled
-            ? 'cursor-not-allowed border-foreground/10 opacity-30'
+            ? 'border-foreground/10 cursor-not-allowed opacity-30'
             : selectedSizes.includes(size)
               ? 'border-foreground bg-foreground text-primary-foreground'
               : 'border-foreground/20 hover:border-foreground/40'
@@ -309,11 +332,13 @@ const ShopPageContent = () => {
           <FilterSection title='Gender' defaultOpen>
             <div className='flex flex-col gap-2'>
               {visibleGenders.map(g => {
-
                 const isDisabled = (counts.gender[g.value] || 0) === 0
 
                 return (
-                  <label key={g.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={g.value}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={genders.includes(g.value)}
@@ -342,11 +367,13 @@ const ShopPageContent = () => {
           <FilterSection title='Category' defaultOpen>
             <div className='flex flex-col gap-2'>
               {visibleCategories.map((cat: { value: ShopCategory; label: string }) => {
-
                 const isDisabled = (counts.category[cat.value] || 0) === 0
 
                 return (
-                  <label key={cat.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={cat.value}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={categories.includes(cat.value)}
@@ -377,7 +404,7 @@ const ShopPageContent = () => {
               <>
                 {shopSizeGroups.map((group: { id: string; label: string; values: ShopSize[] }, groupIdx: number) => (
                   <div key={group.id}>
-                    {groupIdx > 0 && <div className='border-foreground/20 my-3 border-t border-dashed' />}
+                    {groupIdx > 0 && <div className='my-3 border-t border-dashed border-gray-200' />}
                     {shopSizeGroups.length > 1 && (
                       <p className='text-muted-foreground mb-2 text-xs font-medium tracking-wider uppercase'>
                         {group.label}
@@ -417,7 +444,10 @@ const ShopPageContent = () => {
                 const isDisabled = count === 0
 
                 return (
-                  <label key={name} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={name}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={isActive}
@@ -460,11 +490,13 @@ const ShopPageContent = () => {
           <FilterSection title='Fabric'>
             <div className='flex flex-col gap-2'>
               {visibleFabrics.map((f: { value: ShopFabric; label: string }) => {
-
                 const isDisabled = (counts.fabric[f.value] || 0) === 0
 
                 return (
-                  <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={f.value}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={selectedFabrics.includes(f.value)}
@@ -495,11 +527,13 @@ const ShopPageContent = () => {
           <FilterSection title='Fit' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleFits.map((f: { value: ShopFit; label: string }) => {
-
                 const isDisabled = (counts.fit[f.value] || 0) === 0
 
                 return (
-                  <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={f.value}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={selectedFits.includes(f.value)}
@@ -528,11 +562,13 @@ const ShopPageContent = () => {
           <FilterSection title='Neckline' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleNecklines.map((n: { value: ShopNeckline; label: string }) => {
-
                 const isDisabled = (counts.neckline[n.value] || 0) === 0
 
                 return (
-                  <label key={n.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={n.value}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={selectedNecklines.includes(n.value)}
@@ -561,11 +597,13 @@ const ShopPageContent = () => {
           <FilterSection title='Features' defaultOpen={false}>
             <div className='flex flex-col gap-2'>
               {visibleFeatures.map((f: { value: ShopFeature; label: string }) => {
-
                 const isDisabled = (counts.feature[f.value] || 0) === 0
 
                 return (
-                  <label key={f.value} className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}>
+                  <label
+                    key={f.value}
+                    className={`flex items-center gap-2 text-sm ${isDisabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer'}`}
+                  >
                     <input
                       type='checkbox'
                       checked={selectedFeatures.includes(f.value)}
@@ -625,7 +663,7 @@ const ShopPageContent = () => {
                   <span>{p.label}</span>
                 </label>
               ))}
-              <div className='border-foreground/20 my-1 border-t border-dashed' />
+              <div className='my-1 border-t border-dashed border-gray-200' />
               <div className='flex gap-3'>
                 <div className='flex-1'>
                   <label className='text-muted-foreground mb-1 block text-xs'>Minimum ₱</label>
@@ -687,12 +725,12 @@ const ShopPageContent = () => {
   }
 
   return (
-    <section className='pb-8 sm:pb-12 lg:pb-16'>
+    <section className='mt-4 pb-4 sm:pb-6 lg:pb-8'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         <div className='flex gap-8'>
           {/* Left sidebar - Filters */}
-          <aside className='w-60 shrink-0'>
-            <div className='sticky top-16 h-[calc(100vh-4rem)] scrollbar-thin overflow-y-auto rounded-lg bg-white py-4 pr-1'>
+          <aside className='w-[276px] shrink-0'>
+            <div className='bg-white pt-4 pr-1'>
               <div className='px-4'>
                 {/* Filters heading */}
                 <div className='mb-2 flex items-center justify-between'>
@@ -718,18 +756,16 @@ const ShopPageContent = () => {
 
               <div className='px-4'>
                 {filterOrder.map(key => (
-                  <div key={key}>
-                    {renderFilterContent(key)}
-                  </div>
+                  <div key={key}>{renderFilterContent(key)}</div>
                 ))}
               </div>
             </div>
           </aside>
 
           {/* Right side - Search + Sort + Cards */}
-          <div className='min-w-0 flex-1'>
+          <div ref={rightColRef} className='min-w-0 flex-1 scroll-mt-20'>
             {/* Sort bar */}
-            <div className='bg-stone-100/95 sticky top-16 z-40 mb-4 flex items-center justify-end gap-3 py-3 text-sm backdrop-blur-sm'>
+            <div className='sticky top-16 z-40 mb-4 flex items-center justify-end gap-3 bg-stone-100/95 py-3 text-sm backdrop-blur-sm'>
               <div className='relative max-w-xs flex-1'>
                 <SearchIcon className='text-muted-foreground pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2' />
                 <Input
@@ -760,21 +796,28 @@ const ShopPageContent = () => {
             </div>
 
             {/* Product grid */}
-            {filtered.length > 0 ? (
-              <div className='grid grid-cols-2 gap-4 sm:grid-cols-3 sm:gap-6'>
-                {filtered.map(product => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-            ) : (
-              <div className='flex flex-col items-center justify-center gap-2 rounded-3xl border border-dashed py-16 text-center'>
-                <p className='client-card-title'>No products match your search</p>
-                <p className='client-muted client-body-sm'>Try a different keyword or clear the filters.</p>
-                <Button variant='outline' size='sm' className='client-button mt-2 rounded-full' onClick={clearFilters}>
-                  Clear filters
-                </Button>
-              </div>
-            )}
+            <div ref={cardsRef} className='overflow-anchor-none'>
+              {filtered.length > 0 ? (
+                <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4'>
+                  {filtered.map(product => (
+                    <ProductCard key={product.id} product={product} />
+                  ))}
+                </div>
+              ) : (
+                <div className='flex flex-col items-center justify-center gap-2 rounded-3xl border border-dashed py-16 text-center'>
+                  <p className='client-card-title'>No products match your search</p>
+                  <p className='client-muted client-body-sm'>Try a different keyword or clear the filters.</p>
+                  <Button
+                    variant='outline'
+                    size='sm'
+                    className='client-button mt-2 rounded-full'
+                    onClick={clearFilters}
+                  >
+                    Clear filters
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -10,14 +10,11 @@ type ContactUsProps = {
 
 const ContactUs = ({ contactInfo }: ContactUsProps) => {
   return (
-    <section
-      id='contact-us'
-      className='relative py-8 sm:py-16 lg:py-24'
-    >
+    <section id='contact-us' className='relative py-4 sm:py-8 lg:py-12'>
       <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mx-auto mb-12 flex max-w-2xl flex-col items-center justify-center space-y-4 text-center sm:mb-16 lg:mb-24'>
-          <Badge variant='outline' className='h-auto client-meta'>
+          <Badge variant='outline' className='client-meta h-auto'>
             Contact Us
           </Badge>
           <h2 className='client-section-title'>Get in touch with us </h2>
@@ -35,7 +32,7 @@ const ContactUs = ({ contactInfo }: ContactUsProps) => {
           />
 
           <div>
-            <h3 className='mb-2 client-card-title'>We&apos;re here to help</h3>
+            <h3 className='client-card-title mb-2'>We&apos;re here to help</h3>
             <p className='client-muted client-body-lg mb-10'>
               We would love to hear from you. Whether you have a question about sizing, need help with an order, or want
               to learn more about our collections, we&apos;re here to assist.
