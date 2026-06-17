@@ -8,6 +8,15 @@ import { ChevronLeftIcon, HeartIcon, MinusIcon, PlusIcon } from 'lucide-react'
 
 import { Button } from '@/components/ui/button'
 
+import {
+  shopCategoryOptions,
+  shopFabricOptions,
+  shopFeatureOptions,
+  shopFitOptions,
+  shopGenderOptions,
+  shopNecklineOptions
+} from '@/data/client/shop'
+
 import { formatPrice } from '@/lib/format'
 
 import type { ProductColor, ShopProduct, ShopSize } from '@/types/shop'
@@ -23,20 +32,26 @@ const REGIONAL_STANDARDS: RegionalStandard[] = ['US', 'UK', 'EU', 'International
 const QTY_MIN = 1
 const QTY_MAX = 10
 
-const formatLabel = (value: string) => value.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase())
+const ONE_SIZE = 'ONE SIZE' as const
+
+// Look up the human label for a value in one of the shop option registries.
+// Falls back to the raw value if the registry doesn't have a match.
+const labelOf = <T extends { value: string; label: string }>(options: readonly T[], value: string) =>
+  options.find(o => o.value === value)?.label ?? value
 
 const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
-  const initialColor = product.colors.find(c => c.available) ?? product.colors[0]
-  const initialSize: ShopSize = product.sizes.includes('ONE SIZE') ? 'ONE SIZE' : product.sizes[0]
+  const isOneSize = product.sizes.length === 1 && product.sizes[0] === ONE_SIZE
 
-  const [selectedColor, setSelectedColor] = useState<ProductColor>(initialColor)
-  const [selectedSize, setSelectedSize] = useState<ShopSize>(initialSize)
+  const [selectedColor, setSelectedColor] = useState<ProductColor>(
+    () => product.colors.find(c => c.available) ?? product.colors[0]
+  )
+
+  const [selectedSize, setSelectedSize] = useState<ShopSize>(() =>
+    isOneSize ? product.sizes[0] : (product.sizes.find(s => s !== ONE_SIZE) ?? product.sizes[0])
+  )
+
   const [quantity, setQuantity] = useState(QTY_MIN)
   const [regionalStandard, setRegionalStandard] = useState<RegionalStandard>('US')
-
-  const availableColors = product.colors
-  const availableSizes = product.sizes
-  const isOneSize = availableSizes.length === 1 && availableSizes[0] === 'ONE SIZE'
 
   const decQty = () => setQuantity(q => Math.max(QTY_MIN, q - 1))
   const incQty = () => setQuantity(q => Math.min(QTY_MAX, q + 1))
@@ -46,11 +61,23 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
     setSelectedColor(color)
   }
 
+  const specs = [
+    { label: 'Category', value: labelOf(shopCategoryOptions, product.category) },
+    { label: 'Gender', value: labelOf(shopGenderOptions, product.gender) },
+    { label: 'Fabric', value: labelOf(shopFabricOptions, product.fabric) },
+    { label: 'Fit', value: labelOf(shopFitOptions, product.fit) },
+    { label: 'Neckline', value: labelOf(shopNecklineOptions, product.neckline) },
+    {
+      label: 'Features',
+      value: product.features.length > 0 ? product.features.map(f => labelOf(shopFeatureOptions, f)).join(', ') : '—'
+    }
+  ]
+
   return (
     <section className='mx-auto max-w-7xl px-4 pt-6 pb-12 sm:px-6 sm:pt-8 lg:px-8 lg:pt-10'>
       {/* Breadcrumb */}
       <nav className='text-muted-foreground mb-6 flex items-center gap-1.5 text-xs sm:text-sm' aria-label='Breadcrumb'>
-        <Link href='/shop' className='inline-flex items-center gap-1 hover:text-foreground transition-colors'>
+        <Link href='/shop' className='hover:text-foreground inline-flex items-center gap-1 transition-colors'>
           <ChevronLeftIcon className='size-3.5' />
           Shop
         </Link>
@@ -63,7 +90,6 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
         <div className='flex flex-col gap-3'>
           <div className='bg-muted/30 relative overflow-hidden'>
             <img
-              key={selectedColor.name}
               src={selectedColor.image}
               alt={selectedColor.imageAlt || `${product.name} in ${selectedColor.name}`}
               className='aspect-square w-full object-cover'
@@ -78,9 +104,9 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
           </div>
 
           {/* Thumbnail strip — one per available color, borderless */}
-          {availableColors.length > 1 && (
+          {product.colors.length > 1 && (
             <div className='flex flex-wrap gap-2' role='tablist' aria-label='Product images'>
-              {availableColors.map(color => {
+              {product.colors.map(color => {
                 const isActive = selectedColor.name === color.name
                 const isDisabled = !color.available
 
@@ -102,7 +128,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                     }`}
                   >
                     {color.image ? (
-                      <img src={color.image} alt='' className='size-full object-cover' />
+                      <img src={color.image} alt='' className='size-full object-cover' loading='lazy' />
                     ) : (
                       <span className='block size-full' style={{ backgroundColor: color.hex }} />
                     )}
@@ -132,7 +158,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
               <span className='text-muted-foreground text-sm'>{selectedColor.name}</span>
             </div>
             <div className='flex flex-wrap gap-2'>
-              {availableColors.map(color => {
+              {product.colors.map(color => {
                 const isActive = selectedColor.name === color.name
                 const isDisabled = !color.available
 
@@ -150,7 +176,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                         ? 'cursor-not-allowed opacity-30'
                         : isActive
                           ? 'border-foreground ring-foreground ring-1 ring-offset-2'
-                          : 'border-gray-200 hover:scale-110 hover:border-foreground/50'
+                          : 'hover:border-foreground/50 border-gray-200 hover:scale-110'
                     }`}
                     style={{ backgroundColor: color.hex }}
                   />
@@ -204,7 +230,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
 
             {/* Size grid — square pills, no border-radius, light gray border */}
             <div className='flex flex-wrap gap-2'>
-              {availableSizes.map(size => {
+              {product.sizes.map(size => {
                 const isActive = selectedSize === size
 
                 return (
@@ -216,7 +242,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                     className={`relative flex size-12 items-center justify-center border text-sm font-semibold transition-all sm:size-14 ${
                       isActive
                         ? 'border-foreground text-foreground'
-                        : 'border-gray-200 text-foreground hover:border-foreground/50'
+                        : 'text-foreground hover:border-foreground/50 border-gray-200'
                     }`}
                   >
                     {size}
@@ -238,7 +264,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                   onClick={decQty}
                   disabled={quantity <= QTY_MIN}
                   aria-label='Decrease quantity'
-                  className='flex size-10 items-center justify-center transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40'
+                  className='hover:bg-muted flex size-10 items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-40'
                 >
                   <MinusIcon className='size-4' />
                 </button>
@@ -254,7 +280,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                   onClick={incQty}
                   disabled={quantity >= QTY_MAX}
                   aria-label='Increase quantity'
-                  className='flex size-10 items-center justify-center transition-colors hover:bg-muted disabled:cursor-not-allowed disabled:opacity-40'
+                  className='hover:bg-muted flex size-10 items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-40'
                 >
                   <PlusIcon className='size-4' />
                 </button>
@@ -273,7 +299,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
               <Button
                 type='button'
                 size='lg'
-                className='h-12 flex-1 rounded-none bg-black text-white text-sm font-semibold tracking-wide uppercase hover:bg-black/90'
+                className='h-12 flex-1 rounded-none bg-black text-sm font-semibold tracking-wide text-white uppercase hover:bg-black/90'
               >
                 Buy Now
               </Button>
@@ -286,32 +312,12 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
       <div className='mt-12 border-t border-gray-200 pt-8 sm:mt-16 sm:pt-10'>
         <h2 className='mb-4 text-lg font-semibold tracking-tight'>Product Details</h2>
         <dl className='grid grid-cols-1 gap-x-8 gap-y-3 text-sm sm:grid-cols-2'>
-          <div className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
-            <dt className='text-muted-foreground'>Category</dt>
-            <dd className='font-medium'>{formatLabel(product.category)}</dd>
-          </div>
-          <div className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
-            <dt className='text-muted-foreground'>Gender</dt>
-            <dd className='font-medium'>{formatLabel(product.gender)}</dd>
-          </div>
-          <div className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
-            <dt className='text-muted-foreground'>Fabric</dt>
-            <dd className='font-medium'>{formatLabel(product.fabric)}</dd>
-          </div>
-          <div className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
-            <dt className='text-muted-foreground'>Fit</dt>
-            <dd className='font-medium'>{formatLabel(product.fit)}</dd>
-          </div>
-          <div className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
-            <dt className='text-muted-foreground'>Neckline</dt>
-            <dd className='font-medium'>{formatLabel(product.neckline)}</dd>
-          </div>
-          <div className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
-            <dt className='text-muted-foreground'>Features</dt>
-            <dd className='font-medium'>
-              {product.features.length > 0 ? product.features.map(formatLabel).join(', ') : '—'}
-            </dd>
-          </div>
+          {specs.map(({ label, value }) => (
+            <div key={label} className='flex justify-between border-b border-gray-100 py-2 sm:border-none sm:py-0'>
+              <dt className='text-muted-foreground'>{label}</dt>
+              <dd className='font-medium'>{value}</dd>
+            </div>
+          ))}
         </dl>
       </div>
     </section>

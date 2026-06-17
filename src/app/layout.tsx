@@ -89,7 +89,7 @@ export const metadata: Metadata = {
 
 const RootLayout = ({ children }: Readonly<{ children: ReactNode }>) => {
   return (
-    <html lang='en' data-scroll-behavior='smooth' className='flex min-h-full w-full scroll-smooth antialiased'>
+    <html lang='en' className='flex min-h-full w-full scroll-smooth antialiased'>
       <body className='flex min-h-full w-full flex-auto flex-col bg-stone-100'>
         <TooltipProvider>{children}</TooltipProvider>
       </body>
