@@ -85,7 +85,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
         <span className='text-foreground truncate'>{product.name}</span>
       </nav>
 
-      <div className='grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-12'>
+      <div className='grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:gap-12'>
         {/* Left column — Image gallery */}
         <div className='flex flex-col gap-3'>
           <div className='bg-muted/30 relative overflow-hidden'>
@@ -103,7 +103,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
             </button>
           </div>
 
-          {/* Thumbnail strip — one per available color, borderless */}
+          {/* Thumbnail strip — one per available color, borderless. Smaller on mobile so 5+ fit on one row. */}
           {product.colors.length > 1 && (
             <div className='flex flex-wrap gap-2' role='tablist' aria-label='Product images'>
               {product.colors.map(color => {
@@ -119,7 +119,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                     aria-label={`Show ${color.name}`}
                     onClick={() => handleColorSelect(color)}
                     disabled={isDisabled}
-                    className={`relative size-16 shrink-0 overflow-hidden transition-all ${
+                    className={`relative size-12 shrink-0 overflow-hidden transition-all sm:size-16 ${
                       isDisabled
                         ? 'cursor-not-allowed opacity-40'
                         : isActive
@@ -254,8 +254,8 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
 
           <div className='border-t border-gray-200' />
 
-          {/* Quantity + CTAs */}
-          <div className='flex flex-col gap-4'>
+          {/* Quantity + CTAs (desktop layout — sticky on mobile is rendered below) */}
+          <div className='hidden flex-col gap-4 sm:flex'>
             <div className='flex items-center gap-4'>
               <span className='text-sm font-semibold sm:text-base'>Quantity</span>
               <div className='inline-flex items-center border border-gray-200'>
@@ -320,6 +320,48 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
           ))}
         </dl>
       </div>
+
+      {/* Sticky mobile cart bar — fixed to bottom of viewport, hidden on sm+ where the inline CTAs live. */}
+      <div className='bg-background/95 fixed inset-x-0 bottom-0 z-40 border-t border-gray-200 backdrop-blur-md sm:hidden'>
+        <div className='mx-auto flex max-w-7xl items-center gap-2 px-4 py-3 sm:gap-3 sm:px-6'>
+          <div className='inline-flex shrink-0 items-center border border-gray-200'>
+            <button
+              type='button'
+              onClick={decQty}
+              disabled={quantity <= QTY_MIN}
+              aria-label='Decrease quantity'
+              className='hover:bg-muted flex size-11 items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-40'
+            >
+              <MinusIcon className='size-4' />
+            </button>
+            <span
+              className='w-9 text-center text-sm tabular-nums'
+              aria-live='polite'
+              aria-label={`Quantity: ${quantity}`}
+            >
+              {quantity}
+            </span>
+            <button
+              type='button'
+              onClick={incQty}
+              disabled={quantity >= QTY_MAX}
+              aria-label='Increase quantity'
+              className='hover:bg-muted flex size-11 items-center justify-center transition-colors disabled:cursor-not-allowed disabled:opacity-40'
+            >
+              <PlusIcon className='size-4' />
+            </button>
+          </div>
+          <Button
+            type='button'
+            size='lg'
+            className='h-11 flex-1 rounded-full bg-black text-sm font-semibold tracking-wide text-white uppercase hover:bg-black/90'
+          >
+            Add to Cart · {formatPrice(product.price)}
+          </Button>
+        </div>
+      </div>
+      {/* Spacer so the sticky bar doesn't cover the last bit of content on mobile. */}
+      <div className='h-20 sm:hidden' aria-hidden='true' />
     </section>
   )
 }

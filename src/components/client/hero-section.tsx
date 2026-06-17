@@ -94,23 +94,23 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
       className='before:border-primary/20 relative flex-1 py-12 before:absolute before:inset-0 before:-z-10 before:-skew-y-3 before:border-b sm:py-16 lg:py-24'
     >
       <div className='mx-auto flex h-full max-w-7xl flex-col gap-16 px-4 sm:px-6 lg:px-8'>
-        {/* Hero Header */}
-        <div className='grid grid-cols-1 gap-6 gap-y-12 md:gap-y-16 lg:grid-cols-5'>
-          <div className='flex w-full flex-col justify-center gap-5 max-lg:items-center lg:col-span-3 lg:h-95.5'>
-            <h1 className='client-hero-title text-balance max-lg:text-center'>
+        {/* Hero Header — 2-col on md+, stacked on mobile. Text left, image carousel right. */}
+        <div className='grid grid-cols-1 gap-6 gap-y-12 md:grid-cols-5 md:gap-x-8 md:gap-y-16'>
+          <div className='flex w-full flex-col justify-center gap-5 max-md:items-center max-md:text-center md:col-span-3 md:h-95.5 md:items-start md:text-left'>
+            <h1 className='client-hero-title text-balance max-md:text-center'>
               Wear your style with confidence
             </h1>
 
-            <p className='client-muted client-section-description max-w-xl max-lg:text-center'>
+            <p className='client-muted client-section-description max-w-xl max-md:text-center'>
               Welcome to our collection where quality meets design. From premium fabrics to signature prints, every tee
               is crafted to elevate your wardrobe.
             </p>
 
-            <div className='flex items-center gap-3.5'>
+            <div className='flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-3.5'>
               <Button
                 asChild
                 size='lg'
-                className='group relative w-fit overflow-hidden rounded-full client-button before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-size-[250%_250%,100%_100%] before:bg-position-[200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-position-[-100%_0,0_0] has-[>svg]:px-6 dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
+                className='group relative h-12 w-full overflow-hidden rounded-full client-button before:absolute before:inset-0 before:rounded-[inherit] before:bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.5)_50%,transparent_75%,transparent_100%)] before:bg-size-[250%_250%,100%_100%] before:bg-position-[200%_0,0_0] before:bg-no-repeat before:transition-[background-position_0s_ease] before:duration-1000 hover:before:bg-position-[-100%_0,0_0] has-[>svg]:px-6 sm:w-fit dark:before:bg-[linear-gradient(45deg,transparent_25%,rgba(0,0,0,0.2)_50%,transparent_75%,transparent_100%)]'
               >
                 <Link href='#'>
                   Shop now
@@ -120,7 +120,7 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
               <Button
                 size='lg'
                 asChild
-                className='bg-primary/10 hover:bg-primary/20 text-primary rounded-full client-button'
+                className='h-12 w-full rounded-full bg-primary/10 text-base font-semibold hover:bg-primary/20 text-primary sm:w-fit'
               >
                 <Link href='#contact-us'>Browse collection</Link>
               </Button>
@@ -128,7 +128,7 @@ const HeroSection = ({ slides }: { slides: HeroSlide[] }) => {
           </div>
 
           <Carousel
-            className='w-full lg:col-span-2'
+            className='w-full max-md:max-w-md max-md:mx-auto md:col-span-2'
             setApi={setMainApi}
             plugins={plugins}
             opts={{
