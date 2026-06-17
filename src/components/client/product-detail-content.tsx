@@ -16,6 +16,10 @@ type ProductDetailContentProps = {
   product: ShopProduct
 }
 
+type RegionalStandard = 'US' | 'UK' | 'EU' | 'International'
+
+const REGIONAL_STANDARDS: RegionalStandard[] = ['US', 'UK', 'EU', 'International']
+
 const QTY_MIN = 1
 const QTY_MAX = 10
 
@@ -28,6 +32,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
   const [selectedColor, setSelectedColor] = useState<ProductColor>(initialColor)
   const [selectedSize, setSelectedSize] = useState<ShopSize>(initialSize)
   const [quantity, setQuantity] = useState(QTY_MIN)
+  const [regionalStandard, setRegionalStandard] = useState<RegionalStandard>('US')
 
   const availableColors = product.colors
   const availableSizes = product.sizes
@@ -72,7 +77,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
             </button>
           </div>
 
-          {/* Thumbnail strip — one per available color */}
+          {/* Thumbnail strip — one per available color, borderless */}
           {availableColors.length > 1 && (
             <div className='flex flex-wrap gap-2' role='tablist' aria-label='Product images'>
               {availableColors.map(color => {
@@ -88,12 +93,12 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                     aria-label={`Show ${color.name}`}
                     onClick={() => handleColorSelect(color)}
                     disabled={isDisabled}
-                    className={`relative size-16 shrink-0 overflow-hidden border bg-white transition-all ${
+                    className={`relative size-16 shrink-0 overflow-hidden transition-all ${
                       isDisabled
                         ? 'cursor-not-allowed opacity-40'
                         : isActive
-                          ? 'border-foreground ring-foreground ring-1 ring-offset-1'
-                          : 'border-foreground/20 hover:border-foreground/50'
+                          ? 'ring-foreground ring-1 ring-offset-1'
+                          : 'opacity-60 hover:opacity-100'
                     }`}
                   >
                     {color.image ? (
@@ -123,7 +128,7 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
           {/* Color picker */}
           <div className='flex flex-col gap-3'>
             <div className='flex items-baseline justify-between'>
-              <span className='text-sm font-medium tracking-wide uppercase'>Color</span>
+              <span className='text-sm font-semibold sm:text-base'>Color</span>
               <span className='text-muted-foreground text-sm'>{selectedColor.name}</span>
             </div>
             <div className='flex flex-wrap gap-2'>
@@ -144,8 +149,8 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                       isDisabled
                         ? 'cursor-not-allowed opacity-30'
                         : isActive
-                          ? 'border-foreground/30 ring-foreground ring-1 ring-offset-2'
-                          : 'border-foreground/20 hover:scale-110 hover:border-foreground/50'
+                          ? 'border-foreground ring-foreground ring-1 ring-offset-2'
+                          : 'border-gray-200 hover:scale-110 hover:border-foreground/50'
                     }`}
                     style={{ backgroundColor: color.hex }}
                   />
@@ -159,16 +164,45 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
           {/* Size picker */}
           <div className='flex flex-col gap-3'>
             <div className='flex items-baseline justify-between'>
-              <span className='text-sm font-medium tracking-wide uppercase'>Size</span>
+              <h2 className='text-sm font-semibold sm:text-base'>Select Size</h2>
               {!isOneSize && (
                 <button
                   type='button'
-                  className='text-muted-foreground hover:text-foreground text-xs underline underline-offset-3'
+                  className='text-muted-foreground hover:text-foreground text-xs underline underline-offset-3 sm:text-sm'
                 >
                   Size guide
                 </button>
               )}
             </div>
+
+            {/* Regional tabs */}
+            <div className='flex items-center gap-4 sm:gap-6' role='tablist' aria-label='Sizing standard'>
+              {REGIONAL_STANDARDS.map(region => {
+                const isActive = regionalStandard === region
+
+                return (
+                  <button
+                    key={region}
+                    type='button'
+                    role='tab'
+                    aria-selected={isActive}
+                    onClick={() => setRegionalStandard(region)}
+                    className={`relative -mb-px py-1 text-sm font-semibold transition-colors ${
+                      isActive ? 'text-foreground' : 'text-muted-foreground hover:text-foreground'
+                    }`}
+                  >
+                    {region}
+                    {isActive && (
+                      <span className='absolute right-0 bottom-0 left-0 h-0.5 bg-red-500' aria-hidden='true' />
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+
+            <div className='border-t border-gray-200' />
+
+            {/* Size grid — square pills, no border-radius, light gray border */}
             <div className='flex flex-wrap gap-2'>
               {availableSizes.map(size => {
                 const isActive = selectedSize === size
@@ -179,10 +213,10 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                     type='button'
                     onClick={() => setSelectedSize(size)}
                     aria-pressed={isActive}
-                    className={`min-w-14 rounded-md border px-4 py-2 text-sm transition-all ${
+                    className={`relative flex size-12 items-center justify-center border text-sm font-semibold transition-all sm:size-14 ${
                       isActive
-                        ? 'border-foreground bg-foreground text-primary-foreground'
-                        : 'border-foreground/20 hover:border-foreground/50'
+                        ? 'border-foreground text-foreground'
+                        : 'border-gray-200 text-foreground hover:border-foreground/50'
                     }`}
                   >
                     {size}
@@ -197,8 +231,8 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
           {/* Quantity + CTAs */}
           <div className='flex flex-col gap-4'>
             <div className='flex items-center gap-4'>
-              <span className='text-sm font-medium tracking-wide uppercase'>Quantity</span>
-              <div className='inline-flex items-center border border-foreground/20'>
+              <span className='text-sm font-semibold sm:text-base'>Quantity</span>
+              <div className='inline-flex items-center border border-gray-200'>
                 <button
                   type='button'
                   onClick={decQty}
@@ -232,14 +266,14 @@ const ProductDetailContent = ({ product }: ProductDetailContentProps) => {
                 type='button'
                 size='lg'
                 variant='outline'
-                className='h-12 flex-1 rounded-md text-sm font-semibold tracking-wide uppercase'
+                className='h-12 flex-1 rounded-none border border-gray-200 text-sm font-semibold tracking-wide uppercase'
               >
                 Add to Cart
               </Button>
               <Button
                 type='button'
                 size='lg'
-                className='h-12 flex-1 rounded-md text-sm font-semibold tracking-wide uppercase'
+                className='h-12 flex-1 rounded-none bg-black text-white text-sm font-semibold tracking-wide uppercase hover:bg-black/90'
               >
                 Buy Now
               </Button>
