@@ -2,6 +2,8 @@
 
 import { useEffect, useRef, useState } from 'react'
 
+import Link from 'next/link'
+
 import { HeartIcon, ShoppingBagIcon } from 'lucide-react'
 
 import { Card, CardContent, CardTitle } from '@/components/ui/card'
@@ -92,14 +94,18 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
         >
           <HeartIcon className='size-4' />
         </button>
-        <div className='bg-muted/30 overflow-hidden'>
+        <Link
+          href={`/shop/${product.id}`}
+          className='bg-muted/30 block overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'
+          aria-label={`View ${product.name}`}
+        >
           <img
             src={selectedColor.image}
             alt={selectedColor.imageAlt}
             className='aspect-[297.6/356.94] w-full object-cover transition-opacity duration-300 group-hover/product:opacity-90'
             loading='lazy'
           />
-        </div>
+        </Link>
       </CardContent>
       <CardContent className={`flex flex-1 flex-col gap-2 pt-0 pb-0 ${hasAvailableColors ? 'px-4' : 'px-3'}`}>
         {hasAvailableColors ? (
@@ -133,7 +139,14 @@ const ProductCard = ({ product, className }: ProductCardProps) => {
             </div>
           </div>
         )}
-        <CardTitle className='text-base leading-snug font-semibold'>{product.name}</CardTitle>
+        <CardTitle className='text-base leading-snug font-semibold'>
+          <Link
+            href={`/shop/${product.id}`}
+            className='hover:text-foreground/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black'
+          >
+            {product.name}
+          </Link>
+        </CardTitle>
         <span className='mt-auto text-left text-base font-normal tabular-nums'>{formatPrice(product.price)}</span>
         <a
           href='#'
